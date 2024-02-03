@@ -8,22 +8,24 @@ header  {
 nav ul {
   margin: 0;
   text-align: center;
+  font-family: Arial;
+  font-size: 17px;
 }
 nav li {
   display: inline-block;
-  padding-top: .75%;
-  padding-bottom: .75%;
-  padding-left: 2.25%;
-  padding-right: 2.25%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-left: 2%;
+  padding-right: 2%;
 }
 nav a:hover {
-  color: #000
+  color: black
 }
 nav a:before {
   content: ' ';
   display: block;
   height: 5px;
-  background-color: #000;
+  background-color: black;
   top 0;
   width: 0;
   transition: all ease-in-out 300ms;
@@ -73,9 +75,11 @@ p1 {
   color: black;
 }
 p2 {
-  font-family: times new roman;
-  font-size: 14px;
-  color: whitesmoke;
+  font-family: Arial;
+  font-size: 26px;
+  font-weight: bold;
+  color: black;
+  line-height: 2;
 }
 p3 {
   font-family: Arial;
@@ -108,24 +112,42 @@ p6 {
   padding-right: 9%;
   display: inline-block;
 }
-.container {
+.container1 {
   display: flex;
   align-items: center;
   max-width: 700px;
   margin: auto; 
   padding: 30px;
 }
-.text {
+.text1 {
   flex: 1;
   padding-right: 20px;
+}
+.container2 {
+  display: flex;
+  align-items: center;
+  max-width: 1800px;
+  margin: auto; 
+  padding: 30px;
+}
+.text2 {
+  flex: 1;
+  padding-left: 50px;
 }
 .image {
   max-width: 100%;
   height: auto;
+  padding: 10px;
+  
 }
 .profile {
   width: 250px;
   height: 250px;
   border-radius: 200px;
   display: wrap;
+}
+.box {
+  border: 3px solid black;
+  padding: 50px;
+  width: 300px;
 }
