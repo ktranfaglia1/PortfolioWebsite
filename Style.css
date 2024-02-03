@@ -1,0 +1,131 @@
+body {
+  margin: 0%;
+  background-color: white;
+}
+header  {
+  background-color: purple;
+}
+nav ul {
+  margin: 0;
+  text-align: center;
+}
+nav li {
+  display: inline-block;
+  padding-top: .75%;
+  padding-bottom: .75%;
+  padding-left: 2.25%;
+  padding-right: 2.25%;
+}
+nav a:hover {
+  color: #000
+}
+nav a:before {
+  content: ' ';
+  display: block;
+  height: 5px;
+  background-color: #000;
+  top 0;
+  width: 0;
+  transition: all ease-in-out 300ms;
+}
+nav a:hover::before {
+  width: 100%;
+}
+a:link {
+  color: whitesmoke;
+  background-color: transparent;
+  text-decoration: none;
+}
+a:visited {
+  color: whitesmoke;
+  background-color: transparent;
+  text-decoration: none;
+}
+h1 {
+  margin: 0;
+  font-family: times new roman;
+  font-size: 26px;
+  text-decoration: none;
+  color: whitesmoke;
+  background-color: #990000;
+  padding-top: 12px;
+}
+h2 {
+  margin: 0;
+  font-family: times new roman;
+  font-size: 20px;
+  text-decoration: none;
+  color: whitesmoke;
+  background-color: #990000;
+  padding-bottom: 12px;
+}
+p {
+  font-family: Arial;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 1.5;
+  color: black;
+}
+p1 {
+  font-family: Arial;
+  font-size: 24px;
+  line-height: 1.5;
+  color: black;
+}
+p2 {
+  font-family: times new roman;
+  font-size: 14px;
+  color: whitesmoke;
+}
+p3 {
+  font-family: Arial;
+  font-size: 35px;
+  line-height: 1.8;
+  color: whitesmoke;
+}
+p4 {
+  font-family: Arial;
+  font-size: 29px;
+  line-height: 1.8;
+  color: whitesmoke;
+  margin-left: 2%;
+  font-weight: bold;
+}
+p5 {
+  font-family: Arial;
+  font-size: 26px;
+  line-height: 1.8;
+  color: white;
+  margin-left: 5%;
+  text-decoration: underline;
+}
+p6 {
+  font-family: Arial;
+  font-size: 20px;
+  line-height: 2.6;
+  color: white;
+  margin-left: 9%;
+  padding-right: 9%;
+  display: inline-block;
+}
+.container {
+  display: flex;
+  align-items: center;
+  max-width: 700px;
+  margin: auto; 
+  padding: 30px;
+}
+.text {
+  flex: 1;
+  padding-right: 20px;
+}
+.image {
+  max-width: 100%;
+  height: auto;
+}
+.profile {
+  width: 250px;
+  height: 250px;
+  border-radius: 200px;
+  display: wrap;
+}
