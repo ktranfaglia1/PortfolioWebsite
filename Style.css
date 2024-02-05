@@ -44,22 +44,19 @@ a:visited {
   text-decoration: none;
 }
 h1 {
-  margin: 0;
-  font-family: times new roman;
-  font-size: 26px;
-  text-decoration: none;
-  color: whitesmoke;
-  background-color: #990000;
-  padding-top: 12px;
+  font-family: Georgia;
+  font-size: 34px;
+  line-height: 2.5;
+  text-decoration: bold;
+  color: black;
+  text-align: center;
 }
 h2 {
-  margin: 0;
-  font-family: times new roman;
-  font-size: 20px;
-  text-decoration: none;
-  color: whitesmoke;
-  background-color: #990000;
-  padding-bottom: 12px;
+  font-family: Georgia;
+  font-size: 30px;
+  text-decoration: underline;
+  color: black;
+  margin-left: 7%;
 }
 p {
   font-family: Arial;
@@ -82,40 +79,24 @@ p2 {
   line-height: 2;
 }
 p3 {
-  font-family: Arial;
-  font-size: 35px;
-  line-height: 1.8;
-  color: whitesmoke;
+  font-family: Georgia;
+  font-size: 22px;
+  line-height: 2.0;
+  color: black;
+  margin-left: 5%;
+  margin-right: 10%;
 }
 p4 {
   font-family: Arial;
-  font-size: 29px;
+  font-size: 15px;
   line-height: 1.8;
-  color: whitesmoke;
-  margin-left: 2%;
-  font-weight: bold;
-}
-p5 {
-  font-family: Arial;
-  font-size: 26px;
-  line-height: 1.8;
-  color: white;
-  margin-left: 5%;
-  text-decoration: underline;
-}
-p6 {
-  font-family: Arial;
-  font-size: 20px;
-  line-height: 2.6;
-  color: white;
-  margin-left: 9%;
-  padding-right: 9%;
-  display: inline-block;
+  color: black;
+  margin: 1%;
 }
 .container1 {
   display: flex;
   align-items: center;
-  max-width: 700px;
+  max-width: 45%;
   margin: auto; 
   padding: 30px;
 }
@@ -132,13 +113,22 @@ p6 {
 }
 .text2 {
   flex: 1;
-  padding-left: 50px;
+  padding-left: 3%;
 }
-.image {
+.logo {
   max-width: 100%;
   height: auto;
-  padding: 10px;
-  
+  padding: 3%;
+}
+.wave {
+  max-width: 100%;
+  height: auto;
+  padding: 1%;
+}
+.sammy {
+  max-width: 100%;
+  height: auto;
+  padding: 0;
 }
 .profile {
   width: 250px;
@@ -148,6 +138,27 @@ p6 {
 }
 .box {
   border: 3px solid black;
-  padding: 50px;
+  padding: 4%;
   width: 300px;
+}
+#lightbox {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .75);
+  display: none;
+}
+#lightbox.active {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+#lightbox img {
+  max-width: 95%;
+  max-height: 90%;
+  padding: 6px;
+  background-color: black;
+  border: 3px solid white;
 }
