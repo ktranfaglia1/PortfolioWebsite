@@ -43,6 +43,10 @@ a:visited {
   background-color: transparent;
   text-decoration: none;
 }
+nav2 li {
+  padding-top: 1%;
+  margin-left: 9%;
+}
 h1 {
   font-family: Georgia;
   font-size: 34px;
@@ -73,7 +77,7 @@ p1 {
 }
 p2 {
   font-family: Arial;
-  font-size: 26px;
+  font-size: 30px;
   font-weight: bold;
   color: black;
   line-height: 2;
@@ -81,9 +85,8 @@ p2 {
 p3 {
   font-family: Georgia;
   font-size: 22px;
-  line-height: 2.0;
+  line-height: 1.2;
   color: black;
-  margin-left: 5%;
   margin-right: 10%;
 }
 p4 {
@@ -93,27 +96,33 @@ p4 {
   color: black;
   margin: 1%;
 }
+p5 {
+  font-family: Georgia;
+  font-size: 22px;
+  line-height: 2.5;
+  color: black;
+  margin-right: 10%;
+}
 .container1 {
   display: flex;
   align-items: center;
-  max-width: 45%;
+  max-width: 40%;
   margin: auto; 
-  padding: 30px;
+  padding: 2%;
 }
 .text1 {
   flex: 1;
-  padding-right: 20px;
 }
 .container2 {
   display: flex;
   align-items: center;
-  max-width: 1800px;
+  max-width: 90%; 
   margin: auto; 
-  padding: 30px;
+  padding: 1%;
 }
 .text2 {
   flex: 1;
-  padding-left: 3%;
+  padding-left: 1%;
 }
 .logo {
   max-width: 100%;
@@ -123,23 +132,23 @@ p4 {
 .wave {
   max-width: 100%;
   height: auto;
-  padding: 1%;
+  padding: 2%;
 }
 .sammy {
   max-width: 100%;
-  height: auto;
-  padding: 0;
+  margin-left: 2%;
+  margin-right: 2%;
 }
 .profile {
-  width: 250px;
-  height: 250px;
+  width: 35%;
+  height: 35%;
   border-radius: 200px;
   display: wrap;
 }
 .box {
   border: 3px solid black;
   padding: 4%;
-  width: 300px;
+  width: 20%;
 }
 #lightbox {
   position: fixed;
