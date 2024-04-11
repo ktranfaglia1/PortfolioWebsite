@@ -43,11 +43,6 @@ a:visited {
   background-color: transparent;
   text-decoration: none;
 }
-nav2 li {
-  padding-top: .5%;
-  margin-left: 9%;
-  margin-right: 10%;
-}
 h1 {
   font-family: Georgia;
   font-size: 34px;
@@ -64,39 +59,39 @@ h2 {
   color: black;
   margin-left: 7%;
 }
-p {
+h3 {
   font-family: Arial;
   font-weight: bold;
-  font-size: 40px;
+  font-size: 38px;
   line-height: 1.5;
   color: black;
 }
-p1 {
+.p1 {
   font-family: Arial;
   font-size: 24px;
   line-height: 1.5;
   color: black;
 }
-p2 {
+.p2 {
   font-family: Arial;
   font-size: 28px;
   font-weight: bold;
   color: black;
   line-height: 2;
 }
-p3 {
+.p3 {
   font-family: Georgia;
   font-size: 22px;
   line-height: 1.2;
   color: black;
 }
-p4 {
+.p4 {
   font-family: Arial;
   font-size: 15px;
   line-height: 1.8;
   color: black;
 }
-p5 {
+.p5 {
   font-family: Georgia;
   font-size: 22px;
   line-height: 2.2;
@@ -105,28 +100,28 @@ p5 {
 footer {
   margin: .5%;
 }
-.container1 {
+.outer_container1 {
   display: flex;
   align-items: center;
   max-width: 45%;
   margin: auto; 
   padding: 2%;
 }
-.text1 {
+.text_container1 {
   flex: 1;
   text-indent: -1.8em;
   margin-left: 3%;
 }
-.container2 {
+.outer_container2 {
   display: flex;
   align-items: center;
   max-width: 92%; 
-  margin: auto; 
+  margin: 0 auto; 
   padding: 1%;
 }
-.text2 {
+.text_container2 {
+  margin: 0;
   flex: 1;
-  padding-left: 1%;
 }
 .logo {
   max-width: 100%;
@@ -136,7 +131,7 @@ footer {
 .wave {
   max-width: 100%;
   height: auto;
-  padding: 2% 2% 2% 4%;
+  padding: 2%;
 }
 .sammy {
   max-width: 100%;
@@ -154,6 +149,11 @@ footer {
   padding: 2.5%;
   width: 23%;
   max-width: 330px;
+}
+.awards {
+  padding-top: .5%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 #lightbox {
   position: fixed;
