@@ -2,7 +2,6 @@
 <html>
   <head>
     <link rel="stylesheet" href="..\styles\style.css" type="text/css"/>
-    <script defer src="..\src\js\script.js"> </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Kyle Tranfaglia </title>
@@ -13,37 +12,47 @@
         <div class="text_container1">
           <h3> Kyle Tranfaglia </h3> 
           <div class="p1"> Software Developer | Programmer </div>
-        </div>
+            <a href="https://github.com/ktranfaglia1" target="_blank"> <img src="..\images\github.png" alt="GitHub" class="github"></a>
+            <a href="https://www.linkedin.com/in/kyle-tranfaglia-6564b42a4/" target="_blank"> <img src="..\images\linkedin.png" alt="LinkedIn" class="linkedin"> </a>
+          </div>
         <img src="..\images\Profile.jpg" class="profile">
       </div>
     </center>   
     <header>
-      <nav>
-       <ul> 
-        <li> <a href="..\src\index.html"> Home </a> </li>
-        <li> <a href="..\src\resume.html"> Resume </a> </li>
-        <li> <a href="..\src\portfolio.html"> Portfolio </a> </li>
-        <li> <a href="..\src\contact.html"> Contact </a> </li>
-       </ul>
-      </nav>
-    </header> <br> <br>
+      <div class="navbar">
+        <a href="../src/index.html"> Home </a>
+        <div class="dropdown">
+          <button class="drop_button"> Software <i class="fa fa-caret-down"> </i> </button>
+          <div class="dropdown_item">
+            <a href="/COSC425/src/index.html"> Cellular Automata </a>
+            <a href="/MusicPainterWebsite/src/index.html"> Music Painter </a>
+          </div>
+        </div>
+        <a href="../src/portfolio.html"> Portfolio </a>
+        <a href="../src/resume.html"> Resume </a>
+        <a href="../src/contact.html"> Contact </a>
+      </div>
+    </header>
     <div class="outer_container2">
       <div class="box">
         <div class="p2"> Language Proficiencies </div>
         <img src="..\images\C_logo.png" height="25" width="57" class="logo">
         <img src="..\images\C++_logo.png" height="24" width="56" class="logo">
         <img src="..\images\Python_logo.png" height="28" width="60" class="logo">
-        <img src="..\images\Java_logo.png" height="20" width="56" class="logo">
+        <img src="..\images\Java_logo.png" height="20" width="59" class="logo">
         <img src="..\images\Html_logo.png" height="36" width="58" class="logo">
         <img src="..\images\CSS_logo.png" height="34" width="56" class="logo">
         <img src="..\images\JavaScript_logo.png" height="60" width="60" class="logo">
         <img src="..\images\R_logo.png" height="38" width="58" class="logo">
+        <img src="..\images\Php_logo.png" height="58" width="80" class="logo">
+        <img src="..\images\SQL_logo.png" height="58" width="80" class="logo">
       </div>
-      <img src="..\images\Wave.gif" height="200" width="250" class="wave">
+      <img src="..\images\Wave.gif" height="175" width="225" class="wave">
       <div class="text_container2">
         <h3> Hello, my name is Kyle Tranfaglia </h3>
       </div>
     </div>
+    <hr>
     <h1> About me </h1>
     <h2> Education </h2>
     <div class="outer_container2">
@@ -51,21 +60,112 @@
       <div class="text_container1">
         <div class="p5"> 
           <li> Salisbury University, BS, Computer Science, Foundations, Algorithms, and Artificial Intelligence Focus,
-          Software Engineering Focus, 2025 </li> 
+          Software Engineering Focus, 2025 | Minor in Mathematics </li> 
           <li> Salisbury University, BS, Data Science, Computational Data Science Track, 2025 </li> 
         </div>
       </div>
     </div> <br>
     <h2> Awards and Achievements </h2>
     <div class="p3"> 
-      <div class="awards"> 
-        <li> Member of the Clarke Honors College at Salisbury University </li> <ul> <ul>
-        <li> Cummulative GPA (As of Fall 2023): 3.899 </li> </ul> </ul>
-        <li> Dean's List: Fall 2021, Spring 2022, Fall 2022, Spring 2023, Fall 2023 </li> 
-        </div> 
+      <div class="list"> 
+        <li> Member of the Clarke Honors College at Salisbury University </li> 
+        <ul> 
+          <ul>
+            <li> Cummulative GPA (As of Fall 2023): 3.899 </li> 
+          </ul> 
+        </ul>
+        <li> Dean's List: Fall 2021, Spring 2022, Fall 2022, Spring 2023, Fall 2023 </li>
+        <li> Recipient of Richard A. Henson School of Science and Technology Scholarship, Spring 2023 | Renewed Spring 2024 </li>
+      </div> 
+    </div> <br>
+    <h2> Research Projects </h2>
+    <div class="p3"> 
+      <div class="list"> 
+        <li> Visualization of Sound | Music Painter </li> 
+        <ul> 
+          <ul>
+            <li> My Team and I developed a downloadable software in Python, using PySide/PyQt, sound-device, and PyAudio interfaces, that reads the data of a wav file and converts it to a list of dominate frequencies and spectral data. This data is then used to create a 2-D graphical image using simple geometric shapes, hence giving a single image for the entire clip, as opposed to the usual visualizers built into media players that animate just small segments of the song. The project aimed to research and formulate a product that could take any audio file in wav format, including locally captured live recording, and make a more tangible representation in the form of a graphical representation. This project was inspired by a vision of music as an artform, and so, we set out to transform audible art into visual art with immense user customization, yet with constant use of maximum frequency values and spectral data. </li> 
+          </ul> 
+        </ul>
+        <li> Discrete Mathematical Systems | Cellular Automata </li> 
+        <ul> 
+          <ul>
+            <li> Description </li> 
+          </ul> 
+        </ul>
+      </div> 
+    </div>
+    <h2> Work and Experience </h2>
+    <div class="p3"> 
+      <div class="list"> 
+        <li> Mathematics and Computer Science Tutor, Fall 2022 - Present </li> 
+        <ul> 
+          <ul>
+            <li> Description </li> 
+          </ul> 
+        </ul>
+        <li> Computer Science Lab Assistant, Fall 2024 </li> 
+        <ul> 
+          <ul>
+            <li> Description </li> 
+          </ul> 
+        </ul>
+        <li> Calculus I Supplimental Instructor, Fall 2022 </li> 
+        <ul> 
+          <ul>
+            <li> Description </li> 
+          </ul> 
+        </ul>
+      </div> 
+      <h2> Community Involvement </h2>
+    <div class="p3"> 
+      <div class="list"> 
+        <li> HSCPC, 03/13/2024 </li> 
+        <ul> 
+          <ul>
+            <li> Description </li> 
+          </ul> 
+        </ul>
+        <li> Parson Cemetery Clean-up, 04/02/2022  </li> 
+        <ul> 
+          <ul>
+            <li> Description </li> 
+          </ul> 
+        </ul>
+        <li> Jaycee's Christmas Shopping Tour, 12/11/2021</li> 
+        <ul> 
+          <ul>
+            <li> Description </li> 
+          </ul> 
+        </ul>
+      </div> 
+     </div>
     </div>
     <footer>
       <div class="p4"> &copy; Kyle Tranfaglia 2024. All rights reserved. </div>
     </footer>
   </body>
 </html>
+<script>
+  const lightbox = document.createElement('div')
+  lightbox.id = 'lightbox'
+  document.body.appendChild(lightbox)
+
+  const images = document.querySelectorAll('.profile')
+  images.forEach(function(image) {
+    image.addEventListener('click', function() {
+      lightbox.classList.add('active')
+      const img = document.createElement('img')
+      img.src = image.src
+      while (lightbox.firstChild) {
+        lightbox.removeChild(lightbox.firstChild)
+      }
+      lightbox.appendChild(img)
+    })
+  })
+
+  lightbox.addEventListener('click', function(event) {
+    if (event.target !== event.currentTarget) return
+    lightbox.classList.remove('active')
+  })
+</script>
