@@ -130,7 +130,7 @@ footer {
 .head_container {
   display: flex;
   align-items: center;
-  max-width: 45%;
+  max-width: 52%;
   height: 300px;
   margin: auto; 
   padding: 30px;
@@ -150,6 +150,8 @@ footer {
 }
 .wave_container {
   margin: 0;
+  margin-right: 25px;
+  width: 550px;
   text-align: center;
   justify-content: center;
   align-items: center;
@@ -164,7 +166,6 @@ footer {
 .wave {
   max-width: 100%;
   height: auto;
-  padding: 1%;
 }
 .sammy {
   max-width: 100%;
@@ -178,7 +179,7 @@ footer {
   display: wrap;
 }
 .box {
-  border: 3px solid black;
+  border: 2px solid black;
   padding: 3%;
   width: 325px;
   max-width: 330px;
