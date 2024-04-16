@@ -130,21 +130,26 @@ footer {
 .head_container {
   display: flex;
   align-items: center;
-  max-width: 52%;
+  width: 750px;
   height: 300px;
   margin: auto; 
   padding: 30px;
+}
+.name_container {
+  flex: 1;
+  text-indent: -1.8em;
 }
 .text_container {
   flex: 1;
   text-indent: -1.8em;
   margin-left: 3%;
+  margin-right: 20%;
 }
 .outer_container {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 92%; 
+  max-width: 90%; 
   margin: 0 auto; 
   padding: 1%;
 }
@@ -180,9 +185,8 @@ footer {
 }
 .box {
   border: 2px solid black;
-  padding: 3%;
-  width: 325px;
-  max-width: 330px;
+  padding: 2%;
+  width: 340px;
   display: inline-block;
 }
 .list {
