@@ -97,19 +97,19 @@
     <h2> Work and Experience </h2>
     <div class="p3"> 
       <div class="list"> 
-        <li> Mathematics and Computer Science Tutor, Fall 2022 - Present </li> 
+        <li> Mathematics and Computer Science Tutor, September 2022 - May 2025 </li> 
         <ul> 
           <ul>
             <li> In the Math Emporium at the Salisbury University, I hosted an open door tutoring center that provides a focused, studious, and welcoming environment for all undergraduate students. My goal was to expand student's problem solving skillsets and improve their overall understanding of the course material. As a tutor, I guided students through problems and constrcuted on-the-spot mini lessons to reiterate and reinforce course material. I tutored all 100 and 200 level Math and Computer Science courses and occassionally Physics, Chemistry, and Business courses. For over 10 courses, I tutored approximately 10 to 20 students per week, which totals about 1260 students. </li> 
           </ul> 
         </ul>
-        <li> Computer Science Lab Assistant, Fall 2024 </li> 
+        <li> Computer Science Lab Assistant, September 2024 - December 2024 </li> 
         <ul> 
           <ul>
             <li> Once a week for one lab session, I assisted a Computer Science 117: Programming Fundamentals course at Salisbury University. My objective was to improve the average performance for the course by offering free assistance on the course material. As a lab assistant, I floated around the lab room to answer questions regarding the lab assignment, review code, and aid students through programming difficulties. Additionally, I held two office hours per week in which students came for tutoring and/or coding assistance for the course. Overall, I assisted 28 students and improved the average course GPA by 10% for the given professor. </li> 
           </ul> 
         </ul>
-        <li> Calculus I Supplimental Instructor, Fall 2022 </li> 
+        <li> Calculus I Supplimental Instructor, September 2022 - December 2022 </li> 
         <ul> 
           <ul>
             <li> Every class period, which was four days a week, I attended a Calculus I lecture with the same professor and class for the entire semester. During the lecture, I reviewed the material to refresh myself and construct a lesson plan catered toward the current topic. I also had a one and a half hours of office time for lesson plan construction. Then, for three hours a week, split into two sections, I hosted a study session in which I lectured to a classroom of students and led group discussions. My goal was to avoid direct lecturing and establish an interactive environment in which students discuss and collaberatively work through problems with my guidance to strengthen their mathematical skillsets. Overall, my sessions increased the course pass rate by 20% for students that attended.    </li> 
@@ -120,16 +120,22 @@
     <h2> Research Projects </h2>
     <div class="p3"> 
       <div class="list"> 
-        <li> Visualization of Sound | Music Painter </li> 
+        <li> Visualization of Sound | Music Painter, January 2023 - February 2024 </li> 
         <ul> 
           <ul>
             <li> With guidance from a facualty mentor and in collaberation with an undergraduate studying mathematics, I developed a downloadable software in Python, using PySide/PyQt, sound-device, and PyAudio interfaces, that reads the data of a wav file and converts it to a list of dominate frequencies and spectral data. This data is then used to create a 2-D graphical image using simple geometric shapes, hence giving a single image for the entire clip. The project aimed to research and formulate a product that could take any audio file in wav format, including locally captured live recording, and make it more tangible by constructing a  graphical representation. This project was inspired by a vision of music as an artform, and so, we set out to transform audible art into visual art with immense user customization, yet in constant use of sound data. </li> 
           </ul> 
         </ul>
-        <li> Discrete Mathematical Systems | Cellular Automata </li> 
+        <li> Discrete Mathematical Systems | Cellular Automata, February 2024 - December 2024 </li> 
         <ul> 
           <ul>
             <li> Description </li> 
+          </ul> 
+        </ul>
+        <li> Laridae - Undergraduate Research Journal, Volume 4, February 2022 - July 2022 </li> 
+        <ul> 
+          <ul>
+            <li> As a project of personal interest, I wrote an interdisciplinary research paper titled, "Capitalism: The Synthesis of Economic Growth and Climate Change." The paper contains nearly 6000 words and utilizes 22 academic sources to support an argumentative thesis on the role of capitalism in climate change. The final product was submitted to Salisbury University's Laridae - Undergraduate Research Journal as an application to have the work featured in the fourth volume. Among the 31 original submissions, this scholarly article was accepted to be one of the 13 entires. </li> 
           </ul> 
         </ul>
       </div> 
@@ -158,31 +164,62 @@
       </div> 
      </div>
     </div>
+    <a href="#" class="hovering_button"> Top &#9650; </a>
     <footer>
       <div class="p4"> &copy; Kyle Tranfaglia 2024. All rights reserved. </div>
     </footer>
   </body>
 </html>
 <script>
-  const lightbox = document.createElement('div')
-  lightbox.id = 'lightbox'
-  document.body.appendChild(lightbox)
+  // Create a div element to serve as the lightbox
+  const lightbox = document.createElement('div');
+  lightbox.id = 'lightbox';
+  document.body.appendChild(lightbox);
 
-  const images = document.querySelectorAll('.profile')
+  // Select all elements with the class 'profile' and iterate over them
+  const images = document.querySelectorAll('.profile');
   images.forEach(function(image) {
+    // Add click event listener to each image
     image.addEventListener('click', function() {
-      lightbox.classList.add('active')
-      const img = document.createElement('img')
-      img.src = image.src
+      lightbox.classList.add('active');  // Activate the lightbox by adding the 'active' class
+      
+      // Create an img element to display the clicked image
+      const img = document.createElement('img');
+      img.src = image.src;
+      
+      // Remove any existing child elements from the lightbox
       while (lightbox.firstChild) {
-        lightbox.removeChild(lightbox.firstChild)
+        lightbox.removeChild(lightbox.firstChild);
       }
-      lightbox.appendChild(img)
-    })
-  })
+    
+      lightbox.appendChild(img);  // Append the clicked image to the lightbox
+    });
+  });
 
+  // Add click event listener to the lightbox itself
   lightbox.addEventListener('click', function(event) {
-    if (event.target !== event.currentTarget) return
-    lightbox.classList.remove('active')
-  })
+    // Check if the click target is the lightbox itself, if not, return
+    if (event.target !== event.currentTarget) return;
+    
+    lightbox.classList.remove('active');  // Deactivate the lightbox by removing the 'active' class
+  });
+
+  // Listen for and handle the scroll event
+  window.onscroll = function scrollFunction() {
+      // Check if the scroll position is greater than 250 pixels from the top
+      if (document.body.scrollTop > 250 || document.documentElement.scrollTop > 250) {
+          document.querySelector(".hovering_button").classList.add("show");  // Add the "show" class to the hovering button
+      } else {
+          document.querySelector(".hovering_button").classList.remove("show");  // Remove the "show" class from the hovering button
+      }
+  }
+
+  // Listens for a click event on the hovering button
+  document.querySelector('.hovering_button').addEventListener('click', function() {
+      // When the hovering button is clicked, smoothly scroll the page back to the top
+      window.scrollTo({
+          top: 0, 
+          behavior: 'smooth'
+      });
+  });
 </script>
