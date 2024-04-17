@@ -78,7 +78,7 @@ footer {
   background-color: black;
   overflow: hidden;
   height: 60px;
-  margin: 10px 0 30px 0;
+  margin: 0 0 30px 0;
 }
 .navbar a {
   font-size: 18px;  
@@ -101,13 +101,13 @@ footer {
 }
 .navbar .drop_button {
   margin: 0;
+  font-size: 18px;
   border: none;
   outline: none;
   color: whitesmoke;
-  padding: 22px 24px;
+  padding: 24px 24px;
   background-color: inherit;
   font-family: Arial;
-  font-size: 18px;
 }
 .navbar .dropdown_item {
   display: none;
