@@ -35,7 +35,7 @@
     </header>
     <div class="outer_container">
       <div class="box">
-        <div class="p2"> Language Proficiencies </div>
+        <center> <div class="p2"> Language Proficiencies </div> </center>
         <img src="../images/C_logo.png" height="25" width="57" class="logo">
         <img src="../images/C++_logo.png" height="24" width="56" class="logo">
         <img src="../images/Python_logo.png" height="28" width="60" class="logo">
@@ -53,14 +53,14 @@
         <h3> Hello, my name is Kyle Tranfaglia </h3>
       </div>
       <div class="box">
-        <div class="p2"> Software Experiences </div>
-        <img src="../images/Windows_logo.png" height="26" width="52" class="logo">
-        <img src="../images/Debian_logo.png" height="26" width="52" class="logo">
-        <img src="../images/Ubuntu_logo.png" height="42" width="64" class="logo">
+        <center> <div class="p2" class="center"> Software Experiences </div> </center>
+        <img src="../images/Windows_logo.png" height="26" width="54" class="logo">
+        <img src="../images/Debian_logo.png" height="26" width="48" class="logo">
+        <img src="../images/Ubuntu_logo.png" height="42" width="66" class="logo">
         <img src="../images/Git_logo.png" height="46" width="68" class="logo">
         <img src="../images/Vscode_logo.png" height="54" width="54" class="logo">
-        <img src="../images/Pc_logo.png" height="56" width="56" class="logo">
-        <img src="../images/Drive_logo.png" height="22" width="54" class="logo">
+        <img src="../images/Pc_logo.png" height="54" width="54" class="logo">
+        <img src="../images/Drive_logo.png" height="24" width="54" class="logo">
         <img src="../images/Office_logo.png" height="54" width="78" class="logo">
         <img src="../images/Rstudio_logo.png" height="40" width="58" class="logo">
         <img src="../images/Nano_logo.png" height="26" width="46" class="logo">
@@ -169,57 +169,5 @@
       <div class="p4"> &copy; Kyle Tranfaglia 2024. All rights reserved. </div>
     </footer>
   </body>
+  <script type="module" src="../src/js/script.js"> </script>
 </html>
-<script>
-  // Create a div element to serve as the lightbox
-  const lightbox = document.createElement('div');
-  lightbox.id = 'lightbox';
-  document.body.appendChild(lightbox);
-
-  // Select all elements with the class 'profile' and iterate over them
-  const images = document.querySelectorAll('.profile');
-  images.forEach(function(image) {
-    // Add click event listener to each image
-    image.addEventListener('click', function() {
-      lightbox.classList.add('active');  // Activate the lightbox by adding the 'active' class
-      
-      // Create an img element to display the clicked image
-      const img = document.createElement('img');
-      img.src = image.src;
-      
-      // Remove any existing child elements from the lightbox
-      while (lightbox.firstChild) {
-        lightbox.removeChild(lightbox.firstChild);
-      }
-    
-      lightbox.appendChild(img);  // Append the clicked image to the lightbox
-    });
-  });
-
-  // Add click event listener to the lightbox itself
-  lightbox.addEventListener('click', function(event) {
-    // Check if the click target is the lightbox itself, if not, return
-    if (event.target !== event.currentTarget) return;
-    
-    lightbox.classList.remove('active');  // Deactivate the lightbox by removing the 'active' class
-  });
-
-  // Listen for and handle the scroll event
-  window.onscroll = function scrollFunction() {
-      // Check if the scroll position is greater than 250 pixels from the top
-      if (document.body.scrollTop > 250 || document.documentElement.scrollTop > 250) {
-          document.querySelector(".hovering_button").classList.add("show");  // Add the "show" class to the hovering button
-      } else {
-          document.querySelector(".hovering_button").classList.remove("show");  // Remove the "show" class from the hovering button
-      }
-  }
-
-  // Listens for a click event on the hovering button
-  document.querySelector('.hovering_button').addEventListener('click', function() {
-      // When the hovering button is clicked, smoothly scroll the page back to the top
-      window.scrollTo({
-          top: 0, 
-          behavior: 'smooth'
-      });
-  });
-</script>
