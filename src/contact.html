@@ -22,27 +22,33 @@
         <a href="../src/contact.html"> Contact </a>
       </div>
     </header>
-    <div class="contact-container">
-      <div class="contact-info">
-        <h2>Contact Information</h2>
-        <div class="p1"> If you would like to get in contact with me, either fill out the contact form or send me an </div>
-        <ul>
-          <li>Email: your_email@example.com</li>
-          <li>GitHub: YourGitHubUsername</li>
-          <li>LinkedIn: YourLinkedInUsername</li>
-        </ul>
-      </div>
-      <div class="contact-form">
-        <h2>Contact Me</h2>
-        <form id="contactForm" action="https://formspree.io/f/xdoqywoa" method="POST">
-            <label for="name"> Name: </label>
-            <input type="text" id="name" name="name" required> <br>
-            <label for="email"> Email: </label>
-            <input type="email" id="email" name="email" required> <br>
-            <label for="message"> Message: </label><br>
-            <textarea id="message" name="message" rows="4" required></textarea><br>
-            <input type="submit" value="Submit">
-        </form>
+    <div class="centered_container">
+      <div class="contact_container">
+        <div class="contact_section">
+          <div class="contact_info">
+            <h4> Contact Information </h4>
+            <div class="p1"> If you would like to get in contact with me, you may fill out the contact form on the right or send me an email at kyletranfaglia@gmail.com </div>
+            <h5> Platforms </h5>
+            <div class="p1">
+              <ul>
+                <li> GitHub: <a href="https://github.com/ktranfaglia1" target="_blank"> ktranfaglia1 </a> </li>
+                <li> LinkedIn: <a href="https://www.linkedin.com/in/kyle-tranfaglia-6564b42a4/" target="_blank"> kyle-tranfaglia </a> </li>
+              </ul>
+            </div>
+          </div>
+          <div class="contact_form">
+            <h4> Contact Form </h4>
+            <form id="contactForm" action="https://formspree.io/f/xdoqywoa" method="POST">
+                <label for="name"> Name: </label>
+                <input type="text" id="name" name="name" required> <br>
+                <label for="email"> Email: </label>
+                <input type="email" id="email" name="email" required> <br>
+                <label for="message"> Message: </label>
+                <textarea id="message" name="message" rows="12" required> </textarea> <br>
+                <input type="submit" value="Submit">
+            </form>
+          </div>
+        </div>
       </div>
     </div>
   </body>

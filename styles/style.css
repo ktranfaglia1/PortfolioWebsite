@@ -37,6 +37,24 @@ h3 {
   line-height: none;
   color: black;
 }
+h4 {
+  margin: 0;
+  font-family: Georgia;
+  font-size: 36px;
+  line-height: 1.8;
+  text-decoration: bold;
+  color: black;
+  text-align: center;
+}
+h5 {
+  margin: 0;
+  font-family: Georgia;
+  font-size: 32px;
+  line-height: 1.5;
+  text-decoration: bold;
+  color: black;
+  text-align: center;
+}
 .p1 {
   font-family: Arial;
   font-size: 24px;
@@ -229,36 +247,38 @@ footer {
 .hovering_button.show {
   display: inline-block;
 }
-.contact-container {
+.centered_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+.contact_container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  margin: 0 auto;
-  max-width: 800px;
+  width: 1400px;
 }
-
-.contact-form, .contact-info {
+.contact_section {
+  display: flex;
+  flex: 1;
+}
+.contact_form, .contact_info {
   flex: 1;
   padding: 20px;
+  margin: 20px 20px;
 }
-
-.contact-form {
-  background-color: #f9f9f9;
+.contact_form {
+  background-color: lightgray;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
-.contact-info {
+.contact_info {
   text-align: center;
 }
-
-.contact-info ul {
+.contact_info ul {
   list-style-type: none;
   padding: 0;
-}
-
-.contact-info ul li {
-  margin-bottom: 10px;
+  margin: 0;
 }
 #lightbox {
   position: fixed;
