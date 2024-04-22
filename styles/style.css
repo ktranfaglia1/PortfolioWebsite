@@ -229,6 +229,37 @@ footer {
 .hovering_button.show {
   display: inline-block;
 }
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+.contact-form, .contact-info {
+  flex: 1;
+  padding: 20px;
+}
+
+.contact-form {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info {
+  text-align: center;
+}
+
+.contact-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.contact-info ul li {
+  margin-bottom: 10px;
+}
 #lightbox {
   position: fixed;
   z-index: 1000;
