@@ -54,3 +54,11 @@ document.querySelector('.hovering_button').addEventListener('click', function() 
         behavior: 'smooth'
     });
 });
+
+const wavingHand = document.getElementById('wavingHand');  // Get the GIF element by HTML ID
+const originalSrc = wavingHand.src;  // Store the original source of the GIF
+
+// Add event listener for mouseenter
+wavingHand.addEventListener('mouseenter', () => {
+  wavingHand.src = originalSrc;  // Set the GIF source to start playing (original source)
+});
