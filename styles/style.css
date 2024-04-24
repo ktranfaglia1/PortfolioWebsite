@@ -180,7 +180,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 98%; 
+  max-width: 99%; 
   margin: 0 auto; 
   padding: 1%;
 }
@@ -275,9 +275,9 @@ footer {
   margin: 40px 20px;
 }
 .contact_form {
-  background-color: lightgray;
+  background-color: rgb(200, 200, 200);
   border-radius: 12px;
-  box-shadow: 8px 8px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
 }
 .contact_info {
   text-align: center;
@@ -312,6 +312,12 @@ label {
 }
 .contact_form input[type="submit"]:hover {
   background-color: #0056b3;
+}
+.contact_info a {
+  color: black;
+}
+.contact_info a:visited {
+  color: black;
 }
 #lightbox {
   position: fixed;

@@ -55,6 +55,7 @@ document.querySelector('.hovering_button').addEventListener('click', function() 
     });
 });
 
+// Animate hand wave upon hover
 const wavingHand = document.getElementById('wavingHand');  // Get the GIF element by HTML ID
 const originalSrc = wavingHand.src;  // Store the original source of the GIF
 
