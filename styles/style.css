@@ -313,10 +313,10 @@ label {
 .contact_form input[type="submit"]:hover {
   background-color: #0056b3;
 }
-.contact_info a {
+li a {
   color: black;
 }
-.contact_info a:visited {
+li a:visited {
   color: black;
 }
 #lightbox {
