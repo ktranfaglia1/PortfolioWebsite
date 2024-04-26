@@ -364,66 +364,42 @@ li a:visited {
   color: black;
   text-align: center;
 }
-.slide:nth-child(1) {
+.slide {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.slide1 {
   background-image: url("../images/Cellular_automata.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-.slide:nth-child(2) {
+.slide2 {
   background-image: url("../images/Music_painter.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-.slide:nth-child(3) {
+.slide3 {
   background-image: url("../images/Interger_calculator.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-.slide:nth-child(4) {
+.slide4 {
   background-image: url("../images/Spell_checker.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-.slide:nth-child(5) {
+.slide5 {
   background-image: url("../images/Hill_climb_decryption.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-.slide:nth-child(6) {
+.slide6 {
   background-image: url("../images/Graph_algorithm_library.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-.slide:nth-child(7) {
+.slide7 {
   background-image: url("../images/Mini_library.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-.slide:nth-child(8) {
+.slide8 {
   background-image: url("../images/Data_Management.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-.slide:nth-child(9) {
+.slide9 {
   background-image: url("../images/Life_expectancy_data_reporter.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
-.slide:nth-child(10) {
+.slide10 {
   background-image: url("../images/Poker_game.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
 }
+/*
 @keyframes slide {
   0% {
     margin-left: 0px;
@@ -432,10 +408,10 @@ li a:visited {
     margin-left: 0px;
   }
   10% {
-    margin-left: calc(-1200px * 1);
+    margin-left: calc(-1200px);
   }
   18% {
-    margin-left: calc(-1200px * 1);
+    margin-left: calc(-1200px);
   }
   20% {
     margin-left: calc(-1200px * 2);
@@ -489,6 +465,7 @@ li a:visited {
     margin-left: 0;
   }
 }
+*/
 #lightbox {
   position: fixed;
   z-index: 1000;
