@@ -1,6 +1,6 @@
 body {
   margin: 0%;
-  background-color: white;
+  background-color: whitesmoke;
 }
 header  {
   background-color: purple;
@@ -332,7 +332,8 @@ li a:visited {
   color: black;
 }
 .portfolio_background {
-  background-color: rgb(240, 240, 240);
+  background-image: url("../images/Portfolio_background.jpg");
+  background-size: cover;
 }
 .slide_wrapper a {
   color: black;
@@ -347,21 +348,19 @@ li a:visited {
   height: 700px;
   width: 1200px;
   margin: 40px auto 0 auto;
+  border: 1px solid black;
+  box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
 }
 .slide {
   float: left;
   height: 700px;
   width: 1200px;
 }
-.slide_wrapper {
-  width: calc(1200px * 10);
-  animation: slide 90s ease infinite;
-}
 .slide_text {
   font-family: Arial;
   font-size: 24px;
   line-height: 2.5;
-  color: black;
+  color: whitesmoke;
   text-align: center;
 }
 .slide {

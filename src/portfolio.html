@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="..\styles\style.css" type="text/css"/>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Kyle Tranfaglia </title>
+    <title> Portfolio - Kyle Tranfaglia </title>
   </head>  
   <body class="portfolio_background"> 
     <header>
@@ -60,30 +60,22 @@
   </body>
 </html>
 <script>
-  // JavaScript logic to create circular slideshow
-  document.addEventListener("DOMContentLoaded", function() {
-    const wrapper = document.querySelector('.slide_wrapper');
-    let slides = document.querySelectorAll('.slide');
+ // Wait for the DOM content to be fully loaded before executing the script
+document.addEventListener("DOMContentLoaded", function() {
+  const wrapper = document.querySelector('.slide_wrapper');  // Select the wrapper element containing the slides
+  const slides = document.querySelectorAll('.slide');  // Select all slide elements
+  let currentIndex = 0;  // Initialize a variable to keep track of the current slide index
 
-    function moveNext() {
-    // Move the first slide to the end of the wrapper with a smooth transition
-    const firstSlide = slides[0];
-    firstSlide.style.transition = "margin-left 2.5s ease"; // Set the transition property
-    firstSlide.style.marginLeft = "-1200px"; // Move the first slide to the left
-    setTimeout(function() {
-      wrapper.appendChild(firstSlide.cloneNode(true)); // Append a clone of the first slide to the end
-      wrapper.removeChild(firstSlide); // Remove the original first slide
-      slides.forEach(function(slide) {
-        slide.style.transition = "";
-        slide.style.marginLeft = "0";
-      });
-    }, 2500); // Adjust delay to match transition duration
+  // Function to move to the next slide
+  function moveNext() {
+    currentIndex++;  // Increment the current slide index
+    // If the index exceeds the number of slides, reset it to 0 to loop back to the beginning
+    if (currentIndex >= slides.length) {
+      currentIndex = 0;
+    }
+    wrapper.style.marginLeft = -currentIndex * 1200 + 'px';  // Calculate the new position of the wrapper based on the current slide index
   }
 
-    // Interval for transitioning to the next slide
-    setInterval(function() {
-      moveNext(); 
-      slides = document.querySelectorAll('.slide')
-    }, 3000); // Change the time as needed (milliseconds)
-  });
+  setInterval(moveNext, 4000);  // Set an interval to call the moveNext function every 4000 milliseconds (4 seconds)
+});
 </script>
