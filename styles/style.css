@@ -275,7 +275,7 @@ footer {
   margin: 40px 20px;
 }
 .contact_form {
-  background-color: rgb(216, 216, 216);
+  background-color: rgb(208, 208, 208);
   border-radius: 12px;
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
 }
@@ -348,7 +348,7 @@ li a:visited {
   height: 700px;
   width: 1200px;
   margin: 40px auto 0 auto;
-  border: 1px solid black;
+  border: 6px solid black;
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
 }
 .slide {
@@ -398,73 +398,6 @@ li a:visited {
 .slide10 {
   background-image: url("../images/Poker_game.png");
 }
-/*
-@keyframes slide {
-  0% {
-    margin-left: 0px;
-  }
-  8% {
-    margin-left: 0px;
-  }
-  10% {
-    margin-left: calc(-1200px);
-  }
-  18% {
-    margin-left: calc(-1200px);
-  }
-  20% {
-    margin-left: calc(-1200px * 2);
-  }
-  28% {
-    margin-left: calc(-1200px * 2); 
-  }
-  30% {
-    margin-left: calc(-1200px * 3);
-  }
-  38% {
-    margin-left: calc(-1200px * 3);
-  }
-  40% {
-    margin-left: calc(-1200px * 4);
-  }
-  48% {
-    margin-left: calc(-1200px * 4);
-  }
-  50% {
-    margin-left: calc(-1200px * 5);
-  }
-  58% {
-    margin-left: calc(-1200px * 5);
-  }
-  60% {
-    margin-left: calc(-1200px * 6);
-  }
-  68% {
-    margin-left: calc(-1200px * 6);
-  }
-  70% {
-    margin-left: calc(-1200px * 7);
-  }
-  78% {
-    margin-left: calc(-1200px * 7);
-  }
-  80% {
-    margin-left: calc(-1200px * 8);
-  }
-  88% {
-    margin-left: calc(-1200px * 8);
-  }
-  90% {
-    margin-left: calc(-1200px * 9);
-  }
-  98% {
-    margin-left: calc(-1200px * 9);
-  }
-  100% {
-    margin-left: 0;
-  }
-}
-*/
 #lightbox {
   position: fixed;
   z-index: 1000;
