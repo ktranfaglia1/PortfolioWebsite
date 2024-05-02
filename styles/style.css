@@ -258,12 +258,12 @@ footer {
 .centered_container {
   display: flex;
   justify-content: center;
-  height: 100%;
 }
 .contact_container {
   display: flex;
   justify-content: space-between;
-  max-width: 1400px;
+  width: 1400px;
+  height: 100%;
 }
 .contact_section {
   display: flex;
@@ -347,9 +347,13 @@ li a:visited {
   overflow: hidden;
   height: 700px;
   width: 1200px;
-  margin: 40px auto 0 auto;
+  margin: 10px auto 0 auto;
   border: 6px solid black;
   box-shadow: 6px 6px 6px rgba(0, 0, 0, 0.3);
+}
+.overflow_protection {
+  overflow-x: auto;
+  white-space: nowrap;
 }
 .slide {
   float: left;
@@ -400,7 +404,7 @@ li a:visited {
 }
 .resume_container {
   max-width: 1400px;
-  margin: 30px auto;
+  margin: 40px auto;
   display: flex;
   flex-direction: column;
 }

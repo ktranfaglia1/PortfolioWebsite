@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (currentIndex >= slides.length) {
         currentIndex = 0;
         }
-        wrapper.style.marginLeft = -currentIndex * 1200 + 'px';  // Calculate the new position of the wrapper based on the current slide index
+        wrapper.style.marginLeft = -currentIndex * 1200  + 'px';  // Calculate the new position of the wrapper based on the current slide index
     }
 
     setInterval(moveNext, 4000);  // Set an interval to call the moveNext function every 4000 milliseconds (4 seconds)
