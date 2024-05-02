@@ -263,7 +263,7 @@ footer {
 .contact_container {
   display: flex;
   justify-content: space-between;
-  width: 1400px;
+  max-width: 1400px;
 }
 .contact_section {
   display: flex;
@@ -272,7 +272,7 @@ footer {
 .contact_form, .contact_info {
   flex: 1;
   padding: 20px;
-  margin: 40px 10px;
+  margin: 30px 10px;
 }
 .contact_form {
   background-color: rgb(208, 208, 208);
@@ -397,6 +397,15 @@ li a:visited {
 }
 .slide10 {
   background-image: url("../images/Poker_game.png");
+}
+.resume_container {
+  max-width: 1400px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+}
+.pdf_format {
+  height: 1150px;
 }
 #lightbox {
   position: fixed;
