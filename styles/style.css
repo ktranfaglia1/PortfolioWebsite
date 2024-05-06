@@ -55,6 +55,9 @@ h5 {
   color: black;
   text-align: center;
 }
+p {
+  text-align: center;
+}
 .p1 {
   font-family: Arial;
   font-size: 24px;
@@ -106,7 +109,7 @@ footer {
   float: left;
   display: block;
   color: whitesmoke;
-  padding: 24px 24px;
+  padding: 24px;
   text-decoration: none;
 }
 .navbar a:hover {
@@ -124,7 +127,7 @@ footer {
   border: none;
   outline: none;
   color: whitesmoke;
-  padding: 24px 24px;
+  padding: 24px;
   background-color: inherit;
   font-family: Arial;
 }
@@ -147,7 +150,7 @@ footer {
 .navbar .dropdown_item a {
   float: none;
   color: black;
-  padding: 12px 16px;
+  padding: 16px;
   text-decoration: none;
   display: block;
   text-align: left;
@@ -168,12 +171,9 @@ footer {
 }
 .name_container {
   flex: 1;
-  text-indent: -1.8em;
 }
 .text_container {
   flex: 1;
-  text-indent: -1.8em;
-  margin-left: 3%;
   margin-right: 20%;
 }
 .outer_container {
@@ -221,7 +221,7 @@ footer {
   display: inline-block;
 }
 .list {
-  margin: 0 10%;
+  margin: 0 9%;
   padding-top: .5%;
   line-height: 2.2;
 }
@@ -268,11 +268,14 @@ footer {
 .contact_section {
   display: flex;
   flex: 1;
+  width: 100vw;
 }
 .contact_form, .contact_info {
   flex: 1;
   padding: 20px;
   margin: 30px 10px;
+  min-width: 320px;
+  
 }
 .contact_form {
   background-color: rgb(208, 208, 208);
@@ -353,7 +356,6 @@ li a:visited {
 }
 .overflow_protection {
   overflow-x: auto;
-  white-space: nowrap;
 }
 .slide {
   float: left;
@@ -410,6 +412,50 @@ li a:visited {
 }
 .pdf_format {
   height: 1150px;
+}
+@media only screen and (max-width: 600px) {
+  .outer_container {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .outer_container .wave {
+    display: none;
+  }
+  .outer_container .wave_container {
+    margin: inherit;
+    width: 100vw;
+  }
+  .text_container{
+    text-align: start;
+  }
+  .head_container{
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100vw;
+    height: 550px;
+    padding: 20px 0;
+  }
+  .head_container .p1 {
+    width: 225px;
+  }
+  .head_container .p1 span {
+    display: none;
+  }
+  .navbar a {
+    padding: 18px;
+  }
+  .navbar .dropdown {
+    display: none;
+  }
+  .text_container {
+    margin: 0 9%;
+  }
 }
 #lightbox {
   position: fixed;
