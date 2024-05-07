@@ -2,9 +2,6 @@ body {
   margin: 0;
   background-color: white;
 }
-header  {
-  background-color: purple;
-}
 hr {
   margin: 30px 0 0 0;
   border: none;
@@ -167,10 +164,10 @@ footer {
   display: flex;
   align-items: center;
   text-align: center;
+  margin: auto;
   width: 760px;
   height: 300px;
-  margin: auto; 
-  padding: 35px;
+  padding: 35px 20px;
 }
 .name_container {
   flex: 1;
@@ -210,7 +207,6 @@ footer {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  display: wrap;
 }
 .box {
   border: 2px solid black;
@@ -251,20 +247,17 @@ footer {
 }
 .contact_container {
   display: flex;
-  justify-content: space-between;
   width: 1400px;
   height: 100%;
 }
 .contact_section {
   display: flex;
   flex: 1;
-  width: 100vw;
 }
 .contact_form, .contact_info {
   flex: 1;
   padding: 20px;
   margin: 30px 10px;
-  min-width: 320px;
   
 }
 .contact_form {
@@ -287,6 +280,7 @@ footer {
   font-family: Arial;
   font-size: 16px;
   line-height: 1.8;
+  margin-left: 20px;
   color: black;
 }
 .contact_item {
@@ -403,7 +397,22 @@ li a:visited {
 .pdf_format {
   height: 1150px;
 }
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 1365px) {
+  .outer_container .wave_container {
+    width: 450px;
+  }
+  .outer_container .wave {
+    width: 150px;
+    height: 150px;
+  }
+  .outer_container h3 {
+    font-size: 30px;
+  }
+  .contact_text {
+    display: inline-block;
+  }
+}
+@media only screen and (max-width: 770px) {
   .outer_container {
     display: flex;
     flex-direction: column;
@@ -435,19 +444,38 @@ li a:visited {
     padding: 25px 0;
   }
   .head_container .p1 {
-    width: 225px;
+    width: 265px;
   }
   .head_container .p1 span {
     display: none;
   }
+  .navbar {
+    margin: 0 0 10px 0;
+  }
   .navbar a {
-    padding: 18px;
+    padding: 17px;
   }
   .navbar .dropdown {
     display: none;
   }
+  .resume_container {
+    margin: 10px auto;
+  }
   .text_container {
     margin: 0 9%;
+  }
+  .contact_info h4 {
+    line-height: 1.4;
+  }
+  .contact_section {
+    flex-direction: column;
+    margin: 0;
+  }
+  .contact_info, .contact_form {
+    margin: 10px;
+  }
+  .contact_text {
+    display: inline-block;
   }
 }
 #lightbox {
