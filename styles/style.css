@@ -154,7 +154,7 @@ footer {
   position: absolute;
   top: 430px;
   background-color: #f9f9f9;
-  min-width: 125px;
+  width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
@@ -163,14 +163,15 @@ footer {
   position: absolute;
   top: 60px;
   background-color: #f9f9f9;
-  min-width: 125px;
+  width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
 
 .navbar .dropdown_item a {
   float: none;
   color: black;
-  padding: 16px;
+  padding: 12px;
+  font-size: 18px;
   text-decoration: none;
   display: block;
   text-align: left;
