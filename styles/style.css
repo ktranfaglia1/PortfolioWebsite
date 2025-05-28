@@ -82,7 +82,7 @@ p {
   font-family: Georgia;
   font-size: 22px;
   margin: 0 9%;
-  line-height: 2.3;
+  line-height: 2.2;
   color: black;
 }
 
@@ -446,26 +446,30 @@ li a:visited {
 }
 
 .slide7 {
-  background-image: url("../images/Laridae.png");
+  background-image: url("../images/Chess_bot.png");
 }
 
 .slide8 {
-  background-image: url("../images/CarMart.png");
+  background-image: url("../images/Laridae.png");
 }
 
 .slide9 {
-  background-image: url("../images/Interger_calculator.png");
+  background-image: url("../images/CarMart.png");
 }
 
 .slide10 {
-  background-image: url("../images/Query_parser.png");
+  background-image: url("../images/Interger_calculator.png");
 }
 
 .slide11 {
-  background-image: url("../images/Spell_checker.png");
+  background-image: url("../images/Query_parser.png");
 }
 
 .slide12 {
+  background-image: url("../images/Spell_checker.png");
+}
+
+.slide13 {
   background-image: url("../images/Hill_climb_decryption.png");
 }
 
