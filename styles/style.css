@@ -32,17 +32,17 @@ h2 {
 }
 
 h3 {
-  margin: 35px 0;
+  margin: 20px 0;
   font-family: Arial;
   font-weight: bold;
-  font-size: 38px;
+  font-size: 40px;
   color: black;
 }
 
 h4 {
   margin: 0;
   font-family: Georgia;
-  font-size: 38px;
+  font-size: 40px;
   line-height: 1.8;
   text-decoration: bold;
   color: black;
@@ -52,7 +52,7 @@ h4 {
 h5 {
   margin: 0;
   font-family: Georgia;
-  font-size: 34px;
+  font-size: 40px;
   line-height: 1.6;
   text-decoration: bold;
   color: black;
@@ -65,7 +65,7 @@ p {
 
 .p1 {
   font-family: Arial;
-  font-size: 24px;
+  font-size: 26px;
   line-height: 1.8;
   color: black;
 }
@@ -249,11 +249,13 @@ footer {
 }
 
 .github {
+  margin: 1px;
   width: 33px;
   height: auto;
 }
 
 .linkedin {
+  margin: 1px;
   width: 60px;
   height: auto;
 }
@@ -325,7 +327,7 @@ footer {
   align-items: center;
   justify-content: center;
   font-family: Arial;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 1.8;
   margin-left: 20px;
   color: black;
@@ -373,8 +375,8 @@ li a:visited {
   color: black;
 }
 
-.portfolio_background {
-  background-image: url("../images/Portfolio_background.jpg");
+.project_background {
+  background-image: url("../images/Project_background.jpg");
   background-size: cover;
 }
 
