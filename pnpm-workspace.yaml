@@ -1,0 +1,5 @@
+# eslint-plugin-jsx-a11y works with ESLint 10 (eslint-plugin-astro depends on it
+# there) but its declared peer range has not been updated yet.
+peerDependencyRules:
+  allowedVersions:
+    eslint-plugin-jsx-a11y>eslint: "10"
