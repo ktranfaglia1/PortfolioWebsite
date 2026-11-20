@@ -5,6 +5,9 @@ import "../styles/global.css";
 import Footer from "../components/layout/Footer.astro";
 import Header from "../components/layout/Header.astro";
 import { formatTitle } from "../lib/seo";
+import { buildPaletteItems } from "../lib/palette";
+import { getPage, getProjectsWithPages } from "../lib/content";
+import { site } from "../site.config";
 
 interface Props {
   /** Page title; " | Kyle Tranfaglia" is appended unless it already names Kyle. */
@@ -15,6 +18,23 @@ interface Props {
 }
 
 const { title, description, noindex = false } = Astro.props;
+
+const otherPage = await getPage("experience-other");
+const paletteItems = buildPaletteItems({
+  nav: site.nav,
+  extraPages: [
+    { label: otherPage.heading, href: "/experience/other", hint: "Experience" },
+  ],
+  projects: (await getProjectsWithPages()).map((p) => ({
+    id: p.id,
+    title: p.data.title,
+    stack: p.data.stack,
+  })),
+  email: site.email,
+  resume: site.files.resume,
+  transcript: site.files.transcript,
+  socials: site.socials,
+});
 ---
 
 <!doctype html>
@@ -45,6 +65,10 @@ const { title, description, noindex = false } = Astro.props;
           // Storage unavailable (private mode, blocked site data): use the OS setting.
         }
         document.documentElement.dataset.theme = theme;
+        // Scroll reveals only when motion is OK (see src/scripts/reveal.ts).
+        if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          document.documentElement.classList.add("reveal");
+        }
       })();
     </script>
   </head>
@@ -60,5 +84,22 @@ const { title, description, noindex = false } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <script
+      type="application/json"
+      id="palette-data"
+      set:html={JSON.stringify(paletteItems).replaceAll("<", "\\u003c")}
+    />
+    <script>
+      import { site } from "../site.config";
+      import { initCommandPalette } from "../scripts/command-palette";
+      import { initEasterEgg } from "../scripts/easter-egg";
+      import { initReveal } from "../scripts/reveal";
+      import { initSpotlight } from "../scripts/spotlight";
+
+      initCommandPalette();
+      initSpotlight();
+      initReveal();
+      initEasterEgg(site.repo);
+    </script>
   </body>
 </html>

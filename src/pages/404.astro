@@ -19,5 +19,15 @@ const page = await getPage("not-found");
     <Button href="/projects" variant="secondary">
       Browse projects <ArrowRight size={16} aria-hidden="true" />
     </Button>
+    <button
+      type="button"
+      data-palette-trigger
+      class="inline-flex h-10 items-center gap-2 rounded-lg px-3 text-sm text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
+    >
+      Or search
+      <kbd class="rounded-md border border-line bg-surface-2 px-1.5 font-mono text-[11px] leading-5 text-fg-subtle">
+        <span data-shortcut-mod>⌘</span>K
+      </kbd>
+    </button>
   </PageHeader>
 </BaseLayout>

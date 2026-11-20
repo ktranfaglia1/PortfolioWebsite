@@ -17,8 +17,16 @@ export const site = {
     github: "https://github.com/ktranfaglia1",
     linkedin: "https://www.linkedin.com/in/kyletranfaglia",
   },
-  /** GitHub username for the build-time activity card (Phase 4). */
+  /** GitHub username for the build-time activity card. */
   githubUser: "ktranfaglia1",
+  /**
+   * Show the GitHub contribution heatmap on the home page (needs GITHUB_TOKEN
+   * at build time). Off for now: most recent work (Pitchfire) isn't on GitHub,
+   * so the public graph undersells it. Flip to true when it looks representative.
+   */
+  showGitHubActivity: false,
+  /** This site's source, linked from the console greeting. */
+  repo: "https://github.com/ktranfaglia1/PortfolioWebsite",
   files: {
     resume: "/resume/Kyle_Tranfaglia_Resume.pdf",
     transcript: "/resume/Kyle_Tranfaglia_Unofficial_Transcript.pdf",

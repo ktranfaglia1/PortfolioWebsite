@@ -1,6 +1,6 @@
 # Portfolio Redesign Plan
 
-> **Status: APPROVED · Phases 0–2 done · Phase 3 awaiting review ★.** Deploy approach (§7) is pending the server admin's answers.
+> **Status: APPROVED · Phases 0–4 done · Phase 5 next.** Deploy approach (§7) is pending the server admin's answers.
 > Branch: `redesign` · Legacy site preserved on `legacy` · Production: `main` → https://kyletranfaglia.top
 > Last updated: 2026-11-19
 
@@ -219,8 +219,11 @@ Each phase ends with a commit on `redesign` and a short review. ★ marks phases
 - Home bento, Projects + filter, project detail template, Experience, Other Experience, Resume, Contact, 404.
 - All responsive and accessible.
 
-**Phase 4: Interactivity**
-- ⌘K palette, GitHub activity, card spotlight/hover, View Transitions, scroll reveals, easter egg.
+**Phase 4: Interactivity** ✅
+- ⌘K palette (React + cmdk, **lazy-loaded on first open**: pages ship ~4 KB of JS up front).
+- GitHub activity heatmap (build-time GraphQL, needs `GITHUB_TOKEN`; **behind `showGitHubActivity`, off** because the public graph doesn't reflect recent work).
+- Card spotlight, scroll reveals (off for reduced motion and without JS), Konami-code accent easter egg + console greeting.
+- **Native cross-document View Transitions** (CSS only) instead of Astro's ClientRouter, so existing scripts keep working; unsupported browsers navigate normally.
 
 **Phase 5: SEO and quality**
 - Per-page meta, canonical URLs, generated OG/Twitter images.

@@ -12,6 +12,7 @@ import headshot from "../assets/images/profile/headshot.jpg";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/layout/Container.astro";
 import SkillTag from "../components/content/SkillTag.astro";
+import GitHubActivity from "../components/content/GitHubActivity.astro";
 import BentoCell from "../components/ui/BentoCell.astro";
 import BentoGrid from "../components/ui/BentoGrid.astro";
 import Button from "../components/ui/Button.astro";
@@ -96,7 +97,7 @@ const label =
       </h2>
       <BentoGrid>
         {now && (
-          <BentoCell cols={2} rows={2} padding="lg">
+          <BentoCell cols={2} rows={2} padding="lg" index={0}>
             <div class="flex items-start justify-between gap-4">
               <p class={label}>
                 <span
@@ -136,7 +137,12 @@ const label =
         )}
 
         {lead && (
-          <BentoCell cols={2} padding="none" href={`/projects/${lead.id}`}>
+          <BentoCell
+            cols={2}
+            padding="none"
+            href={`/projects/${lead.id}`}
+            index={1}
+          >
             {lead.data.cover && (
               <Image
                 src={lead.data.cover.src}
@@ -161,8 +167,8 @@ const label =
           </BentoCell>
         )}
 
-        {others.map((p) => (
-          <BentoCell href={`/projects/${p.id}`}>
+        {others.map((p, i) => (
+          <BentoCell href={`/projects/${p.id}`} index={2 + i}>
             <p class={label}>Project</p>
             <h3 class="mt-auto pt-6 font-semibold">{p.data.title}</h3>
             <p class="mt-1 line-clamp-3 text-sm text-fg-muted">
@@ -172,7 +178,7 @@ const label =
         ))}
 
         {education && (
-          <BentoCell cols={2}>
+          <BentoCell cols={2} index={4}>
             <p class={label}>
               <GraduationCap size={14} aria-hidden="true" /> Education
             </p>
@@ -193,14 +199,14 @@ const label =
           </BentoCell>
         )}
 
-        <BentoCell>
+        <BentoCell index={5}>
           <p class={label}>
             <MapPin size={14} aria-hidden="true" /> Based in
           </p>
           <p class="mt-auto pt-6 text-lg font-semibold">{site.location}</p>
         </BentoCell>
 
-        <BentoCell href={site.files.resume} class="group">
+        <BentoCell href={site.files.resume} class="group" index={6}>
           <p class={label}>
             <Download size={14} aria-hidden="true" /> Resume
           </p>
@@ -210,7 +216,7 @@ const label =
           </p>
         </BentoCell>
 
-        <BentoCell cols={3}>
+        <BentoCell cols={3} index={7}>
           <p class={label}>Stack</p>
           <ul class="mt-5 flex flex-wrap gap-2" aria-label="Core technologies">
             {stackHighlights.map((s) => (
@@ -227,13 +233,14 @@ const label =
           </a>
         </BentoCell>
 
-        <BentoCell href="/contact" class="bg-accent-subtle">
+        <BentoCell href="/contact" class="bg-accent-subtle" index={8}>
           <p class={label}>
             <Mail size={14} aria-hidden="true" /> Contact
           </p>
           <p class="mt-auto pt-6 text-lg font-semibold">Get in touch</p>
           <p class="text-sm text-fg-muted">{site.email}</p>
         </BentoCell>
+        <GitHubActivity index={9} />
       </BentoGrid>
 
       <div class="mt-8 flex justify-end">

@@ -1,5 +1,5 @@
 ---
-import { Menu, X } from "@lucide/astro";
+import { Menu, Search, X } from "@lucide/astro";
 import { site } from "../../site.config";
 import Container from "./Container.astro";
 import ThemeToggle from "./ThemeToggle.astro";
@@ -12,7 +12,10 @@ function isActive(href: string): boolean {
 }
 ---
 
-<header class="sticky top-0 z-40 border-b border-line bg-canvas/80 backdrop-blur-md supports-[backdrop-filter]:bg-canvas/70">
+<header
+  data-site-header
+  class="sticky top-0 z-40 border-b border-line bg-canvas/80 backdrop-blur-md supports-[backdrop-filter]:bg-canvas/70"
+>
   <Container class="flex h-16 items-center justify-between gap-4">
     <a
       href="/"
@@ -49,6 +52,21 @@ function isActive(href: string): boolean {
     </nav>
 
     <div class="flex items-center gap-1">
+      <button
+        type="button"
+        data-palette-trigger
+        aria-keyshortcuts="Meta+K Control+K"
+        class="inline-flex h-9 items-center gap-2 rounded-lg px-2.5 text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg lg:border lg:border-line lg:pr-1.5"
+      >
+        <Search size={18} aria-hidden="true" />
+        <span class="sr-only">Search and commands</span>
+        <kbd
+          aria-hidden="true"
+          class="hidden rounded-md border border-line bg-surface-2 px-1.5 font-mono text-[11px] leading-5 text-fg-subtle lg:inline"
+        >
+          <span data-shortcut-mod>⌘</span>K
+        </kbd>
+      </button>
       <ThemeToggle />
       <button
         type="button"

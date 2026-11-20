@@ -23,10 +23,13 @@
   --fg-muted: oklch(0.76 0.008 260);
   --fg-subtle: oklch(0.66 0.01 260);
 
-  /* Accent: one color, used sparingly (links, focus, highlights) */
-  --accent: oklch(0.78 0.13 295);
-  --accent-fg: oklch(0.18 0.04 295);
-  --accent-subtle: oklch(0.78 0.13 295 / 0.14);
+  /* Accent: one color, used sparingly (links, focus, highlights).
+     The hue is a variable so the easter egg can rotate it. */
+  --accent-hue: 295;
+  --accent: oklch(0.78 0.13 var(--accent-hue));
+  --accent-fg: oklch(0.18 0.04 var(--accent-hue));
+  --accent-subtle: oklch(0.78 0.13 var(--accent-hue) / 0.14);
+  --spotlight: oklch(0.78 0.13 var(--accent-hue) / 0.08);
 
   --ring: var(--accent);
   --shadow-card:
@@ -46,9 +49,10 @@
   --fg-muted: oklch(0.42 0.01 260);
   --fg-subtle: oklch(0.5 0.01 260);
 
-  --accent: oklch(0.5 0.2 292);
-  --accent-fg: oklch(0.99 0.01 292);
-  --accent-subtle: oklch(0.5 0.2 292 / 0.1);
+  --accent: oklch(0.5 0.2 var(--accent-hue));
+  --accent-fg: oklch(0.99 0.01 var(--accent-hue));
+  --accent-subtle: oklch(0.5 0.2 var(--accent-hue) / 0.1);
+  --spotlight: oklch(0.5 0.2 var(--accent-hue) / 0.06);
 
   --shadow-card:
     0 1px 2px 0 oklch(0 0 0 / 0.04), 0 8px 24px -16px oklch(0 0 0 / 0.18);
@@ -172,6 +176,48 @@
   }
   .prose code {
     @apply rounded bg-surface-2 px-1.5 py-0.5 font-mono text-[0.875em] text-fg;
+  }
+}
+
+/* ==========================================================================
+   Interaction (Phase 4)
+   ========================================================================== */
+
+/* Cursor spotlight on cards (src/scripts/spotlight.ts sets the position). */
+[data-spotlight]:hover {
+  background-image: radial-gradient(
+    28rem circle at var(--spot-x, 50%) var(--spot-y, 50%),
+    var(--spotlight),
+    transparent 60%
+  );
+}
+
+/* Scroll reveal: only hidden when <html class="reveal"> (JS on, motion OK). */
+.reveal [data-reveal]:not(.is-revealed) {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.reveal [data-reveal] {
+  transition:
+    opacity 600ms var(--ease-snappy),
+    transform 600ms var(--ease-snappy);
+  transition-delay: calc(var(--reveal-index, 0) * 60ms);
+}
+
+/* Cross-document page transitions (no JS router). Browsers without support
+   just navigate normally. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 180ms;
+    animation-timing-function: var(--ease-snappy);
+  }
+  /* The header stays put while the page content cross-fades. */
+  header[data-site-header] {
+    view-transition-name: site-header;
   }
 }
 

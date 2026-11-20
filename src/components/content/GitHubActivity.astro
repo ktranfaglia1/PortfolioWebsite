@@ -1,0 +1,58 @@
+---
+import { github } from "../../icons/brands";
+import { getContributionCalendar, type Level } from "../../lib/github";
+import { site } from "../../site.config";
+import BentoCell from "../ui/BentoCell.astro";
+import BrandIcon from "../ui/BrandIcon.astro";
+
+interface Props {
+  index?: number;
+}
+
+const { index = 0 } = Astro.props;
+const calendar = site.showGitHubActivity
+  ? await getContributionCalendar(site.githubUser)
+  : null;
+
+// Literal classes so Tailwind generates them.
+const levelClass: Record<Level, string> = {
+  0: "bg-surface-2",
+  1: "bg-accent/25",
+  2: "bg-accent/50",
+  3: "bg-accent/75",
+  4: "bg-accent",
+};
+const summary = calendar
+  ? `${calendar.total.toLocaleString("en-US")} contributions in the last year`
+  : "";
+---
+
+{calendar && (
+  <BentoCell cols={4} index={index} href={site.socials.github} external>
+    <div class="flex items-center justify-between gap-4">
+      <p class="flex items-center gap-2 font-mono text-xs tracking-widest text-fg-subtle uppercase">
+        <BrandIcon icon={github} size={14} /> GitHub activity
+      </p>
+      <p class="text-sm text-fg-muted">{summary}</p>
+    </div>
+    <!-- Decorative: the summary above carries the information. Narrow screens
+         clip the oldest weeks on the left and keep the most recent. -->
+    <div class="mt-5 flex justify-end overflow-hidden" aria-hidden="true">
+      <div class="flex gap-[3px]">
+        {calendar.weeks.map((week) => (
+          <div class="flex flex-col gap-[3px]">
+            {week.map((day) => (
+              <span
+                class:list={[
+                  "size-[11px] rounded-[3px]",
+                  levelClass[day.level],
+                ]}
+                title={`${day.count} on ${day.date}`}
+              />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </BentoCell>
+)}

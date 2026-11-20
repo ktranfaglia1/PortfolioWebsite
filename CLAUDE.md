@@ -27,6 +27,8 @@ Node 26 (`nvm use`), pnpm. **See PLAN.md** for all decisions, the phase plan, an
 - New routes get added to `tests/e2e/routes.ts` (case studies are picked up automatically).
 - Whitespace between an `{expression}` and a following element can be dropped by the Astro compiler, and Prettier rewrites `{" "}` back to a plain space. Put separators inside a string expression instead: `<span>{` · ${org}`}</span>`.
 - Design tokens live in `src/styles/global.css`. Tailwind's default palette is disabled, so only semantic colors exist (`bg-canvas`, `bg-surface`, `text-fg-muted`, `border-line`, `bg-accent`, ...). Review components on `/styleguide` (noindex, not in the sitemap).
+- Interaction hooks: `data-reveal` (scroll fade-in; `Card reveal={n}` / `BentoCell index={n}` stagger), `data-spotlight` (cursor glow), `data-palette-trigger` (opens ⌘K). Palette items come from `src/lib/palette.ts`; keep long text out of `keywords` (cmdk's fuzzy match makes it match everything).
+- Accessibility tests run axe with reduced motion so reveal-hidden content is still checked.
 - Theme: follows the OS setting until the toggle saves a choice (dark if no OS preference); `<html data-theme>` is set before paint by the inline script in `BaseLayout.astro`; changes go through `src/scripts/theme.ts`.
 
 ## Guardrails
@@ -34,6 +36,7 @@ Node 26 (`nvm use`), pnpm. **See PLAN.md** for all decisions, the phase plan, an
 - Pitchfire: no outbound link while `showLink: false`; never name the acquiring LLC.
 - No phone number on web pages. Don't commit secrets or `*:Zone.Identifier` files.
 - The build must stay a plain static `dist/`. When routes change, update the redirects and the files in `deploy/` (see PLAN.md §7).
+- `GITHUB_TOKEN` (optional, build-time) feeds the GitHub heatmap; without it the card is skipped and the build still succeeds. Never commit a token.
 - Pinned versions: TypeScript stays on 6.0.x until `astro check` and typescript-eslint support 7. `pnpm-workspace.yaml` allows eslint-plugin-jsx-a11y's outdated ESLint peer range.
 
 ## Workflow

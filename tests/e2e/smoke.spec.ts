@@ -23,6 +23,9 @@ for (const route of routes) {
     for (const theme of themes) {
       test(`has no WCAG 2.2 AA violations (${theme})`, async ({ page }) => {
         await useTheme(page, theme);
+        // Reduced motion disables scroll reveals, so every element is visible
+        // and gets contrast-checked (axe skips invisible elements).
+        await page.emulateMedia({ reducedMotion: "reduce" });
         await page.goto(route);
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         const results = await new AxeBuilder({ page })
