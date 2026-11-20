@@ -1,0 +1,28 @@
+---
+/** Review-only banner on the design prototypes, linking A ↔ B. */
+interface Props {
+  current: "a" | "b";
+}
+const { current } = Astro.props;
+const options = [
+  { id: "a", label: "A · Editorial" },
+  { id: "b", label: "B · Commit log" },
+] as const;
+---
+
+<div class="border-b border-line bg-surface">
+  <div class="mx-auto flex max-w-(--container-max) flex-wrap items-center gap-x-4 gap-y-2 px-(--gutter) py-2 font-mono text-xs text-fg-subtle">
+    <span>Design prototype (not indexed)</span>
+    <nav aria-label="Prototypes" class="flex gap-2">
+      {options.map((o) => (
+        <a
+          href={`/lab/${o.id}`}
+          aria-current={o.id === current ? "page" : undefined}
+          class="rounded-full border border-line px-2.5 py-0.5 hover:text-fg aria-[current=page]:border-accent aria-[current=page]:text-accent"
+        >
+          {o.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</div>

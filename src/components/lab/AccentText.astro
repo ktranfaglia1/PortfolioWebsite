@@ -1,0 +1,23 @@
+---
+/**
+ * Renders headline text where *asterisk-wrapped* phrases use the serif italic
+ * accent (Instrument Serif). Copy comes from content files.
+ */
+import { splitAccent } from "../../lib/lab";
+
+interface Props {
+  text: string;
+}
+
+const runs = splitAccent(Astro.props.text);
+---
+
+{runs.map((run) =>
+  run.accent ? (
+    <em class="font-serif text-[1.12em] leading-none font-normal tracking-normal italic">
+      {run.text}
+    </em>
+  ) : (
+    <Fragment>{run.text}</Fragment>
+  ),
+)}

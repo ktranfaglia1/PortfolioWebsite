@@ -1,0 +1,385 @@
+---
+/**
+ * Phase 5.5 prototype A: "Editorial". Wide asymmetric hero with a warm glow,
+ * numbered sections, Casebook-style case-study teasers with outcome strips.
+ * Real content throughout; noindex.
+ */
+import "@fontsource/instrument-serif/latin-400-italic.css";
+import { ArrowRight, ArrowUpRight, Download, Mail } from "@lucide/astro";
+import { Image } from "astro:assets";
+import headshot from "../../assets/images/profile/headshot.jpg";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/layout/Container.astro";
+import AccentText from "../../components/lab/AccentText.astro";
+import HeroGlow from "../../components/lab/HeroGlow.astro";
+import LabSwitcher from "../../components/lab/LabSwitcher.astro";
+import Button from "../../components/ui/Button.astro";
+import { site } from "../../site.config";
+import {
+  getCurrentRole,
+  getEducation,
+  getExperience,
+  getPage,
+  getProjects,
+  getSkillGroups,
+} from "../../lib/content";
+import { formatDateRange } from "../../lib/dates";
+import { categoryLabels } from "../../lib/projects";
+
+const home = await getPage("home");
+const contact = await getPage("contact");
+const now = await getCurrentRole();
+const featured = await getProjects("featured");
+const caseStudies = featured.slice(0, 4);
+const moreWork = featured.slice(4);
+const [education] = await getEducation();
+const experience = [
+  ...(await getExperience("professional")),
+  ...(await getExperience("teaching")),
+  ...(await getExperience("leadership")),
+];
+const skillGroups = await getSkillGroups();
+
+const pad = (n: number) => String(n).padStart(2, "0");
+const year = (d: Date | "present" | undefined) =>
+  d === "present" || d === undefined ? "Now" : String(d.getFullYear());
+const yearRange = (start: Date, end: Date | "present" | undefined) =>
+  year(start) === year(end) ? year(start) : `${year(start)}–${year(end)}`;
+
+const sectionLabel =
+  "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
+---
+
+<BaseLayout
+  title="Prototype A · Editorial"
+  description="Design prototype A for the portfolio redesign."
+  noindex
+  wide
+>
+  <LabSwitcher current="a" />
+
+  <!-- Hero -->
+  <section class="relative isolate overflow-hidden">
+    <HeroGlow />
+    <Container class="pt-16 pb-14 sm:pt-24 xl:pt-32 xl:pb-24">
+      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          {now && (
+            <a
+              href="/experience#professional"
+              class="inline-flex items-center gap-2 text-sm text-fg-muted transition-colors hover:text-fg"
+            >
+              <span class="relative flex size-2" aria-hidden="true">
+                <span class="absolute inline-flex size-full animate-ping rounded-full bg-warm opacity-60 motion-reduce:hidden" />
+                <span class="relative inline-flex size-2 rounded-full bg-warm" />
+              </span>
+              {`${now.data.role} at ${now.data.org}`}
+            </a>
+          )}
+          <h1 class="mt-6 text-[clamp(3.25rem,1rem+6vw,8rem)] leading-[0.9] font-semibold tracking-[-0.045em]">
+            {home.heading}
+          </h1>
+          {home.headline && (
+            <p class="mt-6 max-w-[22ch] text-[clamp(1.75rem,1rem+2.4vw,3.5rem)] leading-[1.05] font-medium tracking-[-0.02em] text-fg-muted">
+              <AccentText text={home.headline} />
+            </p>
+          )}
+          <div class="mt-10 flex flex-wrap gap-3">
+            <Button href="/projects" size="lg">
+              Selected work <ArrowRight size={18} aria-hidden="true" />
+            </Button>
+            <Button href={site.files.resume} variant="secondary" size="lg">
+              <Download size={18} aria-hidden="true" /> Resume
+              <span class="sr-only">(PDF)</span>
+            </Button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4">
+          <div class="relative mx-auto w-48 sm:w-56 lg:ml-auto lg:w-full lg:max-w-sm">
+            <div
+              aria-hidden="true"
+              class="absolute -inset-6 -z-10 rounded-[2.5rem] opacity-50 blur-2xl"
+              style="background: linear-gradient(135deg, var(--accent-subtle), color-mix(in oklch, var(--warm) 35%, transparent));"
+            ></div>
+            <Image
+              src={headshot}
+              alt={`Portrait of ${site.name}`}
+              widths={[240, 360, 480, 720]}
+              sizes="(min-width: 1024px) 24rem, 14rem"
+              loading="eager"
+              fetchpriority="high"
+              class="aspect-[4/5] w-full rounded-[2rem] object-cover"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Fact rail -->
+      <dl class="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 xl:mt-20 xl:grid-cols-4">
+        {now && (
+          <div class="bg-canvas/80 p-5 backdrop-blur">
+            <dt class={sectionLabel}>Now</dt>
+            <dd class="mt-2 font-medium">{now.data.org}</dd>
+            <dd class="text-sm text-fg-muted">{now.data.role}</dd>
+          </div>
+        )}
+        {education && (
+          <div class="bg-canvas/80 p-5 backdrop-blur">
+            <dt class={sectionLabel}>Education</dt>
+            <dd class="mt-2 font-medium">
+              {education.data.degrees
+                .map((d) => d.name.replace("B.S. ", ""))
+                .join(" & ")}
+            </dd>
+            <dd class="text-sm text-fg-muted">
+              {`${education.data.school} · ${education.data.distinction}`}
+            </dd>
+          </div>
+        )}
+        <div class="bg-canvas/80 p-5 backdrop-blur">
+          <dt class={sectionLabel}>Based in</dt>
+          <dd class="mt-2 font-medium">{site.location}</dd>
+        </div>
+        <div class="bg-canvas/80 p-5 backdrop-blur">
+          <dt class={sectionLabel}>Focus</dt>
+          <dd class="mt-2 font-medium">{site.headline}</dd>
+          <dd class="text-sm text-fg-muted">{site.tagline}</dd>
+        </div>
+      </dl>
+    </Container>
+  </section>
+
+  <!-- 01 About -->
+  <section aria-labelledby="a-about" class="border-t border-line">
+    <Container class="grid gap-8 py-20 lg:grid-cols-12 xl:py-28">
+      <div class="lg:col-span-3">
+        <p class={sectionLabel} aria-hidden="true">
+          01
+        </p>
+        <h2 id="a-about" class="mt-2 text-2xl font-semibold">
+          About
+        </h2>
+      </div>
+      <div class="space-y-6 lg:col-span-8 xl:col-span-7">
+        {home.about.map((para, i) => (
+          <p
+            class:list={[
+              i === 0
+                ? "text-[clamp(1.375rem,1rem+1vw,2rem)] leading-snug font-medium tracking-tight text-fg"
+                : "max-w-[68ch] text-lg leading-relaxed text-fg-muted",
+            ]}
+          >
+            {para}
+          </p>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- 02 Selected work -->
+  <section aria-labelledby="a-work" class="border-t border-line">
+    <Container class="py-20 xl:py-28">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p class={sectionLabel} aria-hidden="true">
+            02
+          </p>
+          <h2 id="a-work" class="mt-2 text-2xl font-semibold">
+            Selected work
+          </h2>
+        </div>
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline"
+        >
+          All projects <ArrowRight size={14} aria-hidden="true" />
+        </a>
+      </div>
+
+      <ol class="mt-12 divide-y divide-line border-y border-line">
+        {caseStudies.map((p, i) => (
+          <li class="group relative grid gap-8 py-12 lg:grid-cols-12 lg:gap-10 xl:py-16">
+            <div class="lg:col-span-7 xl:col-span-6">
+              <p class="flex items-center gap-3 font-mono text-xs text-fg-subtle">
+                <span class="text-accent">{pad(i + 1)}</span>
+                <span>
+                  {p.data.categories.map((c) => categoryLabels[c]).join(" · ")}
+                </span>
+              </p>
+              <h3 class="mt-4 text-[clamp(2rem,1.2rem+2.6vw,3.75rem)] leading-[1] font-semibold tracking-[-0.03em]">
+                <a
+                  href={`/projects/${p.id}`}
+                  class="after:absolute after:inset-0 group-hover:text-accent"
+                >
+                  {p.data.title}
+                </a>
+              </h3>
+              <p class="mt-4 max-w-[52ch] text-lg text-fg-muted">
+                {p.data.summary}
+              </p>
+              <p class="mt-4 font-mono text-xs text-fg-subtle">
+                {[p.data.context, formatDateRange(p.data.start, p.data.end)]
+                  .filter(Boolean)
+                  .join(" · ")}
+              </p>
+              {p.data.outcomes.length > 0 && (
+                <dl class="mt-8 grid max-w-xl grid-cols-3 gap-6 border-t border-line pt-6">
+                  {p.data.outcomes.map((o) => (
+                    <div>
+                      <dt class="sr-only">{o.label}</dt>
+                      <dd class="text-[clamp(1.5rem,1rem+1.2vw,2.25rem)] leading-none font-semibold tracking-tight">
+                        {o.value}
+                      </dd>
+                      <dd
+                        class="mt-2 text-xs leading-snug text-fg-subtle"
+                        aria-hidden="true"
+                      >
+                        {o.label}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+            </div>
+            <div class="lg:col-span-5 xl:col-span-6">
+              {p.data.cover && (
+                <Image
+                  src={p.data.cover.src}
+                  alt=""
+                  widths={[480, 720, 960, 1280]}
+                  sizes="(min-width: 1280px) 46vw, (min-width: 1024px) 40vw, 100vw"
+                  quality={70}
+                  class="aspect-[16/10] w-full rounded-2xl border border-line object-cover object-top transition-transform duration-500 ease-snappy group-hover:scale-[1.015] motion-reduce:transition-none"
+                />
+              )}
+            </div>
+            <ArrowUpRight
+              size={22}
+              aria-hidden="true"
+              class="absolute top-12 right-0 hidden text-fg-subtle transition-colors group-hover:text-accent lg:block xl:top-16"
+            />
+          </li>
+        ))}
+      </ol>
+
+      {moreWork.length > 0 && (
+        <ul class="mt-10 grid gap-6 sm:grid-cols-3">
+          {moreWork.map((p, i) => (
+            <li class="group relative">
+              <p class="font-mono text-xs text-accent">
+                {pad(caseStudies.length + i + 1)}
+              </p>
+              <h3 class="mt-2 text-xl font-semibold group-hover:text-accent">
+                <a
+                  href={`/projects/${p.id}`}
+                  class="after:absolute after:inset-0"
+                >
+                  {p.data.title}
+                </a>
+              </h3>
+              <p class="mt-1 line-clamp-2 text-sm text-fg-muted">
+                {p.data.summary}
+              </p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Container>
+  </section>
+
+  <!-- 03 Experience -->
+  <section aria-labelledby="a-exp" class="border-t border-line">
+    <Container class="grid gap-8 py-20 lg:grid-cols-12 xl:py-28">
+      <div class="lg:col-span-3">
+        <p class={sectionLabel} aria-hidden="true">
+          03
+        </p>
+        <h2 id="a-exp" class="mt-2 text-2xl font-semibold">
+          Experience
+        </h2>
+        <a
+          href="/experience"
+          class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline"
+        >
+          Full history <ArrowRight size={14} aria-hidden="true" />
+        </a>
+      </div>
+      <ol class="divide-y divide-line lg:col-span-9">
+        {experience.map((e) => (
+          <li class="grid gap-1 py-5 sm:grid-cols-[7rem_1fr] sm:gap-8 xl:grid-cols-[9rem_1fr_1fr]">
+            <p class="font-mono text-sm text-fg-subtle">
+              {yearRange(e.data.start, e.data.end)}
+            </p>
+            <p>
+              <span class="font-medium text-fg">{e.data.role}</span>
+              <span class="block text-fg-muted">{e.data.org}</span>
+            </p>
+            <p class="hidden text-sm text-fg-muted xl:block">
+              {e.data.summary}
+            </p>
+          </li>
+        ))}
+      </ol>
+    </Container>
+  </section>
+
+  <!-- 04 Toolkit -->
+  <section aria-labelledby="a-tools" class="border-t border-line">
+    <Container class="grid gap-8 py-20 lg:grid-cols-12 xl:py-28">
+      <div class="lg:col-span-3">
+        <p class={sectionLabel} aria-hidden="true">
+          04
+        </p>
+        <h2 id="a-tools" class="mt-2 text-2xl font-semibold">
+          Toolkit
+        </h2>
+      </div>
+      <div class="grid gap-10 sm:grid-cols-3 lg:col-span-9 xl:grid-cols-5">
+        {skillGroups.map((g) => (
+          <div>
+            <h3 class="font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
+              {g.data.label}
+            </h3>
+            <ul class="mt-4 space-y-1.5 text-fg">
+              {g.data.items.map((s) => (
+                <li>{s.name}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </section>
+
+  <!-- 05 Contact -->
+  <section
+    aria-labelledby="a-contact"
+    class="relative isolate overflow-hidden border-t border-line"
+  >
+    <HeroGlow class="opacity-70" />
+    <Container class="py-24 xl:py-36">
+      <p class={sectionLabel} aria-hidden="true">
+        05
+      </p>
+      <h2
+        id="a-contact"
+        class="mt-4 max-w-[20ch] text-[clamp(2.25rem,1.1rem+4vw,5.75rem)] leading-[0.95] font-semibold tracking-[-0.04em]"
+      >
+        <AccentText text={contact.headline ?? contact.heading} />
+      </h2>
+      <p class="mt-6 max-w-[56ch] text-lg text-fg-muted">{contact.intro}</p>
+      <div class="mt-10 flex flex-wrap items-center gap-6">
+        <Button href="/contact" size="lg">
+          <Mail size={18} aria-hidden="true" /> Send a message
+        </Button>
+        <a
+          href={`mailto:${site.email}`}
+          class="font-mono text-sm text-fg-muted underline-offset-4 hover:text-fg hover:underline"
+        >
+          {site.email}
+        </a>
+      </div>
+    </Container>
+  </section>
+</BaseLayout>

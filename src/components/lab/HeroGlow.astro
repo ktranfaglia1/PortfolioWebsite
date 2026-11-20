@@ -1,0 +1,24 @@
+---
+/** Decorative violet + warm glow behind a hero. Purely visual. */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+---
+
+<div
+  aria-hidden="true"
+  class:list={[
+    "pointer-events-none absolute inset-0 -z-10 overflow-hidden",
+    className,
+  ]}
+>
+  <div
+    class="absolute -top-[20%] -left-[10%] h-[70%] w-[60%] rounded-full opacity-60 blur-3xl"
+    style="background: radial-gradient(closest-side, var(--accent-subtle), transparent 70%);"
+  ></div>
+  <div
+    class="absolute top-[10%] right-[-10%] h-[80%] w-[50%] rounded-full opacity-[0.22] blur-3xl"
+    style="background: radial-gradient(closest-side, var(--warm), transparent 70%);"
+  ></div>
+</div>

@@ -77,6 +77,11 @@ const projects = defineCollection({
         gallery: z.array(figure).default([]),
         /** Conferences, publications, awards. */
         recognition: z.array(z.string()).default([]),
+        /** Up to four headline figures for case-study teasers, e.g. { value: "13", label: "visualization algorithms" }. Facts only. */
+        outcomes: z
+          .array(z.object({ value: z.string(), label: z.string() }))
+          .max(4)
+          .default([]),
         /** Lower numbers sort first within a tier; ties sort by date. */
         order: z.number().optional(),
         draft: z.boolean().default(false),
@@ -210,6 +215,10 @@ const pages = defineCollection({
     description: z.string().max(160),
     heading: z.string(),
     intro: z.string(),
+    /** Optional display headline; wrap one phrase in *asterisks* for the serif-italic accent. */
+    headline: z.string().optional(),
+    /** Optional long-form paragraphs (the home page About section). */
+    about: z.array(z.string()).default([]),
   }),
 });
 

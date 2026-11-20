@@ -32,6 +32,13 @@
   --spotlight: oklch(0.78 0.13 var(--accent-hue) / 0.08);
 
   --ring: var(--accent);
+
+  /* Layout: page container width and side gutter (see Container.astro). */
+  --container-max: 72rem;
+  --gutter: 1rem;
+
+  /* Warm secondary glow, used only in decorative gradients. */
+  --warm: oklch(0.8 0.14 62);
   --shadow-card:
     0 1px 0 0 oklch(1 0 0 / 0.04) inset, 0 8px 24px -12px oklch(0 0 0 / 0.6);
 }
@@ -58,6 +65,25 @@
     0 1px 2px 0 oklch(0 0 0 / 0.04), 0 8px 24px -16px oklch(0 0 0 / 0.18);
 }
 
+@media (min-width: 640px) {
+  :root {
+    --gutter: 1.5rem;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+/* Wide layout: content grows to 110rem (1,760px) with fluid gutters. */
+:root[data-layout="wide"] {
+  --container-max: 110rem;
+  --gutter: clamp(1rem, 4vw, 4.5rem);
+}
+:root[data-theme="light"] {
+  --warm: oklch(0.72 0.15 55);
+}
+
 @theme inline {
   /* Only semantic colors exist; Tailwind's default palette is removed. */
   --color-*: initial;
@@ -72,6 +98,7 @@
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
   --color-accent-subtle: var(--accent-subtle);
+  --color-warm: var(--warm);
 
   --shadow-card: var(--shadow-card);
 }
@@ -80,6 +107,7 @@
   /* Typography */
   --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", monospace;
+  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
 
   --text-display: clamp(2.5rem, 1.6rem + 4.5vw, 4.75rem);
   --text-display--line-height: 1.02;

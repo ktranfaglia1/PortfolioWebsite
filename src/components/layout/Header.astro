@@ -19,20 +19,15 @@ function isActive(href: string): boolean {
   <Container class="flex h-16 items-center justify-between gap-4">
     <a
       href="/"
-      class="group flex items-center gap-2.5 rounded-md font-mono text-sm text-fg"
+      class="group rounded-md text-[0.9375rem] font-semibold tracking-tight text-fg"
     >
-      <!-- The accessible name comes from the sr-only text (no aria-label), so
-           it never conflicts with the visible wordmark (WCAG 2.5.3). -->
+      {site.name}
       <span
-        class="grid size-8 place-items-center rounded-lg border border-line bg-surface text-xs font-semibold text-accent transition-colors group-hover:border-line-strong"
+        class="text-accent transition-colors group-hover:text-fg"
         aria-hidden="true"
       >
-        KT
+        .
       </span>
-      <span class="hidden sm:inline" aria-hidden="true">
-        kyle.tranfaglia
-      </span>
-      <span class="sr-only">{site.name}, home</span>
     </a>
 
     <nav aria-label="Main" class="hidden md:block">

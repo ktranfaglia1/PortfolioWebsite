@@ -25,6 +25,8 @@ interface Props {
   ogImage?: string;
   /** Structured data (schema.org) for this page. */
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Use the wide layout container (redesign prototypes; R3 makes it the default). */
+  wide?: boolean;
 }
 
 const {
@@ -33,6 +35,7 @@ const {
   noindex = false,
   ogType = "website",
   jsonLd,
+  wide = false,
 } = Astro.props;
 
 const fullTitle = formatTitle(title);
@@ -63,7 +66,7 @@ const paletteItems = buildPaletteItems({
 ---
 
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="dark" data-layout={wide ? "wide" : undefined}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
