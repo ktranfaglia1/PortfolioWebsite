@@ -12,10 +12,19 @@ interface Props {
   level?: 2 | 3;
   /** Show the cover image (featured cards). */
   showCover?: boolean;
+  /** Above-the-fold card: eager, high-priority image and no scroll-reveal
+   *  fade, so it never delays Largest Contentful Paint. */
+  priority?: boolean;
   class?: string;
 }
 
-const { project, level = 3, showCover = true, class: className } = Astro.props;
+const {
+  project,
+  level = 3,
+  showCover = true,
+  priority = false,
+  class: className,
+} = Astro.props;
 const { title, summary, stack, cover, categories, start, end, context } =
   project.data;
 const Heading = `h${level}` as "h2" | "h3";
@@ -29,7 +38,7 @@ const Heading = `h${level}` as "h2" | "h3";
 <article
   data-project
   data-spotlight
-  data-reveal
+  data-reveal={priority ? undefined : ""}
   data-categories={categories.join(" ")}
   data-stack={JSON.stringify(stack)}
   class:list={[
@@ -46,6 +55,9 @@ const Heading = `h${level}` as "h2" | "h3";
         alt={cover.alt}
         widths={[480, 720, 960, 1280]}
         sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw"
+        quality={70}
+        loading={priority ? "eager" : "lazy"}
+        fetchpriority={priority ? "high" : "auto"}
         class="aspect-video w-full border-b border-line object-cover object-top"
       />
     ) : (

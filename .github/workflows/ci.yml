@@ -41,3 +41,17 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 7
+
+      # Lighthouse (mobile) against the build from `pnpm verify`. Report only:
+      # it never fails the build. Download the artifact to read the reports.
+      - name: Lighthouse
+        if: success()
+        continue-on-error: true
+        run: pnpm lighthouse
+
+      - uses: actions/upload-artifact@v7
+        if: success()
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci/
+          retention-days: 14

@@ -2,9 +2,13 @@
 import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
 import "../styles/global.css";
+// Preloaded so text renders in the final font on first paint (no reflow/CLS).
+import geistLatin from "@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url";
+import geistMonoLatin from "@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2?url";
 import Footer from "../components/layout/Footer.astro";
 import Header from "../components/layout/Header.astro";
-import { formatTitle } from "../lib/seo";
+import { canonicalUrl, formatTitle } from "../lib/seo";
+import { OG_SIZE, ogImagePath } from "../lib/og";
 import { buildPaletteItems } from "../lib/palette";
 import { getPage, getProjectsWithPages } from "../lib/content";
 import { site } from "../site.config";
@@ -15,9 +19,30 @@ interface Props {
   description: string;
   /** Keep the page out of search results (e.g. the style guide). */
   noindex?: boolean;
+  /** Open Graph type: "article" for case studies. */
+  ogType?: "website" | "article";
+  /** Path to the share image; defaults to the generated /og/<route>.png. */
+  ogImage?: string;
+  /** Structured data (schema.org) for this page. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, noindex = false } = Astro.props;
+const {
+  title,
+  description,
+  noindex = false,
+  ogType = "website",
+  jsonLd,
+} = Astro.props;
+
+const fullTitle = formatTitle(title);
+const canonical = canonicalUrl(Astro.url.pathname, site.url);
+// Pages without their own card (404, style guide) share the home image.
+const hasOwnImage = !noindex;
+const ogImage = new URL(
+  Astro.props.ogImage ?? ogImagePath(hasOwnImage ? Astro.url.pathname : "/"),
+  site.url,
+).href;
 
 const otherPage = await getPage("experience-other");
 const paletteItems = buildPaletteItems({
@@ -42,11 +67,76 @@ const paletteItems = buildPaletteItems({
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <link rel="canonical" href={canonical} />
+    )}
+    <link
+      rel="preload"
+      href={geistLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href={geistMonoLatin}
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <meta name="generator" content={Astro.generator} />
+    <meta name="author" content={site.name} />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{formatTitle(title)}</title>
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta
+      name="theme-color"
+      content="#0b0c0f"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta
+      name="theme-color"
+      content="#fafafb"
+      media="(prefers-color-scheme: light)"
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph / Twitter (LinkedIn, Slack, iMessage, X previews) -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content={String(OG_SIZE.width)} />
+    <meta property="og:image:height" content={String(OG_SIZE.height)} />
+    <meta property="og:image:alt" content={`${fullTitle}: ${site.headline}`} />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {jsonLd && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(jsonLd).replaceAll("<", "\\u003c")}
+      />
+    )}
+    {site.cloudflareAnalyticsToken && (
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon={JSON.stringify({
+          token: site.cloudflareAnalyticsToken,
+        })}
+      />
+    )}
 
     <!--
       Apply the theme before first paint (no flash). A choice saved by the

@@ -9,6 +9,7 @@ export default defineConfig([
   {
     ignores: [
       "dist/",
+      ".lighthouseci/",
       ".astro/",
       "node_modules/",
       "playwright-report/",

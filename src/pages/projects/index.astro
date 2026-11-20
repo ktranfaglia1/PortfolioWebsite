@@ -27,11 +27,18 @@ const chip =
 <BaseLayout title={page.title} description={page.description}>
   <PageHeader heading={page.heading} intro={page.intro} />
 
-  <!-- Filter bar: hidden until the script runs, so no-JS visitors see everything. -->
+  <!-- Filter bar: visible from first paint (no layout shift when the script
+       runs); hidden for no-JS visitors, who see every project. -->
+  <noscript>
+    <style>
+      [data-filter] {
+        display: none !important;
+      }
+    </style>
+  </noscript>
   <Container>
     <div
       data-filter
-      hidden
       class="flex flex-col gap-4 rounded-2xl border border-line bg-surface p-4 sm:flex-row sm:items-center sm:justify-between"
     >
       <div
@@ -97,8 +104,8 @@ const chip =
     data-filter-section
   >
     <div class="grid gap-5 md:grid-cols-2">
-      {featured.map((p) => (
-        <ProjectCard project={p} />
+      {featured.map((p, i) => (
+        <ProjectCard project={p} priority={i === 0} />
       ))}
     </div>
   </Section>
@@ -256,7 +263,6 @@ const chip =
         update();
       });
 
-    bar.hidden = false;
     render();
   }
 </script>

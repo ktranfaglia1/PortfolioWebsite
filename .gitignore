@@ -33,3 +33,7 @@ reference/
 test-results/
 playwright-report/
 coverage/
+.lighthouseci/
+
+# Lighthouse under WSL creates Chrome profiles at a literal Windows path
+/C:*

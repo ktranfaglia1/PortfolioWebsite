@@ -4,11 +4,18 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import PageHeader from "../components/page/PageHeader.astro";
 import Button from "../components/ui/Button.astro";
 import { getPage } from "../lib/content";
+import { legacyRedirects } from "../lib/redirects";
 
 const page = await getPage("not-found");
 ---
 
 <BaseLayout title={page.title} description={page.description} noindex>
+  <!-- Forward old-site URLs (e.g. /projects.html) when the server serves this
+       page for them. Runs before paint; real 301s belong in the server config. -->
+  <script is:inline define:vars={{ redirects: legacyRedirects }}>
+    const to = redirects[location.pathname];
+    if (to) location.replace(to + location.search + location.hash);
+  </script>
   <PageHeader
     eyebrow="404"
     heading={page.heading}

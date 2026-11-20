@@ -7,7 +7,7 @@ import {
   Mail,
   MapPin,
 } from "@lucide/astro";
-import { Image } from "astro:assets";
+import { getImage, Image } from "astro:assets";
 import headshot from "../assets/images/profile/headshot.jpg";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/layout/Container.astro";
@@ -27,6 +27,7 @@ import {
   getSkillGroups,
 } from "../lib/content";
 import { formatDateRange } from "../lib/dates";
+import { personJsonLd } from "../lib/seo";
 
 const page = await getPage("home");
 const now = await getCurrentRole();
@@ -39,11 +40,32 @@ const stackHighlights = skillGroups.flatMap((g) =>
   g.data.items.filter((i) => i.icon).slice(0, 4),
 );
 
+const portrait = await getImage({ src: headshot, width: 400, format: "jpg" });
+const [locality = "", region = ""] = site.location
+  .split(",")
+  .map((s) => s.trim());
+const jsonLd = personJsonLd({
+  name: site.name,
+  url: site.url,
+  jobTitle: "Software Engineer",
+  description: `${site.headline}. ${site.tagline}.`,
+  email: site.email,
+  image: new URL(portrait.src, site.url).href,
+  sameAs: [site.socials.github, site.socials.linkedin],
+  locality,
+  region,
+  alumniOf: education?.data.school,
+  worksFor: now?.data.org,
+  knowsAbout: skillGroups.flatMap((g) =>
+    g.data.items.slice(0, 4).map((i) => i.name),
+  ),
+});
+
 const label =
   "font-mono text-xs tracking-widest text-fg-subtle uppercase flex items-center gap-2";
 ---
 
-<BaseLayout title={page.title} description={page.description}>
+<BaseLayout title={page.title} description={page.description} jsonLd={jsonLd}>
   <!-- Hero -->
   <Container class="pt-14 pb-12 sm:pt-24 sm:pb-16">
     <div class="flex flex-col-reverse gap-10 lg:flex-row lg:items-center lg:justify-between">

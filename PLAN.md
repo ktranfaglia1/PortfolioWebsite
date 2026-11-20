@@ -1,6 +1,6 @@
 # Portfolio Redesign Plan
 
-> **Status: APPROVED · Phases 0–4 done · Phase 5 next.** Deploy approach (§7) is pending the server admin's answers.
+> **Status: APPROVED · Phases 0–5 done · Phase 6 (content pass) next.** Deploy approach (§7) is pending the server admin's answers.
 > Branch: `redesign` · Legacy site preserved on `legacy` · Production: `main` → https://kyletranfaglia.top
 > Last updated: 2026-11-19
 
@@ -180,8 +180,11 @@ project?: reference to a project (e.g. City of Cambridge → cambridge-fema-tool
 
 **Fallback if the admin is hard to reach:** the GitHub Action `deploy` branch needs the smallest change on his side (a branch name) and nothing on the server has to change. It's also a good default because it doesn't depend on any of the unknowns.
 
-**Either way:**
-- Redirects from old URLs (§3) and cache headers: Astro's built-in redirects work anywhere; real 301s get added to his web-server config.
+**Either way (server requirements for DEPLOY.md):**
+- Serve `dist/` as-is with clean URLs: `/projects` → `dist/projects/index.html` **without** a trailing-slash redirect (nginx: `try_files $uri $uri/index.html =404;`). Canonicals and the sitemap use no trailing slash.
+- Serve `dist/404.html` with status 404 for unknown paths (it also forwards old `.html` URLs).
+- 301s from `src/lib/redirects.ts`: `/projects.html` → `/projects`, `/resume.html` → `/resume`, `/contact.html` → `/contact`, `/CarMart/*` → `/projects/carmart`.
+- Cache headers: `/_astro/*` is content-hashed (cache 1 year, immutable); HTML, `/og/*`, and PDFs short or revalidate.
 - Optional `GITHUB_TOKEN` (read-only) for the contribution heatmap: a build secret wherever the build runs. Without it, the build still succeeds and the heatmap is hidden.
 - Cloudflare: DNS and proxy stay as they are. Purge the cache once after cutover. Enable Web Analytics in the dashboard.
 - Rollback: redeploy the previous build, or as a last resort the `legacy` branch.
@@ -225,10 +228,11 @@ Each phase ends with a commit on `redesign` and a short review. ★ marks phases
 - Card spotlight, scroll reveals (off for reduced motion and without JS), Konami-code accent easter egg + console greeting.
 - **Native cross-document View Transitions** (CSS only) instead of Astro's ClientRouter, so existing scripts keep working; unsupported browsers navigate normally.
 
-**Phase 5: SEO and quality**
-- Per-page meta, canonical URLs, generated OG/Twitter images.
-- Sitemap, robots.txt, `Person` JSON-LD, redirects, Cloudflare Web Analytics.
-- Playwright + axe suite, Lighthouse CI, then fix anything below target.
+**Phase 5: SEO and quality** ✅
+- Canonical URLs (no trailing slash), OG/Twitter tags, build-time OG images (Satori → sharp) for every page, KT favicon set (`pnpm icons`).
+- Sitemap (public pages only), robots.txt, `Person` + `WebSite` JSON-LD on home, Cloudflare beacon (loads once the token is set).
+- Legacy URLs: static redirect pages under `/CarMart/`; root `.html` URLs forwarded by the 404 page (static files there would shadow clean URLs). Real 301s go in the server config.
+- Lighthouse CI (mobile, non-blocking in CI): Performance 97–100, Accessibility/Best Practices/SEO 100, CLS 0 on every page. LCP < 2s everywhere except `/projects` (≈2.4s simulated slow 4G; font preloads trade a little LCP for zero layout shift).
 
 **Phase 6: Final content pass**
 - Kyle supplies updated content and images (Pitchfire logo and screenshots, anything else marked `TODO(kyle)`).
