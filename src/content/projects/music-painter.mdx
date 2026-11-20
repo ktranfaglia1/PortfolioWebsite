@@ -4,7 +4,7 @@ summary: A desktop app that uses FFT to turn WAV files and live audio into a sin
 tier: featured
 order: 1
 categories: [software, research]
-stack: [Python, PySide/PyQt, PyAudio, sounddevice, NumPy, FFT]
+stack: [Python, PySide2, PyAudio, NumPy, SciPy, FFT]
 role: Developer & researcher
 team: 2
 context: Faculty-mentored research · COSC 390
@@ -34,10 +34,10 @@ I built it from scratch with a mathematics student, under the guidance of a facu
 
 ## Approach
 
-- Read audio from WAV files or live input through PyAudio and sounddevice.
+- Read audio from WAV files (SciPy) or live input and recordings (PyAudio).
 - Ran a Fast Fourier Transform over short chunks to get the dominant frequencies and spectral data for each slice of the clip.
 - Designed 13 original algorithms that map that data to shapes, color, and position, so the same song produces a distinct image in each style.
-- Wrapped it in a PySide/PyQt desktop app with controls for algorithm, chunk size, and background color, plus image export.
+- Wrapped it in a PySide2 desktop app with controls for algorithm, chunk size, and background color, plus render-while-playing, recording, image export, and printing.
 
 ## Outcome
 

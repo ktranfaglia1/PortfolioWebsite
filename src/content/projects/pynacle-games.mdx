@@ -1,6 +1,6 @@
 ---
 title: Pynacle Games
-summary: Six hand-coded, cross-platform Python games with AI solvers built on alpha-beta minimax, A* heuristics, and memoized iterative deepening.
+summary: "Six hand-coded, cross-platform Python games with AI opponents and solvers: alpha-beta minimax, A* search, and annealing-tuned heuristics."
 tier: featured
 order: 2
 categories: [software, ai-ml]
@@ -27,7 +27,10 @@ that explores how solvable the game is and what optimal play looks like.
 ## Approach
 
 - Hand-coded every game and its solver in Python, with no game engine.
-- Used alpha-beta minimax for the adversarial games, A\* with custom heuristics for the 15-puzzle, and memoized iterative deepening to keep search times practical.
+- Connect Four's Hard and Master bots use alpha-beta minimax with memoized positions, center-first move ordering, and search depth that grows as the game goes on (up to 6 plies).
+- The 15-puzzle solves any position with A\* and a Manhattan-distance heuristic.
+- 2048's AI scores moves on empty cells, monotonicity, merge potential, and smoothness, with weights tuned by grid search and then simulated annealing.
+- Tic-Tac-Toe has rule-based bots at three levels; Chess is two-player, built on python-chess.
 - Studied how UI and GUI design choices affect the player's experience, and kept each interface simple and consistent across games.
 - Packaged the games for Windows, Linux, and macOS, and built a website where people can download them and read documentation on the gameplay and the AI behind it.
 

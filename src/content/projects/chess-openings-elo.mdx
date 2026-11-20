@@ -1,6 +1,6 @@
 ---
 title: Chess Openings and Elo
-summary: An analysis of six million Lichess games on how Elo ratings and opening choices relate to game outcomes, with predictive models.
+summary: An analysis of 6.25 million Lichess games on how Elo ratings and opening choices relate to game outcomes, with predictive models.
 tier: featured
 order: 7
 categories: [data-science, research]
@@ -11,7 +11,7 @@ start: 2024-10-01
 end: 2024-12-01
 links:
   repo: https://github.com/ktranfaglia1/ChessAnalysis
-  paper: https://github.com/ktranfaglia1/ChessAnalysis
+  paper: https://github.com/ktranfaglia1/ChessAnalysis/blob/main/Tranfaglia_2024_ChessAnalysis.pdf
 cover:
   # TODO(kyle): replace the paper's title page with a chart from the analysis.
   src: ../../assets/images/projects/chess-openings-elo.png
@@ -31,6 +31,11 @@ cleaned and analyzed more than six million games from Lichess.org to find out.
 
 ## Findings
 
-Elo difference was by far the strongest predictor. Adding opening features improved
-accuracy only slightly, which points to the limits of Elo-based prediction and the need
-for more contextual data.
+- Elo difference was by far the strongest predictor of who wins. White's win rate climbs from
+  50% at even ratings to 93% with a 500-point edge, closely tracking the Elo formula.
+- A logistic regression on Elo features alone reached 64.9% accuracy, against a 50% baseline.
+- Adding openings, event type, and time control in a random forest did not help: it scored
+  60.2% (cross-validated). Those features added noise rather than signal.
+
+Better predictions would need context the game record doesn't capture, like recent form,
+move quality, and time pressure.

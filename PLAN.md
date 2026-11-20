@@ -248,8 +248,22 @@ Diagnosis:
   - Header: the full name replaces the KT chip and handle (KT stays as the favicon).
   - Headline: **"Software Engineer"** (decided 2026-11-20). Data science shows through the degree, the Data & ML category and the case studies.
 - **R2. Design direction ★.**
-  - Kyle wants a modern, less corporate look with subtle character and colour, in the vein of free developer portfolio templates he likes. Inspiration only; no copying of a specific template.
-  - Build two home-page prototypes on a noindex scratch route, screenshotted at 1,280, 1,440, 1,920, 2,560 and 390px. Kyle picks one.
+  - Kyle wants a modern, less corporate look with subtle character and colour. Reference: Folitox's free developer templates (inspiration only; no copying of a specific template, its layout or its assets).
+  - Shared by both prototypes:
+    - The violet accent stays, with a warm secondary glow (amber or ember) behind the hero.
+    - Display headlines with one serif-italic accent word.
+    - Numbered sections (01, 02, …).
+    - Fewer bordered boxes; hierarchy comes from layout, size and spacing.
+    - No heavy 3D or WebGL: the JS budget and Lighthouse targets still apply.
+  - **Prototype A: "Editorial."**
+    - A wide asymmetric hero with a warm glow.
+    - Numbered sections.
+    - Case-study teasers in the Casebook style: a typographic cover, an outcome strip of real figures, a link to a long-form page with a sticky table of contents.
+  - **Prototype B: "Commit log."**
+    - Experience drawn as a git branch graph: roles are commits on a coloured branch, and education merges in from its own branch.
+    - Skills shown as a contribution-style grid.
+    - Mono annotations, while staying readable for recruiters.
+  - Both live on a noindex scratch route (`/lab/a`, `/lab/b`), using real content, screenshotted at 1,280, 1,440, 1,920, 2,560 and 390px. Kyle picks one, or a mix; Casebook-style case-study pages (sticky table of contents, outcome strip) carry over to R4 whichever wins.
 - **R3. Layout system.**
   - Content widens to about 1,440–1,600px with fluid gutters, and type scales fluidly from 1,280 to 2,560px.
   - Body text stays about 70ch wide; the extra width goes to layout (multi-column grids, sticky side columns).
@@ -258,10 +272,44 @@ Diagnosis:
 - **R4. Apply.**
   - Update tokens, components and `/styleguide` first.
   - Then the pages in order: Home, Projects, Case study, Experience, Resume, Contact, 404.
-- **R5. Content depth.**
-  - Sources: GitHub (public repos: READMEs, languages, commit dates), the `legacy` branch, both resumes, and Kyle's LinkedIn export (Profile + Recommendations, in `reference/`).
+- **R5. Content depth and accuracy.**
+  - Sources:
+    - The repos, which now all have READMEs written from their code, papers and commit history (pushed 2026-11-20).
+    - The `legacy` branch.
+    - Both resumes.
+    - Kyle's LinkedIn export in `reference/`: About text, detailed experience, projects. The export includes Kyle's home address and birthday; never publish them.
   - Produce a gap list for each entry, then expanded copy. Anything inferred gets `TODO(kyle): confirm`.
-  - Add a short About narrative on the home page.
+  - Add a short About narrative on the home page, built on LinkedIn's "a software engineer who thinks in systems" framing.
+  - Expand Pitchfire from LinkedIn: the startup and investor workspaces and the engineering pillars (architecture, AI systems, reliability, connected workflows). No outbound link; never name the acquiring LLC.
+  - Expand the tutoring, teaching and hospitality entries from the LinkedIn descriptions:
+    - Math Emporium: more than 1,000 students.
+    - Calculus SI: course pass rate up more than 10%.
+    - Clubhouse at Baywood: about 200 weddings.
+  - **Factual corrections found while writing the READMEs** (fix early; they are errors, not style):
+    - Chess Openings: adding opening, event and time-control features *lowered* accuracy (random forest 60.2% cross-validated, against 64.9% for Elo-only logistic regression). Elo difference is the dominant predictor.
+    - Pynacle Games:
+      - Connect Four: alpha-beta minimax with memoization and phase-based depth (up to 4 plies on Hard, 6 on Master). Not iterative deepening.
+      - 15-puzzle: A\* with a Manhattan heuristic.
+      - 2048: a heuristic AI whose weights were tuned by grid search, then simulated annealing.
+      - Tic-Tac-Toe: rule-based bots.
+      - Chess: two-player on python-chess, no AI.
+    - Transformer Chess Bot:
+      - About 91% validation accuracy at predicting game *outcomes* (win/draw/loss), not 92% move prediction.
+      - Estimated playing strength about 400 Elo.
+      - It was the COSC 490 (Large Language Models) final project, with Dustin O'Brien.
+    - Music Painter:
+      - Built on PySide2, NumPy FFT, SciPy and PyAudio (no sounddevice).
+      - Co-authors: Luke Zolenski, and Dr. Don Spickler (faculty mentor).
+    - Sport Classification:
+      - The paper PDF is in the repo; link it directly.
+      - Team: Dustin O'Brien, Dylan Johnson; advisor Dr. Kyle Teller.
+      - 332 participants; free-text answers parsed with gpt-4o-mini through LangChain.
+    - Celite: team Timothy McKirgan and Dustin O'Brien; directed by Dr. Michael Bardzell.
+    - Archive dates:
+      - spell checker: Nov 2022 (COSC 120)
+      - arbitrary-length integer calculator: Oct 2023 (COSC 320)
+      - hill-climb decryption: Nov 2023 (COSC 320)
+      - parallel query parser: Nov–Dec 2024 (COSC 420, five-person team)
 - **R6. Verify.** `pnpm verify`, the screenshot checks, Lighthouse, and axe in both themes.
 
 **Phase 6: Final content pass** (on hold until 5.5 is done; shrinks to whatever R5 doesn't cover)
