@@ -1,15 +1,17 @@
 ---
+/**
+ * Contribution heatmap from the GitHub API (build-time, needs GITHUB_TOKEN).
+ * Renders nothing when the data isn't available.
+ */
 import { github } from "../../icons/brands";
 import { getContributionCalendar, type Level } from "../../lib/github";
 import { site } from "../../site.config";
-import BentoCell from "../ui/BentoCell.astro";
 import BrandIcon from "../ui/BrandIcon.astro";
 
 interface Props {
-  index?: number;
+  class?: string;
 }
 
-const { index = 0 } = Astro.props;
 const calendar = site.showGitHubActivity
   ? await getContributionCalendar(site.githubUser)
   : null;
@@ -28,12 +30,23 @@ const summary = calendar
 ---
 
 {calendar && (
-  <BentoCell cols={4} index={index} href={site.socials.github} external>
-    <div class="flex items-center justify-between gap-4">
-      <p class="flex items-center gap-2 font-mono text-xs tracking-widest text-fg-subtle uppercase">
+  <a
+    href={site.socials.github}
+    target="_blank"
+    rel="noopener noreferrer"
+    class:list={[
+      "group block rounded-2xl border border-line p-5 transition-colors hover:border-line-strong sm:p-6",
+      Astro.props.class,
+    ]}
+  >
+    <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+      <p class="flex items-center gap-2 font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
         <BrandIcon icon={github} size={14} /> GitHub activity
       </p>
-      <p class="text-sm text-fg-muted">{summary}</p>
+      <p class="text-sm text-fg-muted group-hover:text-fg">
+        {summary}
+        <span class="sr-only">(opens GitHub in a new tab)</span>
+      </p>
     </div>
     <!-- Decorative: the summary above carries the information. Narrow screens
          clip the oldest weeks on the left and keep the most recent. -->
@@ -54,5 +67,5 @@ const summary = calendar
         ))}
       </div>
     </div>
-  </BentoCell>
+  </a>
 )}

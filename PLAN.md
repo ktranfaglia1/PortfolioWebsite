@@ -1,6 +1,6 @@
 # Portfolio Redesign Plan
 
-> **Status: APPROVED · Phases 0–5 done · Redesign detour (Phase 5.5) in progress; Phase 6 on hold.** Deploy approach (§7) is pending the server admin's answers.
+> **Status: APPROVED · Phases 0–5 done · Redesign detour (Phase 5.5): R1–R4 done (Kyle picked A, with B's commit graph on /experience); R5 content depth and R6 verify remain. Phase 6 on hold.** Deploy approach (§7) is pending the server admin's answers.
 > Branch: `redesign` · Legacy site preserved on `legacy` · Production: `main` → https://kyletranfaglia.top
 > Last updated: 2026-11-20
 
@@ -264,12 +264,12 @@ Diagnosis:
     - Skills shown as a contribution-style grid.
     - Mono annotations, while staying readable for recruiters.
   - Both live on a noindex scratch route (`/lab/a`, `/lab/b`), using real content, screenshotted at 1,280, 1,440, 1,920, 2,560 and 390px. Kyle picks one, or a mix; Casebook-style case-study pages (sticky table of contents, outcome strip) carry over to R4 whichever wins.
-- **R3. Layout system.**
+- **R3. Layout system.** ✅ Done 2026-11-20 (wide container by default; overflow checks at five widths).
   - Content widens to about 1,440–1,600px with fluid gutters, and type scales fluidly from 1,280 to 2,560px.
   - Body text stays about 70ch wide; the extra width goes to layout (multi-column grids, sticky side columns).
   - Phones get a deliberately designed layout.
   - Add Playwright screenshot checks at the priority viewports.
-- **R4. Apply.**
+- **R4. Apply.** ✅ Done 2026-11-20: A's editorial system on every page, B's commit graph on /experience, /lab removed, bento components retired.
   - Update tokens, components and `/styleguide` first.
   - Then the pages in order: Home, Projects, Case study, Experience, Resume, Contact, 404.
 - **R5. Content depth and accuracy.**

@@ -1,44 +1,39 @@
 ---
-import {
-  ArrowRight,
-  ArrowUpRight,
-  Download,
-  GraduationCap,
-  Mail,
-  MapPin,
-} from "@lucide/astro";
+import { ArrowRight, Download, Mail } from "@lucide/astro";
 import { getImage, Image } from "astro:assets";
 import headshot from "../assets/images/profile/headshot.jpg";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/layout/Container.astro";
-import SkillTag from "../components/content/SkillTag.astro";
 import GitHubActivity from "../components/content/GitHubActivity.astro";
-import BentoCell from "../components/ui/BentoCell.astro";
-import BentoGrid from "../components/ui/BentoGrid.astro";
+import ProjectRow from "../components/content/ProjectRow.astro";
+import AccentText from "../components/ui/AccentText.astro";
 import Button from "../components/ui/Button.astro";
-import ImagePlaceholder from "../components/ui/ImagePlaceholder.astro";
-import Tag from "../components/ui/Tag.astro";
+import HeroGlow from "../components/ui/HeroGlow.astro";
+import Section from "../components/ui/Section.astro";
 import { site } from "../site.config";
 import {
   getCurrentRole,
   getEducation,
+  getExperience,
   getPage,
   getProjects,
   getSkillGroups,
 } from "../lib/content";
-import { formatDateRange } from "../lib/dates";
 import { personJsonLd } from "../lib/seo";
 
-const page = await getPage("home");
+const home = await getPage("home");
+const contact = await getPage("contact");
 const now = await getCurrentRole();
-const [lead, ...others] = (await getProjects("featured")).slice(0, 3);
+const featured = await getProjects("featured");
+const caseStudies = featured.slice(0, 4);
+const moreWork = featured.slice(4);
 const [education] = await getEducation();
+const experience = [
+  ...(await getExperience("professional")),
+  ...(await getExperience("teaching")),
+  ...(await getExperience("leadership")),
+];
 const skillGroups = await getSkillGroups();
-
-// Home "Stack" card: the first few items with icons from each group.
-const stackHighlights = skillGroups.flatMap((g) =>
-  g.data.items.filter((i) => i.icon).slice(0, 4),
-);
 
 const portrait = await getImage({ src: headshot, width: 400, format: "jpg" });
 const [locality = "", region = ""] = site.location
@@ -47,7 +42,7 @@ const [locality = "", region = ""] = site.location
 const jsonLd = personJsonLd({
   name: site.name,
   url: site.url,
-  jobTitle: "Software Engineer",
+  jobTitle: site.headline,
   description: `${site.headline}. ${site.tagline}.`,
   email: site.email,
   image: new URL(portrait.src, site.url).href,
@@ -61,216 +56,227 @@ const jsonLd = personJsonLd({
   ),
 });
 
-const label =
-  "font-mono text-xs tracking-widest text-fg-subtle uppercase flex items-center gap-2";
+const pad = (n: number) => String(n).padStart(2, "0");
+const year = (d: Date | "present" | undefined) =>
+  d === "present" || d === undefined ? "Now" : String(d.getFullYear());
+const yearRange = (start: Date, end: Date | "present" | undefined) =>
+  year(start) === year(end) ? year(start) : `${year(start)}–${year(end)}`;
+
+const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
+const moreLink =
+  "inline-flex items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline";
 ---
 
-<BaseLayout title={page.title} description={page.description} jsonLd={jsonLd}>
+<BaseLayout title={home.title} description={home.description} jsonLd={jsonLd}>
   <!-- Hero -->
-  <Container class="pt-14 pb-12 sm:pt-24 sm:pb-16">
-    <div class="flex flex-col-reverse gap-10 lg:flex-row lg:items-center lg:justify-between">
-      <div class="max-w-2xl">
-        {now && (
-          <a
-            href="/experience#professional"
-            class="inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1 pr-3 pl-2 text-sm text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
-          >
-            <span class="relative flex size-2" aria-hidden="true">
-              <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden" />
-              <span class="relative inline-flex size-2 rounded-full bg-accent" />
-            </span>
-            {`${now.data.role} at ${now.data.org}`}
-          </a>
-        )}
-        <h1 class="mt-6 text-display font-semibold">{page.heading}</h1>
-        <p class="mt-4 font-mono text-sm text-accent sm:text-base">
-          {site.headline}
-        </p>
-        <p class="mt-6 text-lg text-fg-muted sm:text-xl">{page.intro}</p>
-        <div class="mt-8 flex flex-wrap gap-3">
-          <Button href="/projects" size="lg">
-            View projects <ArrowRight size={18} aria-hidden="true" />
-          </Button>
-          <Button href="/resume" variant="secondary" size="lg">
-            Resume
-          </Button>
-          <Button href="/contact" variant="ghost" size="lg">
-            Contact
-          </Button>
+  <section class="relative isolate overflow-hidden" aria-label="Introduction">
+    <HeroGlow />
+    <Container class="pt-16 pb-14 sm:pt-24 xl:pt-32 xl:pb-24">
+      <div class="grid gap-12 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          {now && (
+            <a
+              href="/experience#professional"
+              class="inline-flex items-center gap-2 text-sm text-fg-muted transition-colors hover:text-fg"
+            >
+              <span class="relative flex size-2" aria-hidden="true">
+                <span class="absolute inline-flex size-full animate-ping rounded-full bg-warm opacity-60 motion-reduce:hidden" />
+                <span class="relative inline-flex size-2 rounded-full bg-warm" />
+              </span>
+              {`${now.data.role} at ${now.data.org}`}
+            </a>
+          )}
+          <h1 class="mt-6 text-[clamp(3.25rem,1rem+6vw,8rem)] leading-[0.9] font-semibold tracking-[-0.045em]">
+            {home.heading}
+          </h1>
+          {home.headline && (
+            <p class="mt-6 max-w-[22ch] text-[clamp(1.75rem,1rem+2.4vw,3.5rem)] leading-[1.05] font-medium tracking-[-0.02em] text-fg-muted">
+              <AccentText text={home.headline} />
+            </p>
+          )}
+          <p class="mt-6 max-w-[58ch] text-lg text-fg-muted">{home.intro}</p>
+          <div class="mt-10 flex flex-wrap gap-3">
+            <Button href="/projects" size="lg">
+              Selected work <ArrowRight size={18} aria-hidden="true" />
+            </Button>
+            <Button href={site.files.resume} variant="secondary" size="lg">
+              <Download size={18} aria-hidden="true" /> Resume
+              <span class="sr-only">(PDF)</span>
+            </Button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4">
+          <div class="relative mx-auto w-48 sm:w-56 lg:ml-auto lg:w-full lg:max-w-sm">
+            <div
+              aria-hidden="true"
+              class="absolute -inset-6 -z-10 rounded-[2.5rem] opacity-50 blur-2xl"
+              style="background: linear-gradient(135deg, var(--accent-subtle), color-mix(in oklch, var(--warm) 35%, transparent));"
+            ></div>
+            <Image
+              src={headshot}
+              alt={`Portrait of ${site.name}`}
+              widths={[240, 360, 480, 720]}
+              sizes="(min-width: 1024px) 24rem, 14rem"
+              loading="eager"
+              fetchpriority="high"
+              class="aspect-[4/5] w-full rounded-[2rem] object-cover"
+            />
+          </div>
         </div>
       </div>
-      <Image
-        src={headshot}
-        alt={`Portrait of ${site.name}`}
-        widths={[160, 240, 320, 480]}
-        sizes="(min-width: 1024px) 240px, 160px"
-        loading="eager"
-        fetchpriority="high"
-        class="size-40 shrink-0 rounded-3xl border border-line object-cover shadow-card lg:size-60"
-      />
-    </div>
-  </Container>
 
-  <!-- Bento -->
-  <section aria-labelledby="overview-title">
-    <Container>
-      <h2 id="overview-title" class="sr-only">
-        Overview
-      </h2>
-      <BentoGrid>
+      <!-- Fact rail -->
+      <dl class="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 xl:mt-20 xl:grid-cols-4">
         {now && (
-          <BentoCell cols={2} rows={2} padding="lg" index={0}>
-            <div class="flex items-start justify-between gap-4">
-              <p class={label}>
-                <span
-                  class="size-1.5 rounded-full bg-accent"
-                  aria-hidden="true"
-                />
-                Now
-              </p>
-              {now.data.logoPlaceholder && !now.data.orgLogo && (
-                <ImagePlaceholder
-                  size="icon"
-                  label={now.data.logoPlaceholder}
-                />
-              )}
-            </div>
-            <h3 class="mt-5 text-2xl font-semibold">{now.data.role}</h3>
-            <p class="mt-1 text-fg-muted">
-              {now.data.org}
-              <span class="text-fg-subtle">
-                {` · ${formatDateRange(now.data.start, now.data.end)}`}
-              </span>
-            </p>
-            {now.data.orgDescription && (
-              <p class="mt-1 text-sm text-fg-subtle">
-                {now.data.orgDescription}
-              </p>
-            )}
-            <p class="mt-5 text-fg-muted">{now.data.summary}</p>
-            <ul class="mt-auto flex flex-wrap gap-1.5 pt-6" aria-label="Stack">
-              {now.data.skills.slice(0, 6).map((s) => (
-                <li>
-                  <Tag>{s}</Tag>
-                </li>
-              ))}
-            </ul>
-          </BentoCell>
+          <div class="bg-canvas/85 p-5 backdrop-blur">
+            <dt class={label}>Now</dt>
+            <dd class="mt-2 font-medium">{now.data.org}</dd>
+            <dd class="text-sm text-fg-muted">{now.data.role}</dd>
+          </div>
         )}
-
-        {lead && (
-          <BentoCell
-            cols={2}
-            padding="none"
-            href={`/projects/${lead.id}`}
-            index={1}
-          >
-            {lead.data.cover && (
-              <Image
-                src={lead.data.cover.src}
-                alt=""
-                widths={[480, 720, 960]}
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                class="aspect-21/9 w-full border-b border-line object-cover"
-              />
-            )}
-            <div class="flex items-start justify-between gap-3 p-5">
-              <div>
-                <p class={label}>Featured project</p>
-                <h3 class="mt-2 font-semibold">{lead.data.title}</h3>
-                <p class="mt-1 text-sm text-fg-muted">{lead.data.summary}</p>
-              </div>
-              <ArrowUpRight
-                size={18}
-                aria-hidden="true"
-                class="shrink-0 text-fg-subtle"
-              />
-            </div>
-          </BentoCell>
-        )}
-
-        {others.map((p, i) => (
-          <BentoCell href={`/projects/${p.id}`} index={2 + i}>
-            <p class={label}>Project</p>
-            <h3 class="mt-auto pt-6 font-semibold">{p.data.title}</h3>
-            <p class="mt-1 line-clamp-3 text-sm text-fg-muted">
-              {p.data.summary}
-            </p>
-          </BentoCell>
-        ))}
-
         {education && (
-          <BentoCell cols={2} index={4}>
-            <p class={label}>
-              <GraduationCap size={14} aria-hidden="true" /> Education
-            </p>
-            <h3 class="mt-auto pt-6 text-lg font-semibold">
-              {education.data.degrees.map((d) => d.name).join(" & ")}
-            </h3>
-            <p class="mt-1 text-sm text-fg-muted">
-              {[
-                education.data.minors.length > 0 &&
-                  `Minor in ${education.data.minors.join(", ")}`,
-                education.data.school,
-                education.data.distinction,
-                `GPA ${education.data.gpa}`,
-              ]
+          <div class="bg-canvas/85 p-5 backdrop-blur">
+            <dt class={label}>Education</dt>
+            <dd class="mt-2 font-medium">
+              {education.data.degrees
+                .map((d) => d.name.replace("B.S. ", ""))
+                .join(" & ")}
+            </dd>
+            <dd class="text-sm text-fg-muted">
+              {[education.data.school, education.data.distinction]
                 .filter(Boolean)
                 .join(" · ")}
-            </p>
-          </BentoCell>
+            </dd>
+          </div>
         )}
+        <div class="bg-canvas/85 p-5 backdrop-blur">
+          <dt class={label}>Based in</dt>
+          <dd class="mt-2 font-medium">{site.location}</dd>
+        </div>
+        <div class="bg-canvas/85 p-5 backdrop-blur">
+          <dt class={label}>Focus</dt>
+          <dd class="mt-2 font-medium">{site.headline}</dd>
+          <dd class="text-sm text-fg-muted">{site.tagline}</dd>
+        </div>
+      </dl>
+    </Container>
+  </section>
 
-        <BentoCell index={5}>
-          <p class={label}>
-            <MapPin size={14} aria-hidden="true" /> Based in
-          </p>
-          <p class="mt-auto pt-6 text-lg font-semibold">{site.location}</p>
-        </BentoCell>
+  <Section id="about" eyebrow="01" title="About" split>
+    <div class="space-y-6 xl:max-w-[60rem]">
+      {home.about.map((para, i) => (
+        <p
+          class:list={[
+            i === 0
+              ? "text-[clamp(1.375rem,1rem+1vw,2rem)] leading-snug font-medium tracking-tight text-fg"
+              : "max-w-[68ch] text-lg leading-relaxed text-fg-muted",
+          ]}
+        >
+          {para}
+        </p>
+      ))}
+    </div>
+  </Section>
 
-        <BentoCell href={site.files.resume} class="group" index={6}>
-          <p class={label}>
-            <Download size={14} aria-hidden="true" /> Resume
-          </p>
-          <p class="mt-auto pt-6 text-lg font-semibold">
-            Download PDF
-            <span class="sr-only">(resume)</span>
-          </p>
-        </BentoCell>
+  <Section id="work" eyebrow="02" title="Selected work">
+    <a slot="header" href="/projects" class:list={[moreLink, "mt-4"]}>
+      All projects <ArrowRight size={14} aria-hidden="true" />
+    </a>
+    <div class="border-y border-line">
+      {caseStudies.map((p, i) => (
+        <ProjectRow project={p} number={i + 1} />
+      ))}
+    </div>
+    {moreWork.length > 0 && (
+      <ul class="mt-10 grid gap-8 sm:grid-cols-3">
+        {moreWork.map((p, i) => (
+          <li class="group relative" data-reveal>
+            <p class="font-mono text-xs text-accent">
+              {pad(caseStudies.length + i + 1)}
+            </p>
+            <h3 class="mt-2 text-xl font-semibold transition-colors group-hover:text-accent">
+              <a
+                href={`/projects/${p.id}`}
+                class="after:absolute after:inset-0"
+              >
+                {p.data.title}
+              </a>
+            </h3>
+            <p class="mt-1 line-clamp-2 text-sm text-fg-muted">
+              {p.data.summary}
+            </p>
+          </li>
+        ))}
+      </ul>
+    )}
+  </Section>
 
-        <BentoCell cols={3} index={7}>
-          <p class={label}>Stack</p>
-          <ul class="mt-5 flex flex-wrap gap-2" aria-label="Core technologies">
-            {stackHighlights.map((s) => (
-              <li>
-                <SkillTag name={s.name} icon={s.icon} />
-              </li>
+  <Section id="experience" eyebrow="03" title="Experience" split>
+    <a slot="header" href="/experience" class:list={[moreLink, "mt-4"]}>
+      Full history <ArrowRight size={14} aria-hidden="true" />
+    </a>
+    <ol class="divide-y divide-line">
+      {experience.map((e) => (
+        <li class="grid gap-1 py-5 first:pt-0 sm:grid-cols-[7rem_1fr] sm:gap-8 xl:grid-cols-[9rem_1fr_1fr]">
+          <p class="font-mono text-sm text-fg-subtle">
+            {yearRange(e.data.start, e.data.end)}
+          </p>
+          <p>
+            <span class="font-medium text-fg">{e.data.role}</span>
+            <span class="block text-fg-muted">{e.data.org}</span>
+          </p>
+          <p class="hidden text-sm text-fg-muted xl:block">{e.data.summary}</p>
+        </li>
+      ))}
+    </ol>
+  </Section>
+
+  <Section id="toolkit" eyebrow="04" title="Toolkit" split>
+    <a slot="header" href="/resume#skills" class:list={[moreLink, "mt-4"]}>
+      All skills <ArrowRight size={14} aria-hidden="true" />
+    </a>
+    <div class="grid gap-10 sm:grid-cols-3 xl:grid-cols-5">
+      {skillGroups.map((g) => (
+        <div>
+          <h3 class={label}>{g.data.label}</h3>
+          <ul class="mt-4 space-y-1.5 text-fg">
+            {g.data.items.map((s) => (
+              <li>{s.name}</li>
             ))}
           </ul>
-          <a
-            href="/resume#skills"
-            class="mt-auto inline-flex items-center gap-1 pt-5 text-sm font-medium text-accent underline-offset-4 hover:underline"
-          >
-            All skills <ArrowRight size={14} aria-hidden="true" />
-          </a>
-        </BentoCell>
+        </div>
+      ))}
+    </div>
+    <GitHubActivity class="mt-12" />
+  </Section>
 
-        <BentoCell href="/contact" class="bg-accent-subtle" index={8}>
-          <p class={label}>
-            <Mail size={14} aria-hidden="true" /> Contact
-          </p>
-          <p class="mt-auto pt-6 text-lg font-semibold">Get in touch</p>
-          <p class="text-sm text-fg-muted">{site.email}</p>
-        </BentoCell>
-        <GitHubActivity index={9} />
-      </BentoGrid>
-
-      <div class="mt-8 flex justify-end">
+  <!-- 05 Contact -->
+  <section
+    aria-labelledby="contact-cta"
+    class="relative isolate overflow-hidden border-t border-line"
+  >
+    <HeroGlow class="opacity-70" />
+    <Container class="py-24 xl:py-36">
+      <p class={label} aria-hidden="true">
+        05
+      </p>
+      <h2
+        id="contact-cta"
+        class="mt-4 max-w-[20ch] text-[clamp(2.25rem,1.1rem+4vw,5.75rem)] leading-[0.95] font-semibold tracking-[-0.04em]"
+      >
+        <AccentText text={contact.headline ?? contact.heading} />
+      </h2>
+      <p class="mt-6 max-w-[56ch] text-lg text-fg-muted">{contact.intro}</p>
+      <div class="mt-10 flex flex-wrap items-center gap-6">
+        <Button href="/contact" size="lg">
+          <Mail size={18} aria-hidden="true" /> Send a message
+        </Button>
         <a
-          href="/projects"
-          class="inline-flex items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline"
+          href={`mailto:${site.email}`}
+          class="font-mono text-sm text-fg-muted underline-offset-4 hover:text-fg hover:underline"
         >
-          See all projects <ArrowRight size={14} aria-hidden="true" />
+          {site.email}
         </a>
       </div>
     </Container>

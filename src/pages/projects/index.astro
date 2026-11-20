@@ -3,6 +3,7 @@ import { ExternalLink } from "@lucide/astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/page/PageHeader.astro";
 import ProjectCard from "../../components/content/ProjectCard.astro";
+import ProjectRow from "../../components/content/ProjectRow.astro";
 import Section from "../../components/ui/Section.astro";
 import Container from "../../components/layout/Container.astro";
 import { getPage, getProjects } from "../../lib/content";
@@ -25,7 +26,11 @@ const chip =
 ---
 
 <BaseLayout title={page.title} description={page.description}>
-  <PageHeader heading={page.heading} intro={page.intro} />
+  <PageHeader
+    heading={page.heading}
+    headline={page.headline}
+    intro={page.intro}
+  />
 
   <!-- Filter bar: visible from first paint (no layout shift when the script
        runs); hidden for no-JS visitors, who see every project. -->
@@ -39,7 +44,7 @@ const chip =
   <Container>
     <div
       data-filter
-      class="flex flex-col gap-4 rounded-2xl border border-line bg-surface p-4 sm:flex-row sm:items-center sm:justify-between"
+      class="flex flex-col gap-4 border-y border-line py-4 sm:flex-row sm:items-center sm:justify-between"
     >
       <div
         role="group"
@@ -100,24 +105,20 @@ const chip =
   <Section
     id="featured"
     title="Featured"
-    class="pt-6 sm:pt-8"
+    rule={false}
+    class="pt-6 sm:pt-8 xl:pt-10"
     data-filter-section
   >
-    <div class="grid gap-5 md:grid-cols-2">
+    <div class="border-b border-line">
       {featured.map((p, i) => (
-        <ProjectCard project={p} priority={i === 0} />
+        <ProjectRow project={p} number={i + 1} priority={i === 0} />
       ))}
     </div>
   </Section>
 
   {standard.length > 0 && (
-    <Section
-      id="more"
-      title="More projects"
-      class="pt-0 sm:pt-0"
-      data-filter-section
-    >
-      <div class="grid gap-5 md:grid-cols-2">
+    <Section id="more" title="More projects" data-filter-section>
+      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {standard.map((p) => (
           <ProjectCard project={p} />
         ))}
@@ -130,13 +131,12 @@ const chip =
       id="archive"
       title="Archive"
       description="Smaller course projects. Source code on GitHub."
-      class="pt-0 sm:pt-0"
       data-filter-section
     >
-      <div class="relative overflow-x-auto rounded-2xl border border-line">
+      <div class="relative overflow-x-auto border-y border-line">
         <table class="w-full text-left text-sm">
           <caption class="sr-only">Archived projects</caption>
-          <thead class="bg-surface-2 font-mono text-xs text-fg-subtle">
+          <thead class="border-b border-line font-mono text-xs text-fg-subtle">
             <tr>
               <th scope="col" class="px-4 py-3 font-normal">
                 Year

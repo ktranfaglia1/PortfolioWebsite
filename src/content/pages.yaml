@@ -1,5 +1,6 @@
 # Per-page copy: tab title, meta description (max 160 chars), heading, intro.
-# TODO(kyle): review all of this copy, especially the home intro.
+# TODO(kyle): review all of this copy, especially the home intro and the
+# page headlines (*asterisks* mark the serif-italic accent phrase).
 - id: home
   title: Kyle Tranfaglia | Software Engineer
   description: Kyle Tranfaglia is a software engineer building full-stack, AI-powered products, with dual degrees in computer science and data science.
@@ -15,11 +16,13 @@
   title: Projects
   description: Software, AI, and data science projects by Kyle Tranfaglia, from desktop apps and web platforms to published research.
   heading: Projects
+  headline: Research, products, and tools, *built end to end*.
   intro: Software, AI, and data science work, from conference-accepted research to client projects. Filter by category or technology.
 - id: experience
   title: Experience
   description: Kyle Tranfaglia's professional experience, teaching and tutoring roles, leadership, and education.
   heading: Experience
+  headline: A career that reads *like a commit log*.
   intro: Where I've worked, taught, and led, plus my education and honors.
 - id: experience-other
   title: Other experience
@@ -30,6 +33,7 @@
   title: Resume
   description: Kyle Tranfaglia's resume and unofficial transcript, with a summary of experience, projects, skills, and education.
   heading: Resume
+  headline: The short version, *on one page*.
   intro: A quick summary of my experience and skills. Download the PDF for the full version.
 - id: contact
   title: Contact
@@ -41,4 +45,5 @@
   title: Page not found
   description: The page you're looking for doesn't exist.
   heading: Page not found
+  headline: This path leads *nowhere*.
   intro: That page doesn't exist or has moved.

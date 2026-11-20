@@ -20,7 +20,6 @@ export default defineConfig({
       // Review pages, the 404, and legacy redirect pages stay out of search.
       filter: (page) =>
         !/\/(styleguide|404)$/.test(page) &&
-        !page.includes("/lab/") &&
         !page.endsWith(".html") &&
         !page.includes("/CarMart"),
     }),

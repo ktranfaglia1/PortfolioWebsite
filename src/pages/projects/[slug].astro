@@ -14,6 +14,7 @@ import Container from "../../components/layout/Container.astro";
 import BrandIcon from "../../components/ui/BrandIcon.astro";
 import Button from "../../components/ui/Button.astro";
 import ImagePlaceholder from "../../components/ui/ImagePlaceholder.astro";
+import HeroGlow from "../../components/ui/HeroGlow.astro";
 import Tag from "../../components/ui/Tag.astro";
 import { getProjectsWithPages, type Project } from "../../lib/content";
 import { formatDateRange } from "../../lib/dates";
@@ -34,7 +35,8 @@ interface Props {
 
 const { project, siblings } = Astro.props;
 const d = project.data;
-const { Content } = await render(project);
+const { Content, headings } = await render(project);
+const toc = headings.filter((h) => h.depth === 2);
 const around = neighbors(siblings, project.id);
 
 const facts = [
@@ -46,107 +48,160 @@ const facts = [
 
 // A paper link that points at the same place as the repo is shown once.
 const showPaper = d.links.paper && d.links.paper !== d.links.repo;
+const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
 ---
 
 <BaseLayout title={d.title} description={d.summary} ogType="article">
   <article>
-    <Container class="pt-10 sm:pt-14">
-      <a
-        href="/projects"
-        class="inline-flex items-center gap-1.5 rounded-md text-sm text-fg-muted transition-colors hover:text-fg"
-      >
-        <ArrowLeft size={16} aria-hidden="true" /> All projects
-      </a>
+    <header class="relative isolate overflow-hidden">
+      <HeroGlow class="opacity-70" />
+      <Container class="pt-10 pb-12 sm:pt-14 xl:pb-16">
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-1.5 rounded-md text-sm text-fg-muted transition-colors hover:text-fg"
+        >
+          <ArrowLeft size={16} aria-hidden="true" /> All projects
+        </a>
 
-      <header class="mt-8 max-w-3xl">
-        <ul class="flex flex-wrap gap-2" aria-label="Categories">
-          {d.categories.map((c) => (
-            <li>
-              <Tag variant="accent">{categoryLabels[c]}</Tag>
-            </li>
-          ))}
-        </ul>
-        <h1 class="mt-4 text-4xl font-semibold sm:text-5xl">{d.title}</h1>
-        <p class="mt-4 text-lg text-fg-muted">{d.summary}</p>
-        {(d.links.live || d.links.repo || showPaper) && (
-          <div class="mt-8 flex flex-wrap gap-3">
-            {d.links.live && (
-              <Button href={d.links.live} external>
-                <ExternalLink size={16} aria-hidden="true" /> Live site
-              </Button>
-            )}
-            {d.links.repo && (
-              <Button href={d.links.repo} variant="secondary" external>
-                <BrandIcon icon={github} size={16} /> Source code
-              </Button>
-            )}
-            {showPaper && (
-              <Button
-                href={d.links.paper}
-                variant="secondary"
-                external={!d.links.paper!.startsWith("/")}
-              >
-                <FileText size={16} aria-hidden="true" /> Read the paper
-              </Button>
+        <div class="mt-10 grid gap-10 lg:grid-cols-12 xl:mt-14">
+          <div class="lg:col-span-8">
+            <p class="font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
+              {d.categories.map((c) => categoryLabels[c]).join(" · ")}
+            </p>
+            <h1 class="mt-4 text-[clamp(2.75rem,1.2rem+4.4vw,6.5rem)] leading-[0.95] font-semibold tracking-[-0.04em]">
+              {d.title}
+            </h1>
+            <p class="mt-6 max-w-[56ch] text-lg text-fg-muted sm:text-xl">
+              {d.summary}
+            </p>
+            {(d.links.live || d.links.repo || showPaper) && (
+              <div class="mt-8 flex flex-wrap gap-3">
+                {d.links.live && (
+                  <Button href={d.links.live} external>
+                    <ExternalLink size={16} aria-hidden="true" /> Live site
+                  </Button>
+                )}
+                {d.links.repo && (
+                  <Button href={d.links.repo} variant="secondary" external>
+                    <BrandIcon icon={github} size={16} /> Source code
+                  </Button>
+                )}
+                {showPaper && (
+                  <Button
+                    href={d.links.paper}
+                    variant="secondary"
+                    external={!d.links.paper!.startsWith("/")}
+                  >
+                    <FileText size={16} aria-hidden="true" /> Read the paper
+                  </Button>
+                )}
+              </div>
             )}
           </div>
-        )}
-      </header>
 
-      <div class="mt-12">
-        {d.cover ? (
-          <Image
-            src={d.cover.src}
-            alt={d.cover.alt}
-            widths={[640, 960, 1280, 1920]}
-            sizes="(min-width: 1152px) 1088px, 100vw"
-            loading="eager"
-            fetchpriority="high"
-            class="w-full rounded-2xl border border-line shadow-card"
-          />
-        ) : (
-          <ImagePlaceholder label={`${d.title} screenshot`} />
-        )}
-      </div>
-
-      <div class="mt-12 grid gap-12 lg:grid-cols-[1fr_18rem]">
-        <div class="prose">
-          <Content />
-        </div>
-
-        <aside class="space-y-8 lg:order-last" aria-label="Project details">
-          <dl class="space-y-4 rounded-2xl border border-line bg-surface p-5">
+          <dl class="grid grid-cols-2 gap-x-6 gap-y-5 self-end border-t border-line pt-6 lg:col-span-4 lg:grid-cols-1 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
             {facts.map((f) => (
               <div>
                 <dt class="font-mono text-xs text-fg-subtle">{f.label}</dt>
                 <dd class="mt-0.5 text-fg">{f.value}</dd>
               </div>
             ))}
-            <div>
-              <dt class="font-mono text-xs text-fg-subtle">Stack</dt>
-              <dd class="mt-2">
-                <ul class="flex flex-wrap gap-1.5">
-                  {d.stack.map((s) => (
-                    <li>
-                      <Tag>{s}</Tag>
-                    </li>
-                  ))}
-                </ul>
-              </dd>
-            </div>
           </dl>
+        </div>
+
+        {d.outcomes.length > 0 && (
+          <dl
+            class="mt-12 grid gap-6 border-y border-line py-8 sm:grid-cols-3 xl:mt-16"
+            aria-label="Outcomes"
+          >
+            {d.outcomes.map((o) => (
+              <div class="flex flex-col-reverse justify-end">
+                <dt class="mt-2 text-sm text-fg-subtle">{o.label}</dt>
+                <dd class="text-[clamp(2rem,1.2rem+2vw,3.5rem)] leading-none font-semibold tracking-tight text-fg">
+                  {o.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        )}
+      </Container>
+    </header>
+
+    <Container>
+      {d.cover ? (
+        <Image
+          src={d.cover.src}
+          alt={d.cover.alt}
+          widths={[640, 960, 1280, 1920, 2560]}
+          sizes="(min-width: 1760px) 1616px, 92vw"
+          loading="eager"
+          fetchpriority="high"
+          class="w-full rounded-2xl border border-line shadow-card"
+        />
+      ) : (
+        <ImagePlaceholder label={`${d.title} screenshot`} />
+      )}
+
+      <div class="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-10 xl:mt-24">
+        {toc.length > 1 && (
+          <nav
+            aria-label="On this page"
+            class="hidden lg:col-span-3 lg:block xl:col-span-2"
+          >
+            <div class="sticky top-24">
+              <p class={label}>Contents</p>
+              <ol class="mt-4 space-y-2 border-l border-line text-sm">
+                {toc.map((h) => (
+                  <li>
+                    <a
+                      href={`#${h.slug}`}
+                      class="-ml-px block border-l border-transparent pl-4 text-fg-muted transition-colors hover:border-accent hover:text-fg"
+                    >
+                      {h.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </nav>
+        )}
+
+        <div
+          class:list={[
+            "prose min-w-0",
+            toc.length > 1
+              ? "lg:col-span-6 xl:col-span-7"
+              : "lg:col-span-8 xl:col-span-9",
+          ]}
+        >
+          <Content />
+        </div>
+
+        <aside class="space-y-10 lg:col-span-3" aria-label="Project details">
+          <section aria-labelledby="stack-title">
+            <h2 id="stack-title" class={label}>
+              Stack
+            </h2>
+            <ul class="mt-4 flex flex-wrap gap-1.5">
+              {d.stack.map((s) => (
+                <li>
+                  <Tag>{s}</Tag>
+                </li>
+              ))}
+            </ul>
+          </section>
 
           {d.recognition.length > 0 && (
             <section aria-labelledby="recognition-title">
               <h2
                 id="recognition-title"
-                class="flex items-center gap-2 font-mono text-xs tracking-widest text-fg-subtle uppercase"
+                class:list={[label, "flex items-center gap-2"]}
               >
                 <Award size={14} aria-hidden="true" /> Recognition
               </h2>
-              <ul class="mt-3 space-y-2 text-sm text-fg-muted">
+              <ul class="mt-4 space-y-2 text-sm text-fg-muted">
                 {d.recognition.map((r) => (
-                  <li class="border-l-2 border-accent pl-3">{r}</li>
+                  <li class="border-l-2 border-warm pl-3">{r}</li>
                 ))}
               </ul>
             </section>
@@ -155,7 +210,7 @@ const showPaper = d.links.paper && d.links.paper !== d.links.repo;
       </div>
 
       {d.gallery.length > 0 && (
-        <section aria-labelledby="gallery-title" class="mt-16">
+        <section aria-labelledby="gallery-title" class="mt-20">
           <h2 id="gallery-title" class="text-2xl font-semibold">
             Gallery
           </h2>
@@ -176,10 +231,10 @@ const showPaper = d.links.paper && d.links.paper !== d.links.repo;
   </article>
 
   {around && (
-    <Container class="mt-20">
+    <Container class="mt-24">
       <nav
         aria-label="More projects"
-        class="grid gap-4 border-t border-line pt-8 sm:grid-cols-2"
+        class="grid gap-4 border-t border-line pt-10 sm:grid-cols-2"
       >
         <a
           href={`/projects/${around.prev.id}`}

@@ -3,8 +3,8 @@ import { ArrowRight, Award, GraduationCap } from "@lucide/astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/layout/Container.astro";
 import PageHeader from "../../components/page/PageHeader.astro";
+import CareerGraph from "../../components/content/CareerGraph.astro";
 import ExperienceItem from "../../components/content/ExperienceItem.astro";
-import Card from "../../components/ui/Card.astro";
 import Section from "../../components/ui/Section.astro";
 import Timeline from "../../components/ui/Timeline.astro";
 import { getEducation, getExperience, getPage } from "../../lib/content";
@@ -19,24 +19,28 @@ const volunteer = await getExperience("volunteer");
 const education = await getEducation();
 
 const sections = [
+  { id: "history", label: "History" },
   { id: "professional", label: "Professional" },
-  { id: "teaching", label: "Teaching & Tutoring" },
-  { id: "leadership", label: "Leadership & Community" },
-  { id: "education", label: "Education & Honors" },
+  { id: "teaching", label: "Teaching" },
+  { id: "leadership", label: "Leadership" },
+  { id: "education", label: "Education" },
 ];
+const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
 ---
 
 <BaseLayout title={page.title} description={page.description}>
-  <PageHeader heading={page.heading} intro={page.intro} />
-
-  <Container>
+  <PageHeader
+    heading={page.heading}
+    headline={page.headline}
+    intro={page.intro}
+  >
     <nav aria-label="On this page">
-      <ul class="flex flex-wrap gap-2">
+      <ul class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-sm">
         {sections.map((s) => (
           <li>
             <a
               href={`#${s.id}`}
-              class="inline-block rounded-full border border-line px-3 py-1.5 text-sm text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
+              class="text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline"
             >
               {s.label}
             </a>
@@ -45,16 +49,26 @@ const sections = [
         <li>
           <a
             href="/experience/other"
-            class="inline-block rounded-full border border-dashed border-line-strong px-3 py-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
+            class="text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline"
           >
             {otherPage.heading}
           </a>
         </li>
       </ul>
     </nav>
-  </Container>
+  </PageHeader>
 
-  <Section id="professional" eyebrow="01" title="Professional">
+  <Section
+    id="history"
+    eyebrow="$ git log --graph"
+    title="Career history"
+    description="Work, teaching, projects, and school on one timeline, newest first. Each row links to its details."
+    split
+  >
+    <CareerGraph />
+  </Section>
+
+  <Section id="professional" eyebrow="01" title="Professional" split>
     <Timeline>
       {professional.map((e) => (
         <ExperienceItem entry={e} />
@@ -67,6 +81,7 @@ const sections = [
     eyebrow="02"
     title="Teaching & Tutoring"
     description={`${teaching.length} roles tutoring and teaching Math and Computer Science.`}
+    split
   >
     <Timeline>
       {teaching.map((e) => (
@@ -75,20 +90,18 @@ const sections = [
     </Timeline>
   </Section>
 
-  <Section id="leadership" eyebrow="03" title="Leadership & Community">
+  <Section id="leadership" eyebrow="03" title="Leadership & Community" split>
     <Timeline>
       {leadership.map((e) => (
         <ExperienceItem entry={e} />
       ))}
     </Timeline>
     {volunteer.length > 0 && (
-      <div class="mt-12">
-        <h3 class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
-          Volunteering
-        </h3>
-        <ul class="mt-4 divide-y divide-line rounded-2xl border border-line">
+      <div class="mt-14">
+        <h3 class={label}>Volunteering</h3>
+        <ul class="mt-4 divide-y divide-line border-y border-line">
           {volunteer.map((v) => (
-            <li class="flex flex-col gap-1 p-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+            <li class="flex flex-col gap-1 py-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
               <p>
                 <span class="font-medium text-fg">{v.data.role}</span>
                 <span class="text-fg-muted">{` · ${v.data.org}`}</span>
@@ -106,17 +119,19 @@ const sections = [
     )}
   </Section>
 
-  <Section id="education" eyebrow="04" title="Education & Honors">
+  <Section id="education" eyebrow="04" title="Education & Honors" split>
     {education.map(({ data: ed }) => (
-      <div class="grid gap-6 lg:grid-cols-2">
-        <Card padding="lg">
+      <div class="grid gap-12 xl:grid-cols-2">
+        <div data-reveal>
           <p class="flex items-center gap-2 font-mono text-xs text-fg-subtle">
             <GraduationCap size={14} aria-hidden="true" />
             {formatDateRange(ed.start, ed.end)}
             {ed.location && <span>{` · ${ed.location}`}</span>}
           </p>
-          <h3 class="mt-3 text-xl font-semibold">{ed.school}</h3>
-          <ul class="mt-4 space-y-3">
+          <h3 class="mt-3 text-[clamp(1.75rem,1.2rem+1.4vw,2.5rem)] leading-tight font-semibold tracking-tight">
+            {ed.school}
+          </h3>
+          <ul class="mt-6 space-y-4">
             {ed.degrees.map((deg) => (
               <li>
                 <p class="font-medium text-fg">{deg.name}</p>
@@ -133,28 +148,30 @@ const sections = [
               </li>
             )}
           </ul>
-          <dl class="mt-6 flex gap-8 border-t border-line pt-5">
-            <div>
-              <dt class="font-mono text-xs text-fg-subtle">GPA</dt>
-              <dd class="mt-0.5 text-2xl font-semibold text-fg">{ed.gpa}</dd>
+          <dl class="mt-8 grid max-w-md grid-cols-2 gap-6 border-t border-line pt-6">
+            <div class="flex flex-col-reverse justify-end">
+              <dt class="mt-2 text-xs text-fg-subtle">GPA</dt>
+              <dd class="text-[clamp(1.5rem,1rem+1.2vw,2.25rem)] leading-none font-semibold tracking-tight text-fg">
+                {ed.gpa}
+              </dd>
             </div>
             {ed.distinction && (
-              <div>
-                <dt class="font-mono text-xs text-fg-subtle">Distinction</dt>
-                <dd class="mt-0.5 text-2xl font-semibold text-fg">
+              <div class="flex flex-col-reverse justify-end">
+                <dt class="mt-2 text-xs text-fg-subtle">Distinction</dt>
+                <dd class="font-serif text-[clamp(1.5rem,1rem+1.2vw,2.25rem)] leading-none text-fg italic">
                   {ed.distinction}
                 </dd>
               </div>
             )}
           </dl>
-        </Card>
+        </div>
 
         {ed.honors.length > 0 && (
           <div>
-            <h3 class="flex items-center gap-2 font-mono text-xs tracking-widest text-fg-subtle uppercase">
+            <h3 class:list={[label, "flex items-center gap-2"]}>
               <Award size={14} aria-hidden="true" /> Honors & awards
             </h3>
-            <ul class="mt-4 divide-y divide-line">
+            <ul class="mt-4 divide-y divide-line border-y border-line">
               {ed.honors.map((h) => (
                 <li class="py-3">
                   <p class="font-medium text-fg">{h.title}</p>
@@ -172,19 +189,28 @@ const sections = [
     ))}
   </Section>
 
-  <Container>
-    <Card href="/experience/other" padding="lg" class="group">
-      <div class="flex items-center justify-between gap-6">
+  <section class="border-t border-line" aria-labelledby="other-title">
+    <Container class="py-16 sm:py-20">
+      <a
+        href="/experience/other"
+        class="group flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"
+      >
         <div>
-          <h2 class="text-xl font-semibold">{otherPage.heading}</h2>
-          <p class="mt-2 max-w-2xl text-fg-muted">{otherPage.intro}</p>
+          <p class={label}>Before software</p>
+          <h2
+            id="other-title"
+            class="mt-3 text-[clamp(1.75rem,1.2rem+1.6vw,3rem)] leading-tight font-semibold tracking-tight transition-colors group-hover:text-accent"
+          >
+            {otherPage.heading}
+          </h2>
+          <p class="mt-3 max-w-[60ch] text-fg-muted">{otherPage.intro}</p>
         </div>
         <ArrowRight
-          size={22}
+          size={28}
           aria-hidden="true"
           class="shrink-0 text-fg-subtle transition-transform group-hover:translate-x-1 group-hover:text-accent"
         />
-      </div>
-    </Card>
-  </Container>
+      </a>
+    </Container>
+  </section>
 </BaseLayout>

@@ -1,27 +1,55 @@
 ---
 import Container from "../layout/Container.astro";
+import AccentText from "../ui/AccentText.astro";
+import HeroGlow from "../ui/HeroGlow.astro";
 
 interface Props {
   heading: string;
+  /** Large secondary line; *asterisks* mark the serif-italic accent. */
+  headline?: string;
   intro?: string;
+  /** Small mono label above the heading. */
   eyebrow?: string;
+  /** Soft violet/warm glow behind the header (default on). */
+  glow?: boolean;
   class?: string;
 }
 
-const { heading, intro, eyebrow, class: className } = Astro.props;
+const {
+  heading,
+  headline,
+  intro,
+  eyebrow,
+  glow = true,
+  class: className,
+} = Astro.props;
 ---
 
-<Container class:list={["pt-16 pb-8 sm:pt-24 sm:pb-12", className]}>
-  {eyebrow && (
-    <p class="mb-4 font-mono text-xs tracking-widest text-accent uppercase">
-      {eyebrow}
-    </p>
-  )}
-  <h1 class="text-4xl font-semibold sm:text-5xl">{heading}</h1>
-  {intro && <p class="mt-4 max-w-2xl text-lg text-fg-muted">{intro}</p>}
-  {Astro.slots.has("default") && (
-    <div class="mt-8 flex flex-wrap gap-3">
-      <slot />
-    </div>
-  )}
-</Container>
+<div class="relative isolate overflow-hidden">
+  {glow && <HeroGlow class="opacity-80" />}
+  <Container
+    class:list={["pt-16 pb-14 sm:pt-24 sm:pb-16 xl:pt-32 xl:pb-20", className]}
+  >
+    {eyebrow && (
+      <p class="mb-5 font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
+        {eyebrow}
+      </p>
+    )}
+    <h1 class="text-[clamp(2.75rem,1.2rem+4.4vw,6.5rem)] leading-[0.95] font-semibold tracking-[-0.04em]">
+      {heading}
+    </h1>
+    {headline && (
+      <p class="mt-5 max-w-[24ch] text-[clamp(1.5rem,1rem+1.6vw,2.75rem)] leading-[1.1] font-medium tracking-[-0.02em] text-fg-muted">
+        <AccentText text={headline} />
+      </p>
+    )}
+    {intro && (
+      <p class="mt-6 max-w-[60ch] text-lg text-fg-muted sm:text-xl">{intro}</p>
+    )}
+    {Astro.slots.has("default") && (
+      <div class="mt-10 flex flex-wrap items-center gap-3">
+        <slot />
+      </div>
+    )}
+  </Container>
+</div>

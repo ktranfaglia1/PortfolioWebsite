@@ -4,12 +4,19 @@ import Container from "../layout/Container.astro";
 
 interface Props extends Omit<HTMLAttributes<"section">, "title"> {
   id?: string;
-  /** Small mono label above the title, e.g. "Experience". */
+  /** Small mono label above the title, usually the section number ("01"). */
   eyebrow?: string;
   title?: string;
   description?: string;
   /** Heading level for the title. Pages own the single <h1>. */
   level?: 2 | 3;
+  /**
+   * Editorial layout: on large screens the header sits in a narrow left
+   * column and the content fills the rest of the 12-column grid.
+   */
+  split?: boolean;
+  /** Draw the hairline that separates numbered sections (default on). */
+  rule?: boolean;
   class?: string;
 }
 
@@ -19,35 +26,58 @@ const {
   title,
   description,
   level = 2,
+  split = false,
+  rule = true,
   class: className,
   ...rest
 } = Astro.props;
 const Heading = `h${level}` as "h2" | "h3";
 const headingId = id && title ? `${id}-title` : undefined;
+const hasHeader = Boolean(eyebrow || title || description);
 ---
 
 <section
   id={id}
   aria-labelledby={headingId}
-  class:list={["py-12 sm:py-16", className]}
+  class:list={[
+    rule && "border-t border-line",
+    "py-16 sm:py-20 xl:py-28",
+    className,
+  ]}
   {...rest}
 >
-  <Container>
-    {(eyebrow || title || description) && (
-      <header class="mb-8 max-w-2xl sm:mb-10">
+  <Container class:list={[split && "grid gap-8 lg:grid-cols-12 lg:gap-10"]}>
+    {hasHeader && (
+      <header
+        class:list={[
+          split ? "lg:col-span-3" : "mb-10 max-w-2xl sm:mb-12",
+          split && "lg:sticky lg:top-24 lg:self-start",
+        ]}
+      >
         {eyebrow && (
-          <p class="mb-3 font-mono text-xs tracking-widest text-accent uppercase">
+          <p
+            class="font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase"
+            aria-hidden={/^\d+$/.test(eyebrow) ? "true" : undefined}
+          >
             {eyebrow}
           </p>
         )}
         {title && (
-          <Heading id={headingId} class="text-2xl font-semibold sm:text-3xl">
+          <Heading
+            id={headingId}
+            class="mt-2 text-2xl font-semibold sm:text-3xl"
+          >
             {title}
           </Heading>
         )}
-        {description && <p class="mt-3 text-fg-muted">{description}</p>}
+        {description && (
+          <p class="mt-3 max-w-[48ch] text-fg-muted">{description}</p>
+        )}
+        <slot name="header" />
       </header>
     )}
-    <slot />
+    <div class:list={[split && "min-w-0 lg:col-span-9"]}>
+      <slot />
+    </div>
   </Container>
 </section>

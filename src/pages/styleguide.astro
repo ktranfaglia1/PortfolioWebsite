@@ -3,23 +3,15 @@
  * Design-system review page (Phase 1). Not linked from the nav, excluded from
  * the sitemap, and marked noindex. Sample copy here is for review only.
  */
-import { ArrowRight, ArrowUpRight, Download, MapPin } from "@lucide/astro";
+import { ArrowRight, ArrowUpRight, Download } from "@lucide/astro";
 import { Image } from "astro:assets";
-import { site } from "../site.config";
-import {
-  getCurrentRole,
-  getEducation,
-  getExperience,
-  getProjects,
-  getSkillGroups,
-} from "../lib/content";
-import { getSkillIcon } from "../lib/skill-icons";
+import { getExperience, getProjects } from "../lib/content";
 import { formatDateRange } from "../lib/dates";
-import BrandIcon from "../components/ui/BrandIcon.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/layout/Container.astro";
-import BentoCell from "../components/ui/BentoCell.astro";
-import BentoGrid from "../components/ui/BentoGrid.astro";
+import CareerGraph from "../components/content/CareerGraph.astro";
+import ProjectRow from "../components/content/ProjectRow.astro";
+import AccentText from "../components/ui/AccentText.astro";
 import Button from "../components/ui/Button.astro";
 import Card from "../components/ui/Card.astro";
 import ImagePlaceholder from "../components/ui/ImagePlaceholder.astro";
@@ -43,6 +35,7 @@ const swatches = [
     className: "bg-accent-subtle",
     note: "Accent tint",
   },
+  { token: "warm", className: "bg-warm", note: "Glows, live dot" },
 ];
 
 const stack = [
@@ -55,13 +48,10 @@ const stack = [
 ];
 
 // Real content (Phase 2): proves every entry, image, and reference resolves.
-const now = await getCurrentRole();
 const projects = await getProjects();
 const featured = projects.filter((p) => p.data.tier === "featured");
 const professional = await getExperience("professional");
 const experience = await getExperience();
-const [education] = await getEducation();
-const skillGroups = await getSkillGroups();
 const groupCounts = Object.entries(
   Object.groupBy(experience, (e) => e.data.group),
 ).map(([group, entries]) => ({ group, count: entries?.length ?? 0 }));
@@ -106,6 +96,12 @@ const chessBot = featured.find((p) => p.id === "transformer-chess-bot");
           text-display · Geist 600
         </p>
         <p class="text-display font-semibold">Kyle Tranfaglia</p>
+      </div>
+      <div>
+        <p class="mb-2 font-mono text-xs text-fg-subtle">
+          font-serif · Instrument Serif italic, accents only
+        </p>
+        <p class="font-serif text-4xl text-fg italic">thinks in systems</p>
       </div>
       <div>
         <p class="mb-2 font-mono text-xs text-fg-subtle">
@@ -196,101 +192,37 @@ const chessBot = featured.find((p) => p.id === "transformer-chess-bot");
   </Section>
 
   <Section
-    id="bento"
+    id="editorial"
     eyebrow="Components"
-    title="Bento grid"
-    description="Rough preview of how the home page will be composed. Content and layout are finalized in Phase 3."
+    title="Editorial pieces"
+    description="The Phase 5.5 redesign: serif-italic accents, numbered split sections, case-study rows with outcome strips, and the career graph."
   >
-    <BentoGrid>
-      <BentoCell cols={2} rows={2}>
-        <div class="flex items-center gap-2">
-          <span class="relative flex size-2">
-            <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden"></span>
-            <span class="relative inline-flex size-2 rounded-full bg-accent"></span>
-          </span>
-          <p class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
-            Now
+    <div class="space-y-16">
+      <div>
+        <p class="mb-3 font-mono text-xs text-fg-subtle">
+          AccentText · copy marks one phrase with *asterisks*
+        </p>
+        <p class="max-w-[22ch] text-[clamp(1.75rem,1rem+2.4vw,3.5rem)] leading-[1.05] font-medium tracking-[-0.02em] text-fg-muted">
+          <AccentText text="Software engineer who *thinks in systems*." />
+        </p>
+      </div>
+      {chessBot && (
+        <div>
+          <p class="mb-3 font-mono text-xs text-fg-subtle">
+            ProjectRow · home and /projects
           </p>
+          <div class="border-y border-line">
+            <ProjectRow project={chessBot} number={1} />
+          </div>
         </div>
-        {now && (
-          <>
-            <h3 class="mt-4 text-2xl font-semibold">{now.data.role}</h3>
-            <p class="mt-1 text-fg-muted">
-              {now.data.org}
-              {now.data.orgDescription && (
-                <span>{` · ${now.data.orgDescription}`}</span>
-              )}
-            </p>
-            <p class="mt-4 text-fg-muted">{now.data.summary}</p>
-            <div class="mt-auto flex flex-wrap gap-2 pt-6">
-              {now.data.skills.slice(0, 5).map((s) => (
-                <Tag>{s}</Tag>
-              ))}
-            </div>
-          </>
-        )}
-      </BentoCell>
-      <BentoCell cols={2} padding="none" href="#bento">
-        {chessBot?.data.cover && (
-          <Image
-            src={chessBot.data.cover.src}
-            alt={chessBot.data.cover.alt}
-            widths={[480, 800, 1200]}
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            class="aspect-21/9 w-full border-b border-line object-cover object-top"
-          />
-        )}
-        <div class="p-5">
-          <h3 class="font-semibold">{chessBot?.data.title}</h3>
-          <p class="mt-1 text-sm text-fg-muted">
-            {chessBot?.data.stack.join(" · ")}
-          </p>
-        </div>
-      </BentoCell>
-      <BentoCell>
-        <p class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
-          Education
+      )}
+      <div>
+        <p class="mb-3 font-mono text-xs text-fg-subtle">
+          CareerGraph · /experience
         </p>
-        <p class="mt-auto text-lg font-semibold">
-          {education?.data.degrees.map((deg) => deg.name).join(" & ")}
-        </p>
-        <p class="text-sm text-fg-muted">
-          {education?.data.school}
-          {education?.data.distinction && (
-            <span>{` · ${education.data.distinction}`}</span>
-          )}
-        </p>
-      </BentoCell>
-      <BentoCell>
-        <p class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
-          Based in
-        </p>
-        <p class="mt-auto flex items-center gap-2 text-lg font-semibold">
-          <MapPin size={18} aria-hidden="true" class="text-accent" />
-          {site.location}
-        </p>
-      </BentoCell>
-      <BentoCell cols={4}>
-        <p class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
-          Stack
-        </p>
-        <div class="mt-4 flex flex-wrap gap-2">
-          {skillGroups
-            .flatMap((g) => g.data.items)
-            .filter((i) => i.icon)
-            .slice(0, 14)
-            .map((item) => {
-              const icon = getSkillIcon(item.icon!);
-              return (
-                <Tag>
-                  {icon && <BrandIcon icon={icon} size={12} />}
-                  {item.name}
-                </Tag>
-              );
-            })}
-        </div>
-      </BentoCell>
-    </BentoGrid>
+        <CareerGraph />
+      </div>
+    </div>
   </Section>
 
   <Section id="timeline" eyebrow="Components" title="Timeline">

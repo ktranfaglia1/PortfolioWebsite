@@ -33,9 +33,11 @@
 
   --ring: var(--accent);
 
-  /* Layout: page container width and side gutter (see Container.astro). */
-  --container-max: 72rem;
-  --gutter: 1rem;
+  /* Layout: page container width and side gutter (see Container.astro).
+     Content can grow to 110rem (1,760px); gutters scale with the viewport.
+     Body text keeps its own ~70ch measure inside that. */
+  --container-max: 110rem;
+  --gutter: clamp(1rem, 4vw, 4.5rem);
 
   /* Warm secondary glow, used only in decorative gradients. */
   --warm: oklch(0.8 0.14 62);
@@ -65,21 +67,6 @@
     0 1px 2px 0 oklch(0 0 0 / 0.04), 0 8px 24px -16px oklch(0 0 0 / 0.18);
 }
 
-@media (min-width: 640px) {
-  :root {
-    --gutter: 1.5rem;
-  }
-}
-@media (min-width: 1024px) {
-  :root {
-    --gutter: 2rem;
-  }
-}
-/* Wide layout: content grows to 110rem (1,760px) with fluid gutters. */
-:root[data-layout="wide"] {
-  --container-max: 110rem;
-  --gutter: clamp(1rem, 4vw, 4.5rem);
-}
 :root[data-theme="light"] {
   --warm: oklch(0.72 0.15 55);
 }
@@ -164,7 +151,7 @@
 
 @layer components {
   .prose {
-    @apply max-w-2xl text-fg-muted;
+    @apply max-w-[68ch] text-fg-muted;
     line-height: 1.75;
   }
   .prose > * + * {

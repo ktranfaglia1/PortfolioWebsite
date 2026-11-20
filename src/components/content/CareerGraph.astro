@@ -1,0 +1,219 @@
+---
+/**
+ * Career history drawn like `git log --graph`: one lane each for work,
+ * teaching, featured projects and education, newest first. The SVG is
+ * decorative; each row's text carries the information.
+ */
+import { getEducation, getExperience, getProjects } from "../../lib/content";
+import { formatMonthYear } from "../../lib/dates";
+import {
+  laneSegments,
+  shortHash,
+  type GraphEvent,
+} from "../../lib/career-graph";
+
+interface Props {
+  class?: string;
+}
+
+const lanes = [
+  { name: "work", color: "var(--accent)" },
+  { name: "teaching", color: "var(--warm)" },
+  { name: "projects", color: "var(--fg-muted)" },
+  {
+    name: "education",
+    color: "color-mix(in oklch, var(--accent) 50%, var(--warm))",
+  },
+];
+
+interface Row extends GraphEvent {
+  title: string;
+  meta: string;
+  href?: string;
+  /** Graduation merges the education lane into work. */
+  merge?: boolean;
+}
+
+const work = [
+  ...(await getExperience("professional")),
+  ...(await getExperience("leadership")),
+];
+const teaching = await getExperience("teaching");
+const featured = await getProjects("featured");
+const [education] = await getEducation();
+
+const rows: Row[] = [
+  ...work.map((e) => ({
+    id: e.id,
+    lane: 0,
+    date: e.data.start,
+    title: e.data.role,
+    meta: e.data.org,
+    href: `#${e.data.group}`,
+  })),
+  ...teaching.map((e) => ({
+    id: e.id,
+    lane: 1,
+    date: e.data.start,
+    title: e.data.role,
+    meta: e.data.org,
+    href: "#teaching",
+  })),
+  ...featured.map((p) => ({
+    id: p.id,
+    lane: 2,
+    date: p.data.start,
+    title: p.data.title,
+    meta: p.data.context ?? p.data.role,
+    href: `/projects/${p.id}`,
+  })),
+];
+if (education) {
+  const ed = education.data;
+  if (ed.end instanceof Date) {
+    rows.push({
+      id: `${education.id}-graduated`,
+      lane: 3,
+      date: ed.end,
+      title: `Graduated ${ed.distinction ?? ""}`.trim(),
+      meta: `${ed.degrees.map((d) => d.name).join(" & ")} · ${ed.school}`,
+      href: "#education",
+      merge: true,
+    });
+  }
+  rows.push({
+    id: `${education.id}-enrolled`,
+    lane: 3,
+    date: ed.start,
+    title: `Enrolled at ${ed.school}`,
+    meta: ed.degrees.map((d) => d.name).join(" & "),
+    href: "#education",
+  });
+}
+rows.sort((a, b) => b.date.getTime() - a.date.getTime());
+const segments = laneSegments(rows, lanes.length, [0]);
+const firstOfLane = new Set(
+  lanes.map((_, lane) => rows.findIndex((r) => r.lane === lane)),
+);
+
+const LANE_W = 20;
+const DOT_Y = 26;
+const graphWidth = lanes.length * LANE_W;
+const laneX = (lane: number) => LANE_W / 2 + lane * LANE_W;
+---
+
+<div class:list={[Astro.props.class]}>
+  <ul class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-xs text-fg-muted">
+    {lanes.map((l) => (
+      <li class="flex items-center gap-2">
+        <span
+          class="size-2.5 rounded-full"
+          style={`background:${l.color}`}
+          aria-hidden="true"
+        />
+        {l.name}
+      </li>
+    ))}
+  </ul>
+
+  <ol class="mt-6" aria-label="Career history, newest first">
+    {rows.map((r, i) => {
+      const lane = lanes[r.lane]!;
+      return (
+        <li class="relative grid grid-cols-[auto_1fr] gap-x-4 sm:grid-cols-[auto_4.5rem_1fr_auto]">
+          <div
+            class="relative min-h-14"
+            style={`width:${graphWidth}px`}
+            aria-hidden="true"
+          >
+            <svg class="absolute inset-0 h-full w-full overflow-visible">
+              {segments[i]!.map((seg, li) => {
+                const x = laneX(li);
+                const stroke = lanes[li]!.color;
+                const [y1, y2] =
+                  seg === "full"
+                    ? ["0", "100%"]
+                    : seg === "top"
+                      ? ["0", String(DOT_Y)]
+                      : seg === "bottom"
+                        ? [String(DOT_Y), "100%"]
+                        : [null, null];
+                return y1 === null ? null : (
+                  <line
+                    x1={x}
+                    x2={x}
+                    y1={y1}
+                    y2={y2}
+                    stroke={stroke}
+                    stroke-width="2"
+                  />
+                );
+              })}
+              {r.merge && (
+                <path
+                  d={`M ${laneX(r.lane)} ${DOT_Y} C ${laneX(r.lane)} ${DOT_Y - 18}, ${laneX(0)} ${DOT_Y - 6}, ${laneX(0)} 0`}
+                  fill="none"
+                  stroke={lane.color}
+                  stroke-width="2"
+                />
+              )}
+              <circle
+                cx={laneX(r.lane)}
+                cy={DOT_Y}
+                r="5.5"
+                fill="var(--canvas)"
+                stroke={lane.color}
+                stroke-width="2.5"
+              />
+            </svg>
+          </div>
+          <p
+            class="hidden pt-[1.05rem] font-mono text-xs text-fg-subtle sm:block"
+            aria-hidden="true"
+          >
+            {shortHash(r.id)}
+          </p>
+          <div class="min-w-0 py-3.5">
+            <p class="flex flex-wrap items-center gap-2">
+              {i === 0 && (
+                <span class="rounded-full border border-accent/50 px-2 py-0.5 font-mono text-[0.6875rem] text-accent">
+                  HEAD
+                </span>
+              )}
+              {firstOfLane.has(i) && (
+                <span
+                  class="rounded-full px-2 py-0.5 font-mono text-[0.6875rem] text-fg-muted"
+                  style={`border:1px solid ${lane.color}`}
+                >
+                  {lane.name}
+                </span>
+              )}
+              {r.merge && (
+                <span class="font-mono text-xs text-fg-subtle">merge:</span>
+              )}
+              {r.href ? (
+                <a
+                  href={r.href}
+                  class="font-medium text-fg underline-offset-4 hover:text-accent hover:underline"
+                >
+                  {r.title}
+                </a>
+              ) : (
+                <span class="font-medium text-fg">{r.title}</span>
+              )}
+            </p>
+            <p class="mt-0.5 text-sm text-fg-muted">
+              {r.meta}
+              <span class="font-mono text-xs text-fg-subtle sm:hidden">
+                {` · ${formatMonthYear(r.date)}`}
+              </span>
+            </p>
+          </div>
+          <p class="hidden pt-[1.05rem] text-right font-mono text-xs text-fg-subtle sm:block">
+            {formatMonthYear(r.date)}
+          </p>
+        </li>
+      );
+    })}
+  </ol>
+</div>
