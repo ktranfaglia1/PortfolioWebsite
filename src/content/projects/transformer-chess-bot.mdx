@@ -33,13 +33,32 @@ pairs a transformer-style evaluator with Monte Carlo Tree Search, inspired by Al
 
 ## My contributions
 
-- Built the complete PySide6 GUI, including real-time evaluation visualization.
-- Improved the core transformer model with self-attention.
-- Cleaned and assembled training data from millions of Lichess games across skill levels, plus grandmaster games.
+- Built the complete PySide6 GUI: move validation, move history, and a live display of the
+  model's win, draw, and loss probabilities.
+- Built the larger attention-based model: self-attention blocks, residual connections,
+  feed-forward layers, and layer normalization, wired into MCTS for move choice.
+- Introduced position averaging, which resolves the contradictory labels that come from the
+  same position appearing in games with different results.
+- Built the training datasets: Lichess game sets, grandmaster-only sets, a balanced set with
+  equal wins, losses, and draws, and 10 variants filtered by minimum Elo.
+- Tuned MCTS and tested trained model weights inside the app.
+
+My teammate, Dustin O'Brien, designed and trained the network variants and wrote the
+pipeline that converts PGN game records to tensors.
 
 ## Outcome
 
-The model reached about 91% validation accuracy at predicting game outcomes (win, draw, or loss) from grandmaster positions. Its playing strength (an
-estimated 400 Elo) fell short of our target, which taught us how much a strategic game AI
-depends on the quality of its training data. The project still showed that language-model
-techniques are a workable way to evaluate chess positions.
+- The model reached about 91% validation accuracy at predicting game outcomes (win, draw, or
+  loss).
+- Its playing strength, an estimated 400 Elo, fell far short of our 2200 target. It often
+  missed undefended pieces and immediate threats.
+- **Data quality was the main lesson.** Grandmaster games are high quality but rarely show a
+  mistake being punished. Lower-rated games show those lessons but add noise. A hybrid dataset
+  helped, but our hardware's memory limits capped both data size and model size.
+- **Layer order mattered.** Moving layer normalization to the start of each block noticeably
+  improved the models.
+
+The probabilistic search did play in a more varied, human-like way than a traditional engine,
+which partly supported our hypothesis. Next steps from the report: self-play reinforcement
+learning, policy and value outputs for the tree search as AlphaZero uses, and distributed
+training across sharded data.

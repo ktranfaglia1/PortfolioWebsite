@@ -310,6 +310,18 @@ Diagnosis:
       - arbitrary-length integer calculator: Oct 2023 (COSC 320)
       - hill-climb decryption: Nov 2023 (COSC 320)
       - parallel query parser: Nov–Dec 2024 (COSC 420, five-person team)
+  - **Papers are the source of truth** (Kyle, 2026-11-20). Where a paper and other sources disagree, follow the paper.
+    - Done:
+      - The four paper-backed pages (Laridae, Sport Classification, Transformer Chess Bot, Chess Openings) were rewritten from their papers.
+      - The Laridae journal PDF is in `reference/`; Kyle's article is on pages 63–67.
+    - Transformer Chess Bot: the report never says the ~91% was measured on grandmaster games. The final dataset mixed GM and mid-Elo games, so don't say "grandmaster" for that figure.
+    - Resume PDF (`public/resume/`):
+      - It is ReportLab output with no source file anywhere.
+      - Edit it by replacing whole text lines in the content stream; ASCII glyphs are all in the font subsets. This keeps the design byte-identical.
+      - Fixed so far:
+        - Music Painter stack: now PySide2, NumPy.
+        - Pynacle: the "iterative deepening" claim is gone.
+        - Chess bot: "92% on grandmaster games" is now "about 91% validation accuracy predicting game outcomes".
 - **R6. Verify.** `pnpm verify`, the screenshot checks, Lighthouse, and axe in both themes.
 
 **Phase 6: Final content pass** (on hold until 5.5 is done; shrinks to whatever R5 doesn't cover)

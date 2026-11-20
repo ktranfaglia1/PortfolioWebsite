@@ -32,12 +32,20 @@ cleaned and analyzed more than six million games from Lichess.org to find out.
 
 ## Approach
 
-- Cleaned and preprocessed the full dataset in Python.
-- Mapped opening preferences across Elo groups and event types to see how strategy changes with skill.
-- Built logistic regression and random forest models to test how well Elo and opening choice predict results.
+- Loaded and cleaned 6.25 million Lichess games from July 2016 with pandas. The average
+  player was rated about 1750.
+- Engineered features: five skill groups (Beginner up to Master), the average Elo per game,
+  and opening names grouped across their variations.
+- Mapped opening preferences across Elo groups and event types, from bullet to correspondence.
+- Built logistic regression and random forest models (scikit-learn) to test how well Elo and
+  game context predict results.
 
 ## Findings
 
+- **Openings follow skill and format.** The Sicilian Defense was the most popular opening in
+  every group except Beginners, who favored the King's Pawn. The English Opening and Caro-Kann
+  stood out among Experts and Masters. Formats had their own favorites too, such as the Modern
+  Defense in bullet and the Italian Game in classical tournaments.
 - Elo difference was by far the strongest predictor of who wins. White's win rate climbs from
   50% at even ratings to 93% with a 500-point edge, closely tracking the Elo formula.
 - A logistic regression on Elo features alone reached 64.9% accuracy, against a 50% baseline.

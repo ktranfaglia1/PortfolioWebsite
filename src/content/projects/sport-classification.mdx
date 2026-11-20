@@ -36,15 +36,31 @@ sleep, and concussion history.
 
 ## Approach
 
-- Cleaned the survey data, normalized free-text answers, and ran statistical tests to find the sleep and attention features linked to concussion history.
-- Used PCA and several clustering methods to look for natural groupings.
+- Filtered the Sports Cog 1 survey (ages 18–25) from 360+ responses down to 332 valid
+  participants, removing personal details and anyone who failed attention checks.
+- Normalized free-text answers about sports, positions, sleep schedules, and concussions using
+  regular expressions, plus the OpenAI API via LangChain for the hardest cases.
+- Ran two-sample proportion tests (in Python and R) to find the sleep and attention responses
+  that differ between people with and without a concussion history. This cut more than 150
+  features down to 16: 9 sleep features and 7 attention features.
+- Reduced dimensions with PCA, then compared k-means, hierarchical, and DBSCAN clustering using
+  silhouette, Calinski-Harabasz, and Davies-Bouldin scores.
 
 ## Findings
 
-- A two-cluster solution fit best, which supports the traditional binary classification.
-- Sleep features lined up most closely with the conventional labels, especially for football.
-- Attention features showed patterns that didn't always match the existing categories.
+- **Concussion history shows up in sleep and attention.** 45% of concussed athletes reported
+  poor sleep, against 18% of other athletes. 21% said they "always" have trouble concentrating,
+  against 2%.
+- **Football carries an outsized burden.** It accounted for 21.4% of reported concussions while
+  making up 9.6% of athletes.
+- **Two clusters fit best.** All three scores agreed on k = 2 (silhouette 0.35). Clustering on
+  the 16 significant features separated cleanly; random or full feature sets did not. That
+  supports the traditional two-way split between collision and contact sports.
+- **The labels don't map cleanly.** Sleep-based clusters matched convention best, especially
+  for football. Attention-based clusters were the most cohesive (silhouette up to 0.81) but
+  often put football and soccer players in the "contact" group. Changing the significance
+  threshold could flip where football landed.
 
-These results show where traditional labels fall short and how cognitive-behavioral data
-could better reflect repeated head-impact exposure. The work sets up future studies using
-position-specific and neurological data to improve athlete-safety models.
+The traditional labels capture part of the picture, but not reliably. Future work should add
+player positions (a kicker and a lineman face very different risks), EEG data, and better
+coverage of collision sports beyond football.
