@@ -1,6 +1,6 @@
 # Portfolio Redesign Plan
 
-> **Status: APPROVED · Phase 0 in progress.** Deploy approach (§7) is pending the server admin's answers.
+> **Status: APPROVED · Phases 0–1 done · Phase 2 in progress.** Deploy approach (§7) is pending the server admin's answers.
 > Branch: `redesign` · Legacy site preserved on `legacy` · Production: `main` → https://kyletranfaglia.top
 > Last updated: 2026-11-19
 
@@ -35,7 +35,7 @@ Tagline source (LinkedIn): *Full-Stack Development, Data & Analytics, AI*.
 | Testing | **Standard.** CI on every PR (failures block the merge): `astro check`, ESLint, Prettier check, build. Vitest for `src/lib` logic. Playwright smoke test for every route + axe scan in both themes. Lighthouse CI as a non-blocking report from Phase 5. |
 
 ### Design
-**Bento + polished product feel**, using the terminal-minimal type system (sans + mono accents) and restrained motion. **Dark by default** with a light/dark toggle (follows system on first visit, remembers the choice, no flash on load). References: linear.app, raycast.com, vercel.com (feel); brittanychiang.com, leerob.com (type and restraint).
+**Bento + polished product feel**, using the terminal-minimal type system (sans + mono accents) and restrained motion. **Dark-first design** with a light/dark toggle (first visit follows the OS setting, dark if none; the toggle remembers the choice; no flash on load). References: linear.app, raycast.com, vercel.com (feel); brittanychiang.com, leerob.com (type and restraint).
 
 ### Interactivity
 ⌘K command palette · light/dark toggle · project filtering (state kept in the URL) · GitHub activity (fetched at build time) · "Now" card · one small easter egg. Everything works with the keyboard and respects `prefers-reduced-motion`.
@@ -120,7 +120,8 @@ showLink?: boolean, order?, draft?
 ├── src/
 │   ├── assets/images/
 │   ├── components/
-│   │   └── islands/        # CommandPalette, ThemeToggle, ProjectFilter, ContactForm, GitHubActivity
+│   │   └── islands/        # CommandPalette, ProjectFilter, ContactForm, GitHubActivity
+│   │                       # (theme toggle and mobile menu are plain .astro + tiny inline scripts: no React needed)
 │   ├── content/            # projects/, experience/, education.yaml, skills.yaml
 │   ├── content.config.ts
 │   ├── layouts/

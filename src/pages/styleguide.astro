@@ -1,0 +1,297 @@
+---
+/**
+ * Design-system review page (Phase 1). Not linked from the nav, excluded from
+ * the sitemap, and marked noindex. Sample copy here is for review only.
+ */
+import { ArrowRight, ArrowUpRight, Download, MapPin } from "@lucide/astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Container from "../components/layout/Container.astro";
+import BentoCell from "../components/ui/BentoCell.astro";
+import BentoGrid from "../components/ui/BentoGrid.astro";
+import Button from "../components/ui/Button.astro";
+import Card from "../components/ui/Card.astro";
+import ImagePlaceholder from "../components/ui/ImagePlaceholder.astro";
+import Section from "../components/ui/Section.astro";
+import Tag from "../components/ui/Tag.astro";
+import Timeline from "../components/ui/Timeline.astro";
+import TimelineItem from "../components/ui/TimelineItem.astro";
+
+const swatches = [
+  { token: "canvas", className: "bg-canvas", note: "Page background" },
+  { token: "surface", className: "bg-surface", note: "Cards" },
+  { token: "surface-2", className: "bg-surface-2", note: "Hover, insets" },
+  { token: "line", className: "bg-line", note: "Borders" },
+  { token: "line-strong", className: "bg-line-strong", note: "Hover borders" },
+  { token: "fg", className: "bg-fg", note: "Primary text" },
+  { token: "fg-muted", className: "bg-fg-muted", note: "Body text" },
+  { token: "fg-subtle", className: "bg-fg-subtle", note: "Meta text" },
+  { token: "accent", className: "bg-accent", note: "Links, focus, highlights" },
+  {
+    token: "accent-subtle",
+    className: "bg-accent-subtle",
+    note: "Accent tint",
+  },
+];
+
+const stack = [
+  "TypeScript",
+  "React",
+  "Node.js",
+  "PostgreSQL",
+  "Python",
+  "PyTorch",
+];
+const d = (iso: string) => new Date(iso);
+---
+
+<BaseLayout
+  title="Style guide | Kyle Tranfaglia"
+  description="Design system reference for the portfolio redesign."
+  noindex
+>
+  <Container class="pt-16 pb-4 sm:pt-24">
+    <p class="font-mono text-xs tracking-widest text-accent uppercase">
+      Phase 1 · Design system
+    </p>
+    <h1 class="mt-3 text-display font-semibold">Style guide</h1>
+    <p class="mt-4 max-w-2xl text-lg text-fg-muted">
+      Every token and base component in one place. Use the theme toggle in the
+      header to review light mode. This page is not linked from the site and is
+      hidden from search.
+    </p>
+  </Container>
+
+  <Section id="color" eyebrow="Tokens" title="Color">
+    <ul class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+      {swatches.map((s) => (
+        <li class="overflow-hidden rounded-xl border border-line bg-surface">
+          <div class:list={["h-16 border-b border-line", s.className]} />
+          <div class="p-3">
+            <p class="font-mono text-xs text-fg">{s.token}</p>
+            <p class="mt-0.5 text-xs text-fg-subtle">{s.note}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section id="type" eyebrow="Tokens" title="Typography">
+    <div class="space-y-6">
+      <div>
+        <p class="mb-2 font-mono text-xs text-fg-subtle">
+          text-display · Geist 600
+        </p>
+        <p class="text-display font-semibold">Kyle Tranfaglia</p>
+      </div>
+      <div>
+        <p class="mb-2 font-mono text-xs text-fg-subtle">
+          text-3xl · section title
+        </p>
+        <p class="text-3xl font-semibold tracking-tight">Selected projects</p>
+      </div>
+      <div>
+        <p class="mb-2 font-mono text-xs text-fg-subtle">
+          text-lg · card title
+        </p>
+        <p class="text-lg font-semibold tracking-tight">
+          Transformer Chess Bot
+        </p>
+      </div>
+      <div class="max-w-2xl">
+        <p class="mb-2 font-mono text-xs text-fg-subtle">
+          text-base · fg-muted · body
+        </p>
+        <p class="text-fg-muted">
+          Re-architected an internal Python/AWS tool into a multi-tenant,
+          production TypeScript platform and expanded it from VC-only to support
+          PE firms.
+        </p>
+      </div>
+      <div>
+        <p class="mb-2 font-mono text-xs text-fg-subtle">
+          font-mono · meta and labels
+        </p>
+        <p class="font-mono text-sm text-fg-muted">
+          Dec 2025 – Present · Durham, NC
+        </p>
+      </div>
+      <p>
+        Inline link:{" "}
+        <a href="#type" class="text-accent underline-offset-4 hover:underline">
+          view the case study
+        </a>
+        .
+      </p>
+    </div>
+  </Section>
+
+  <Section id="buttons" eyebrow="Components" title="Buttons and tags">
+    <div class="flex flex-wrap items-center gap-3">
+      <Button href="#buttons">
+        View projects <ArrowRight size={16} aria-hidden="true" />
+      </Button>
+      <Button variant="secondary" href="#buttons">
+        <Download size={16} aria-hidden="true" /> Resume
+      </Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button size="sm" variant="secondary">
+        Small
+      </Button>
+      <Button size="lg">Large</Button>
+    </div>
+    <div class="mt-6 flex flex-wrap gap-2">
+      {stack.map((s) => (
+        <Tag>{s}</Tag>
+      ))}
+      <Tag variant="accent">Featured</Tag>
+    </div>
+  </Section>
+
+  <Section id="cards" eyebrow="Components" title="Cards">
+    <div class="grid gap-4 sm:grid-cols-2">
+      <Card>
+        <p class="font-mono text-xs text-fg-subtle">Static card</p>
+        <h3 class="mt-2 text-lg font-semibold">City of Cambridge</h3>
+        <p class="mt-2 text-fg-muted">
+          Python GIS application integrating LiDAR and DEM data to visualize
+          FEMA flood projections.
+        </p>
+      </Card>
+      <Card href="#cards">
+        <p class="font-mono text-xs text-fg-subtle">Linked card (hover me)</p>
+        <h3 class="mt-2 flex items-center gap-1 text-lg font-semibold">
+          Music Painter{" "}
+          <ArrowUpRight size={18} aria-hidden="true" class="text-fg-subtle" />
+        </h3>
+        <p class="mt-2 text-fg-muted">
+          FFT-based desktop app that turns audio into images. Accepted at five
+          conferences.
+        </p>
+      </Card>
+    </div>
+  </Section>
+
+  <Section
+    id="bento"
+    eyebrow="Components"
+    title="Bento grid"
+    description="Rough preview of how the home page will be composed. Content and layout are finalized in Phase 3."
+  >
+    <BentoGrid>
+      <BentoCell cols={2} rows={2}>
+        <div class="flex items-center gap-2">
+          <span class="relative flex size-2">
+            <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden"></span>
+            <span class="relative inline-flex size-2 rounded-full bg-accent"></span>
+          </span>
+          <p class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
+            Now
+          </p>
+        </div>
+        <h3 class="mt-4 text-2xl font-semibold">
+          Co-Founder &amp; Lead Software Engineer
+        </h3>
+        <p class="mt-1 text-fg-muted">Pitchfire · AI deal-flow platform</p>
+        <p class="mt-4 text-fg-muted">
+          Sole engineer for a multi-tenant TypeScript platform serving 145 users
+          across 111 venture and private-equity firms.
+        </p>
+        <div class="mt-auto flex flex-wrap gap-2 pt-6">
+          {["TypeScript", "React", "PostgreSQL", "pgvector", "Claude"].map(
+            (s) => (
+              <Tag>{s}</Tag>
+            ),
+          )}
+        </div>
+      </BentoCell>
+      <BentoCell cols={2} padding="none" href="#bento">
+        <ImagePlaceholder
+          label="Transformer Chess Bot GUI"
+          aspect="21 / 9"
+          class="rounded-none border-0 border-b"
+        />
+        <div class="p-5">
+          <h3 class="font-semibold">Transformer Chess Bot</h3>
+          <p class="mt-1 text-sm text-fg-muted">PyTorch evaluator + MCTS</p>
+        </div>
+      </BentoCell>
+      <BentoCell>
+        <p class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
+          Education
+        </p>
+        <p class="mt-auto text-lg font-semibold">
+          B.S. CS &amp; B.S. Data Science
+        </p>
+        <p class="text-sm text-fg-muted">
+          Salisbury University · Summa Cum Laude
+        </p>
+      </BentoCell>
+      <BentoCell>
+        <p class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
+          Based in
+        </p>
+        <p class="mt-auto flex items-center gap-2 text-lg font-semibold">
+          <MapPin size={18} aria-hidden="true" class="text-accent" /> Durham, NC
+        </p>
+      </BentoCell>
+      <BentoCell cols={4}>
+        <p class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
+          Stack
+        </p>
+        <div class="mt-4 flex flex-wrap gap-2">
+          {[
+            ...stack,
+            "Express",
+            "Tailwind CSS",
+            "scikit-learn",
+            "Pandas",
+            "AWS",
+          ].map((s) => (
+            <Tag>{s}</Tag>
+          ))}
+        </div>
+      </BentoCell>
+    </BentoGrid>
+  </Section>
+
+  <Section id="timeline" eyebrow="Components" title="Timeline">
+    <Timeline>
+      <TimelineItem
+        position="Co-Founder & Lead Software Engineer"
+        org="Pitchfire"
+        start={d("2025-12-01")}
+        end="present"
+        summary="Two-sided AI deal-flow platform, incubated by New North Ventures."
+      >
+        <ul class="list-disc space-y-1.5 pl-5 marker:text-fg-subtle">
+          <li>
+            Designed the PostgreSQL schema and pgvector semantic search behind
+            matching across nearly 5,000 VC firms.
+          </li>
+          <li>
+            Built the AI layer: deck analysis, thesis-match scoring, and a
+            permission-aware assistant.
+          </li>
+        </ul>
+      </TimelineItem>
+      <TimelineItem
+        position="Software Engineering Intern"
+        org="City of Cambridge"
+        start={d("2025-02-01")}
+        end={d("2025-04-01")}
+        summary="FEMA flood visualization and cost-benefit analysis."
+      />
+    </Timeline>
+  </Section>
+
+  <Section id="placeholder" eyebrow="Components" title="Image placeholder">
+    <div class="grid gap-4 sm:grid-cols-2">
+      <ImagePlaceholder label="Pitchfire investor workspace" />
+      <ImagePlaceholder
+        label="Pitchfire logo"
+        aspect="1 / 1"
+        class="max-w-48"
+      />
+    </div>
+  </Section>
+</BaseLayout>

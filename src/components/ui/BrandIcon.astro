@@ -1,0 +1,24 @@
+---
+import type { BrandMark } from "../../icons/brands";
+
+interface Props {
+  icon: BrandMark;
+  size?: number;
+  class?: string;
+}
+
+const { icon, size = 18, class: className } = Astro.props;
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width={size}
+  height={size}
+  fill="currentColor"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+>
+  <path d={icon.path}></path>
+</svg>

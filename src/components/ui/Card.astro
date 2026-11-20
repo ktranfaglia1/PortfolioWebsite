@@ -1,0 +1,42 @@
+---
+interface Props {
+  /** Makes the whole card a link. Don't nest other links inside a linked card. */
+  href?: string;
+  external?: boolean;
+  padding?: "none" | "md" | "lg";
+  class?: string;
+}
+
+const {
+  href,
+  external = false,
+  padding = "md",
+  class: className,
+} = Astro.props;
+
+const paddings = { none: "", md: "p-5 sm:p-6", lg: "p-6 sm:p-8" } as const;
+
+const classes = [
+  "relative flex flex-col overflow-hidden rounded-2xl border border-line bg-surface shadow-card",
+  paddings[padding],
+  href &&
+    "transition-[border-color,background-color,transform] duration-200 ease-snappy hover:-translate-y-0.5 hover:border-line-strong hover:bg-surface-2",
+  className,
+];
+---
+
+{href ? (
+  <a
+    href={href}
+    class:list={classes}
+    target={external ? "_blank" : undefined}
+    rel={external ? "noopener noreferrer" : undefined}
+  >
+    <slot />
+    {external && <span class="sr-only">(opens in a new tab)</span>}
+  </a>
+) : (
+  <div class:list={classes}>
+    <slot />
+  </div>
+)}

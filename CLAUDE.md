@@ -21,6 +21,9 @@ Node 26 (`nvm use`), pnpm. **See PLAN.md** for all decisions, the phase plan, an
 - Style with Tailwind utilities that reference design tokens; no raw hex values in components.
 - Pure logic goes in `src/lib/` with Vitest tests next to it (`*.test.ts`).
 - New routes get added to the `routes` list in `tests/e2e/smoke.spec.ts`.
+- Whitespace between an `{expression}` and a following element can be dropped by the Astro compiler, and Prettier rewrites `{" "}` back to a plain space. Put separators inside a string expression instead: `<span>{` · ${org}`}</span>`.
+- Design tokens live in `src/styles/global.css`. Tailwind's default palette is disabled, so only semantic colors exist (`bg-canvas`, `bg-surface`, `text-fg-muted`, `border-line`, `bg-accent`, ...). Review components on `/styleguide` (noindex, not in the sitemap).
+- Theme: follows the OS setting until the toggle saves a choice (dark if no OS preference); `<html data-theme>` is set before paint by the inline script in `BaseLayout.astro`; changes go through `src/scripts/theme.ts`.
 
 ## Guardrails
 - Home page JS budget: < 100 KB gzipped. Check accessibility in both themes; respect `prefers-reduced-motion`.

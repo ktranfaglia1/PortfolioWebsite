@@ -1,0 +1,41 @@
+---
+import Card from "./Card.astro";
+
+interface Props {
+  /** Columns on desktop (4-col grid). Tablet caps at 2. */
+  cols?: 1 | 2 | 3 | 4;
+  /** Rows on tablet and up. */
+  rows?: 1 | 2;
+  href?: string;
+  external?: boolean;
+  padding?: "none" | "md" | "lg";
+  class?: string;
+}
+
+const {
+  cols = 1,
+  rows = 1,
+  href,
+  external,
+  padding,
+  class: className,
+} = Astro.props;
+
+// Literal class names so Tailwind can see them.
+const colClasses = {
+  1: "",
+  2: "sm:col-span-2",
+  3: "sm:col-span-2 lg:col-span-3",
+  4: "sm:col-span-2 lg:col-span-4",
+} as const;
+const rowClasses = { 1: "", 2: "sm:row-span-2" } as const;
+---
+
+<Card
+  href={href}
+  external={external}
+  padding={padding}
+  class:list={[colClasses[cols], rowClasses[rows], className]}
+>
+  <slot />
+</Card>

@@ -1,6 +1,6 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const PORT = 4321;
+const PORT = 4322;
 
 /**
  * E2E tests run against the production build served by `astro preview`.

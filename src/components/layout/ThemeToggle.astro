@@ -1,0 +1,49 @@
+---
+import { Moon, Sun } from "@lucide/astro";
+---
+
+<!--
+  The visible icon is driven by CSS from <html data-theme>, so it is correct
+  before any JS runs. JS only handles clicks and keeps aria-pressed in sync.
+-->
+<button
+  type="button"
+  data-theme-toggle
+  aria-pressed="true"
+  class="inline-flex size-9 items-center justify-center rounded-lg text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
+>
+  <span class="sr-only">Dark mode</span>
+  <Sun size={18} aria-hidden="true" class="theme-icon-sun" />
+  <Moon size={18} aria-hidden="true" class="theme-icon-moon" />
+</button>
+
+<style>
+  /* Dark: show the sun (switch to light). Light: show the moon. */
+  :global(:root[data-theme="light"]) .theme-icon-sun,
+  :global(:root:not([data-theme="light"])) .theme-icon-moon {
+    display: none;
+  }
+</style>
+
+<script>
+  import {
+    followSystemTheme,
+    getTheme,
+    THEME_CHANGE_EVENT,
+    toggleTheme,
+  } from "../../scripts/theme";
+
+  const buttons = document.querySelectorAll<HTMLButtonElement>(
+    "[data-theme-toggle]",
+  );
+
+  function sync() {
+    const pressed = String(getTheme() === "dark");
+    buttons.forEach((b) => b.setAttribute("aria-pressed", pressed));
+  }
+
+  buttons.forEach((b) => b.addEventListener("click", () => toggleTheme()));
+  document.addEventListener(THEME_CHANGE_EVENT, sync);
+  followSystemTheme();
+  sync();
+</script>

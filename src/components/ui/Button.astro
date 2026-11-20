@@ -1,0 +1,71 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Variant = "primary" | "secondary" | "ghost";
+type Size = "sm" | "md" | "lg";
+
+interface Props {
+  variant?: Variant;
+  size?: Size;
+  /** Renders an <a> when set, otherwise a <button>. */
+  href?: string;
+  /** Opens in a new tab with an accessible hint. */
+  external?: boolean;
+  download?: boolean | string;
+  type?: "button" | "submit" | "reset";
+  class?: string;
+  "aria-label"?: HTMLAttributes<"a">["aria-label"];
+}
+
+const {
+  variant = "primary",
+  size = "md",
+  href,
+  external = false,
+  download,
+  type = "button",
+  class: className,
+  ...rest
+} = Astro.props;
+
+const variants: Record<Variant, string> = {
+  primary:
+    "bg-accent text-accent-fg hover:brightness-110 active:brightness-95 shadow-card",
+  secondary:
+    "border border-line bg-surface text-fg hover:border-line-strong hover:bg-surface-2",
+  ghost: "text-fg-muted hover:bg-surface-2 hover:text-fg",
+};
+
+const sizes: Record<Size, string> = {
+  sm: "h-8 px-3 text-sm gap-1.5",
+  md: "h-10 px-4 text-sm gap-2",
+  lg: "h-12 px-5 text-base gap-2",
+};
+
+const classes = [
+  "inline-flex items-center justify-center rounded-lg font-medium whitespace-nowrap",
+  "transition-[background-color,border-color,color,filter] duration-150 ease-snappy",
+  "disabled:pointer-events-none disabled:opacity-50",
+  variants[variant],
+  sizes[size],
+  className,
+];
+---
+
+{href ? (
+  <a
+    href={href}
+    class:list={classes}
+    target={external ? "_blank" : undefined}
+    rel={external ? "noopener noreferrer" : undefined}
+    download={download}
+    {...rest}
+  >
+    <slot />
+    {external && <span class="sr-only">(opens in a new tab)</span>}
+  </a>
+) : (
+  <button type={type} class:list={classes} {...rest}>
+    <slot />
+  </button>
+)}

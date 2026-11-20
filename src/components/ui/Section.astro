@@ -1,0 +1,50 @@
+---
+import Container from "../layout/Container.astro";
+
+interface Props {
+  id?: string;
+  /** Small mono label above the title, e.g. "Experience". */
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  /** Heading level for the title. Pages own the single <h1>. */
+  level?: 2 | 3;
+  class?: string;
+}
+
+const {
+  id,
+  eyebrow,
+  title,
+  description,
+  level = 2,
+  class: className,
+} = Astro.props;
+const Heading = `h${level}` as "h2" | "h3";
+const headingId = id && title ? `${id}-title` : undefined;
+---
+
+<section
+  id={id}
+  aria-labelledby={headingId}
+  class:list={["py-12 sm:py-16", className]}
+>
+  <Container>
+    {(eyebrow || title || description) && (
+      <header class="mb-8 max-w-2xl sm:mb-10">
+        {eyebrow && (
+          <p class="mb-3 font-mono text-xs tracking-widest text-accent uppercase">
+            {eyebrow}
+          </p>
+        )}
+        {title && (
+          <Heading id={headingId} class="text-2xl font-semibold sm:text-3xl">
+            {title}
+          </Heading>
+        )}
+        {description && <p class="mt-3 text-fg-muted">{description}</p>}
+      </header>
+    )}
+    <slot />
+  </Container>
+</section>

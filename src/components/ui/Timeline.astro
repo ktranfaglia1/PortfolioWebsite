@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<ol
+  class:list={[
+    "relative space-y-10 border-l border-line pl-6 sm:pl-8",
+    className,
+  ]}
+>
+  <slot />
+</ol>

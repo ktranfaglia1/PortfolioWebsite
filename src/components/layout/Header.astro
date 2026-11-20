@@ -1,0 +1,123 @@
+---
+import { Menu, X } from "@lucide/astro";
+import { site } from "../../site.config";
+import Container from "./Container.astro";
+import ThemeToggle from "./ThemeToggle.astro";
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+function isActive(href: string): boolean {
+  if (href === "/") return path === "/";
+  return path === href || path.startsWith(`${href}/`);
+}
+---
+
+<header class="sticky top-0 z-40 border-b border-line bg-canvas/80 backdrop-blur-md supports-[backdrop-filter]:bg-canvas/70">
+  <Container class="flex h-16 items-center justify-between gap-4">
+    <a
+      href="/"
+      class="group flex items-center gap-2.5 rounded-md font-mono text-sm text-fg"
+    >
+      <!-- The accessible name comes from the sr-only text (no aria-label), so
+           it never conflicts with the visible wordmark (WCAG 2.5.3). -->
+      <span
+        class="grid size-8 place-items-center rounded-lg border border-line bg-surface text-xs font-semibold text-accent transition-colors group-hover:border-line-strong"
+        aria-hidden="true"
+      >
+        KT
+      </span>
+      <span class="hidden sm:inline" aria-hidden="true">
+        kyle.tranfaglia
+      </span>
+      <span class="sr-only">{site.name}, home</span>
+    </a>
+
+    <nav aria-label="Main" class="hidden md:block">
+      <ul class="flex items-center gap-1">
+        {site.nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              class="rounded-lg px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg aria-[current=page]:text-fg aria-[current=page]:bg-surface-2"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-1">
+      <ThemeToggle />
+      <button
+        type="button"
+        class="inline-flex size-9 items-center justify-center rounded-lg text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg md:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        data-menu-button
+      >
+        <span class="sr-only">Menu</span>
+        <Menu size={20} aria-hidden="true" class="menu-icon-open" />
+        <X size={20} aria-hidden="true" class="menu-icon-close hidden" />
+      </button>
+    </div>
+  </Container>
+
+  <nav
+    id="mobile-nav"
+    aria-label="Main"
+    class="border-t border-line md:hidden"
+    hidden
+  >
+    <Container class="py-3">
+      <ul class="flex flex-col">
+        {site.nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              class="block rounded-lg px-3 py-3 text-base text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg aria-[current=page]:text-fg aria-[current=page]:bg-surface-2"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </nav>
+</header>
+
+<script>
+  const button =
+    document.querySelector<HTMLButtonElement>("[data-menu-button]");
+  const panel = document.getElementById("mobile-nav");
+
+  if (button && panel) {
+    const openIcon = button.querySelector(".menu-icon-open");
+    const closeIcon = button.querySelector(".menu-icon-close");
+
+    const setOpen = (open: boolean) => {
+      panel.hidden = !open;
+      button.setAttribute("aria-expanded", String(open));
+      openIcon?.classList.toggle("hidden", open);
+      closeIcon?.classList.toggle("hidden", !open);
+    };
+
+    const isOpen = () => button.getAttribute("aria-expanded") === "true";
+
+    button.addEventListener("click", () => setOpen(!isOpen()));
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen()) {
+        setOpen(false);
+        button.focus();
+      }
+    });
+
+    // Close if the viewport grows past the mobile breakpoint.
+    window.matchMedia("(min-width: 48rem)").addEventListener("change", (e) => {
+      if (e.matches) setOpen(false);
+    });
+  }
+</script>

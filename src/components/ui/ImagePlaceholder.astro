@@ -1,0 +1,44 @@
+---
+import { ImageOff } from "@lucide/astro";
+
+interface Props {
+  /** What the real image will show, e.g. "Pitchfire investor dashboard". */
+  label: string;
+  /** CSS aspect-ratio, e.g. "16 / 9". */
+  aspect?: string;
+  class?: string;
+}
+
+const { label, aspect = "16 / 9", class: className } = Astro.props;
+---
+
+<!-- TODO(kyle): replace with the real image when supplied. -->
+<div
+  role="img"
+  aria-label={`Image placeholder: ${label}`}
+  style={{ aspectRatio: aspect }}
+  class:list={[
+    "placeholder-stripes grid w-full place-items-center rounded-xl border border-dashed border-line-strong",
+    className,
+  ]}
+>
+  <div
+    class="flex flex-col items-center gap-2 px-4 text-center"
+    aria-hidden="true"
+  >
+    <ImageOff size={22} class="text-fg-subtle" />
+    <span class="font-mono text-xs text-fg-subtle">Image coming soon</span>
+    <span class="text-sm text-fg-muted">{label}</span>
+  </div>
+</div>
+
+<style>
+  .placeholder-stripes {
+    background-color: var(--surface);
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0 10px,
+      var(--surface-2) 10px 20px
+    );
+  }
+</style>
