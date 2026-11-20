@@ -7,7 +7,7 @@
  */
 export const site = {
   name: "Kyle Tranfaglia",
-  headline: "Software Engineer · Data Scientist",
+  headline: "Software Engineer",
   /** From LinkedIn; used under the headline and in meta copy. */
   tagline: "Full-Stack Development, Data & Analytics, AI",
   url: "https://kyletranfaglia.top",

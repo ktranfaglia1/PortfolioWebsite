@@ -1,8 +1,8 @@
 # Portfolio Redesign Plan
 
-> **Status: APPROVED · Phases 0–5 done · Phase 6 (content pass) next.** Deploy approach (§7) is pending the server admin's answers.
+> **Status: APPROVED · Phases 0–5 done · Redesign detour (Phase 5.5) in progress; Phase 6 on hold.** Deploy approach (§7) is pending the server admin's answers.
 > Branch: `redesign` · Legacy site preserved on `legacy` · Production: `main` → https://kyletranfaglia.top
-> Last updated: 2026-11-19
+> Last updated: 2026-11-20
 
 ---
 
@@ -14,7 +14,7 @@
 - Simple local dev, automated checks, and a deploy that's easy to hand off to the server admin.
 
 **Audience:** recruiters and hiring managers, other engineers, and people following up on a resume.
-**Positioning:** "Software Engineer · Data Scientist" is the identity. Co-founder of Pitchfire is the current role, not the identity.
+**Positioning:** "Software Engineer" is the identity (decided 2026-11-20, Phase 5.5). Data science stays visible through the dual degree, the Data & ML project category and the case studies, not the title. Co-founder of Pitchfire is the current role, not the identity.
 Tagline source (LinkedIn): *Full-Stack Development, Data & Analytics, AI*.
 
 ---
@@ -61,7 +61,7 @@ Tagline source (LinkedIn): *Full-Stack Development, Data & Analytics, AI*.
 
 | Route | Contents |
 |---|---|
-| `/` | **Hero:** name, "Software Engineer · Data Scientist", a one-line value statement, CTAs (Projects, Resume, Contact). **Bento grid:** Now (Pitchfire), 2–3 featured projects, tech stack, education snapshot, GitHub activity, location, contact card. |
+| `/` | **Hero:** name, "Software Engineer", a one-line value statement, CTAs (Projects, Resume, Contact). **Bento grid:** Now (Pitchfire), 2–3 featured projects, tech stack, education snapshot, GitHub activity, location, contact card. |
 | `/projects` | Filter bar island (category + tech). Featured grid, then standard projects, then the Archive table. |
 | `/projects/[slug]` | Case study: overview, role/team/timeline, stack, problem → approach → outcome, recognition (conferences), gallery, links, prev/next. |
 | `/experience` | Section nav (deep links like `#teaching`); Professional; Teaching & Tutoring; Leadership & Community; Education & Honors; card linking to Other Experience. |
@@ -234,7 +234,37 @@ Each phase ends with a commit on `redesign` and a short review. ★ marks phases
 - Legacy URLs: static redirect pages under `/CarMart/`; root `.html` URLs forwarded by the 404 page (static files there would shadow clean URLs). Real 301s go in the server config.
 - Lighthouse CI (mobile, non-blocking in CI): Performance 97–100, Accessibility/Best Practices/SEO 100, CLS 0 on every page. LCP < 2s everywhere except `/projects` (≈2.4s simulated slow 4G; font preloads trade a little LCP for zero layout shift).
 
-**Phase 6: Final content pass**
+**Phase 5.5: Redesign detour ★** (approved 2026-11-20; runs before Phase 6)
+
+Kyle's review of Phases 1–5: the design lacks character, looks templated and too corporate, and uses space oddly. It reads as a phone layout scaled up rather than one that uses large screens. **Priority viewports:** laptops and monitors from 12" to 30" (about 1,280–2,560 CSS px) and phones (about 390px).
+
+Diagnosis:
+- Every page sits in a 1,152px column (`max-w-6xl`), which fills only 45–60% of a 1080p or 1440p monitor.
+- Every element is the same bordered card with the same mono label, so nothing stands out.
+- Nothing in the visual language is specific to Kyle.
+- The "KT kyle.tranfaglia" header wordmark reads as an account badge.
+
+- **R1. Identity.**
+  - Header: the full name replaces the KT chip and handle (KT stays as the favicon).
+  - Headline: **"Software Engineer"** (decided 2026-11-20). Data science shows through the degree, the Data & ML category and the case studies.
+- **R2. Design direction ★.**
+  - Kyle wants a modern, less corporate look with subtle character and colour, in the vein of free developer portfolio templates he likes. Inspiration only; no copying of a specific template.
+  - Build two home-page prototypes on a noindex scratch route, screenshotted at 1,280, 1,440, 1,920, 2,560 and 390px. Kyle picks one.
+- **R3. Layout system.**
+  - Content widens to about 1,440–1,600px with fluid gutters, and type scales fluidly from 1,280 to 2,560px.
+  - Body text stays about 70ch wide; the extra width goes to layout (multi-column grids, sticky side columns).
+  - Phones get a deliberately designed layout.
+  - Add Playwright screenshot checks at the priority viewports.
+- **R4. Apply.**
+  - Update tokens, components and `/styleguide` first.
+  - Then the pages in order: Home, Projects, Case study, Experience, Resume, Contact, 404.
+- **R5. Content depth.**
+  - Sources: GitHub (public repos: READMEs, languages, commit dates), the `legacy` branch, both resumes, and Kyle's LinkedIn export (Profile + Recommendations, in `reference/`).
+  - Produce a gap list for each entry, then expanded copy. Anything inferred gets `TODO(kyle): confirm`.
+  - Add a short About narrative on the home page.
+- **R6. Verify.** `pnpm verify`, the screenshot checks, Lighthouse, and axe in both themes.
+
+**Phase 6: Final content pass** (on hold until 5.5 is done; shrinks to whatever R5 doesn't cover)
 - Kyle supplies updated content and images (Pitchfire logo and screenshots, anything else marked `TODO(kyle)`).
 - Proofreading. Check every link.
 

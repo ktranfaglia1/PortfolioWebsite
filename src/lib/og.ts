@@ -63,7 +63,7 @@ export interface OgInput {
   eyebrow: string;
   title: string;
   description?: string;
-  /** Footer line, e.g. "Kyle Tranfaglia · Software Engineer · Data Scientist". */
+  /** Footer line, e.g. "Kyle Tranfaglia · Software Engineer". */
   footer: string;
   domain: string;
 }

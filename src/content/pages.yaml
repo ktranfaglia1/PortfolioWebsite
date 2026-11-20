@@ -1,8 +1,8 @@
 # Per-page copy: tab title, meta description (max 160 chars), heading, intro.
 # TODO(kyle): review all of this copy, especially the home intro.
 - id: home
-  title: Kyle Tranfaglia | Software Engineer & Data Scientist
-  description: Kyle Tranfaglia is a software engineer and data scientist building full-stack, AI-powered products. Projects, experience, and resume.
+  title: Kyle Tranfaglia | Software Engineer
+  description: Kyle Tranfaglia is a software engineer building full-stack, AI-powered products, with dual degrees in computer science and data science.
   heading: Kyle Tranfaglia
   intro: I build full-stack products end to end, from the database schema to the AI layer, with a data scientist's habit of measuring what matters.
 - id: projects
