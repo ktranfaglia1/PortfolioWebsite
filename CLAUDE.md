@@ -8,12 +8,14 @@ Node 26 (`nvm use`), pnpm. **See PLAN.md** for all decisions, the phase plan, an
 - `pnpm build` / `pnpm preview` — production build to `dist/` and local preview
 - `pnpm verify` — check + lint + format check + build + unit + e2e. Run before every commit. (Not `pnpm ci`: that's a built-in pnpm command that reinstalls dependencies.)
 - `pnpm format` — apply Prettier
-- E2E tests run against `astro preview`, so build first.
+- E2E tests run against `astro preview` on port 4322 with `--ignore-lock`, so build first. (Astro 7 auto-backgrounds `preview`/`dev` when it detects an AI agent; `--ignore-lock` keeps the test server in the foreground and avoids colliding with a running `pnpm dev`.)
 
 ## Content rules
 - All copy lives in `src/content/` and `src/site.config.ts`. Never hard-code copy in components.
-- Schema changes go through `src/content.config.ts`.
-- Missing images use `<ImagePlaceholder>` and get a `TODO(kyle)` comment.
+- Schema changes go through `src/content.config.ts`; the field reference is PLAN.md §4. Pages read content through `src/lib/content.ts`, not `getCollection` directly.
+- Page titles, meta descriptions, and intros live in `src/content/pages.yaml`.
+- Images go in `src/assets/images/` (named after the content slug) and render with `astro:assets` `<Image>`, never from `public/`. Only downloadable files (PDFs) live in `public/`.
+- Missing images use `<ImagePlaceholder>` and get a `TODO(kyle)` comment. `grep -rn "TODO(kyle)" src` lists everything Kyle still owes.
 - `reference/` (git-ignored) holds private source material such as the hospitality resume. Use it for writing content; never publish or commit it.
 
 ## Conventions

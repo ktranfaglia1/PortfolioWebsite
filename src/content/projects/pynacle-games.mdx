@@ -1,0 +1,37 @@
+---
+title: Pynacle Games
+summary: Six hand-coded, cross-platform Python games with AI solvers built on alpha-beta minimax, A* heuristics, and memoized iterative deepening.
+tier: featured
+order: 2
+categories: [software, ai-ml]
+stack: [Python, PyQt5, Minimax, A*, React, Vite]
+role: Designer & developer
+context: HONR 312 & MATH 390
+start: 2024-09-01
+end: 2025-05-01
+links:
+  live: https://pynaclegames.org
+  repo: https://github.com/ktranfaglia1/PynacleGames
+cover:
+  # TODO(kyle): replace with a stronger screenshot (e.g. the Chess or 2048 solver mid-game).
+  src: ../../assets/images/projects/pynacle-games.png
+  alt: The Pynacle Games Snake game's game-over screen with Play Again, High Scores, and Exit buttons
+---
+
+## Overview
+
+Pynacle Games is a collection of six downloadable games: Chess, Connect Four, 2048,
+15-puzzle, Snake, and Tic-Tac-Toe. Each one pairs a playable PyQt5 interface with an AI
+that explores how solvable the game is and what optimal play looks like.
+
+## Approach
+
+- Hand-coded every game and its solver in Python, with no game engine.
+- Used alpha-beta minimax for the adversarial games, A\* with custom heuristics for the 15-puzzle, and memoized iterative deepening to keep search times practical.
+- Studied how UI and GUI design choices affect the player's experience, and kept each interface simple and consistent across games.
+- Packaged the games for Windows, Linux, and macOS, and built a website where people can download them and read documentation on the gameplay and the AI behind it.
+
+## Outcome
+
+All six games are live at [pynaclegames.org](https://pynaclegames.org), each with its own
+documentation page.

@@ -1,0 +1,31 @@
+# Education and honors. One entry per school.
+- id: salisbury-university
+  school: Salisbury University
+  location: Salisbury, MD
+  start: 2021-08-01
+  end: 2025-05-01
+  degrees:
+    - name: B.S. Computer Science
+      tracks:
+        - Foundations, Algorithms, and Artificial Intelligence
+        - Software Engineering
+    - name: B.S. Data Science
+      tracks:
+        - Computational Data Science
+  minors: [Mathematics]
+  gpa: 3.911
+  distinction: Summa Cum Laude
+  honors:
+    - title: Distinguished Computer Science Student
+      when: Spring 2025
+    - title: 1st Place, SU Annual Math Challenge
+      when: Spring 2025
+    - title: Director & Host, GullCode
+      when: Spring 2025
+      detail: Salisbury University's annual coding competition
+    - title: Clarke Honors College graduate
+      detail: University Honors
+    - title: Dean's List
+      when: Every semester, Fall 2021 – Spring 2025
+    - title: Richard A. Henson School of Science and Technology Scholarship
+      when: Spring 2023, renewed Spring 2024

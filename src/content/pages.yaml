@@ -1,0 +1,37 @@
+# Per-page copy: tab title, meta description (max 160 chars), heading, intro.
+# TODO(kyle): review all of this copy, especially the home intro.
+- id: home
+  title: Kyle Tranfaglia | Software Engineer & Data Scientist
+  description: Kyle Tranfaglia is a software engineer and data scientist building full-stack, AI-powered products. Projects, experience, and resume.
+  heading: Kyle Tranfaglia
+  intro: I build full-stack products end to end, from the database schema to the AI layer, with a data scientist's habit of measuring what matters.
+- id: projects
+  title: Projects
+  description: Software, AI, and data science projects by Kyle Tranfaglia, from desktop apps and web platforms to published research.
+  heading: Projects
+  intro: Software, AI, and data science work, from conference-accepted research to client projects. Filter by category or technology.
+- id: experience
+  title: Experience
+  description: Kyle Tranfaglia's professional experience, teaching and tutoring roles, leadership, and education.
+  heading: Experience
+  intro: Where I've worked, taught, and led, plus my education and honors.
+- id: experience-other
+  title: Other experience
+  description: Kyle Tranfaglia's hospitality and service work, including formal events, restaurant service, and theatre operations.
+  heading: Other experience
+  intro: Before and alongside software, I spent seven years in hospitality, from my first host job to formal service for nearly 200 weddings. It's where I learned to stay calm under pressure, work closely with a team, and take ownership when I'm the one in charge.
+- id: resume
+  title: Resume
+  description: Kyle Tranfaglia's resume and unofficial transcript, with a summary of experience, projects, skills, and education.
+  heading: Resume
+  intro: A quick summary of my experience and skills. Download the PDF for the full version.
+- id: contact
+  title: Contact
+  description: Get in touch with Kyle Tranfaglia by email, LinkedIn, GitHub, or the contact form.
+  heading: Contact
+  intro: Have a role, a project, or a question? Send a message and I'll reply within one business day.
+- id: not-found
+  title: Page not found
+  description: The page you're looking for doesn't exist.
+  heading: Page not found
+  intro: That page doesn't exist or has moved.

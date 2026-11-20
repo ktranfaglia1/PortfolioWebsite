@@ -1,0 +1,66 @@
+# Skill groups, matching the resume. `icon` is a Simple Icons slug
+# (https://simpleicons.org); leave it out to show a text badge.
+- id: languages
+  label: Languages
+  order: 1
+  items:
+    - { name: TypeScript, icon: typescript }
+    - { name: JavaScript, icon: javascript }
+    - { name: Python, icon: python }
+    - { name: SQL, icon: postgresql }
+    - { name: C++, icon: cplusplus }
+    - { name: Java, icon: openjdk }
+    - { name: C, icon: c }
+    - { name: R, icon: r }
+    - { name: PHP, icon: php }
+    - { name: Bash, icon: gnubash }
+- id: frontend
+  label: Frontend
+  order: 2
+  items:
+    - { name: React, icon: react }
+    - { name: Vite, icon: vite }
+    - { name: Tailwind CSS, icon: tailwindcss }
+    - { name: shadcn/ui, icon: shadcnui }
+    - { name: Radix, icon: radixui }
+    - { name: TanStack Query, icon: reactquery }
+    - { name: Zod, icon: zod }
+    - { name: Recharts }
+    - { name: HTML, icon: html5 }
+    - { name: CSS, icon: css }
+- id: backend-data
+  label: Backend & Data
+  order: 3
+  items:
+    - { name: Node.js, icon: nodedotjs }
+    - { name: Express, icon: express }
+    - { name: PostgreSQL, icon: postgresql }
+    - { name: Drizzle ORM, icon: drizzle }
+    - { name: pgvector }
+    - { name: Passport, icon: passport }
+    - { name: Flask, icon: flask }
+    - { name: PySide/PyQt, icon: qt }
+- id: ai-ml
+  label: AI & ML
+  order: 4
+  items:
+    - { name: Anthropic API, icon: anthropic }
+    - { name: OpenAI API }
+    - { name: Prompt engineering }
+    - { name: Embeddings }
+    - { name: Coding agents, icon: claude }
+    - { name: PyTorch, icon: pytorch }
+    - { name: scikit-learn, icon: scikitlearn }
+    - { name: Pandas, icon: pandas }
+- id: infrastructure-tools
+  label: Infrastructure & Tools
+  order: 5
+  items:
+    - { name: Replit, icon: replit }
+    - { name: AWS }
+    - { name: Google Cloud Storage, icon: googlecloudstorage }
+    - { name: Resend, icon: resend }
+    - { name: Vitest, icon: vitest }
+    - { name: ClamAV }
+    - { name: Git, icon: git }
+    - { name: Linux, icon: linux }

@@ -1,0 +1,37 @@
+---
+title: Transformer Chess Bot
+summary: An AlphaZero-inspired chess AI pairing a PyTorch transformer-style evaluator with Monte Carlo Tree Search, with a live-evaluation GUI.
+tier: featured
+order: 4
+categories: [ai-ml, research]
+stack: [Python, PyTorch, PySide6, MCTS]
+role: GUI, model, and data engineer
+team: 2
+context: Research project
+start: 2025-03-01
+end: 2025-05-01
+links:
+  repo: https://github.com/ktranfaglia1/TransformerChessBot
+cover:
+  src: ../../assets/images/projects/transformer-chess-bot.png
+  alt: The chess bot's GUI with a board mid-game, move history, and a live win-probability panel
+---
+
+## Overview
+
+Traditional engines like Stockfish play deterministic, superhuman chess. We wanted to know
+whether techniques from language models could produce play that feels more human. The bot
+pairs a transformer-style evaluator with Monte Carlo Tree Search, inspired by AlphaZero.
+
+## My contributions
+
+- Built the complete PySide6 GUI, including real-time evaluation visualization.
+- Improved the core transformer model with self-attention.
+- Cleaned and assembled training data from millions of Lichess games across skill levels, plus grandmaster games.
+
+## Outcome
+
+The model reached 92% prediction accuracy on grandmaster games. Its playing strength (an
+estimated 400 Elo) fell short of our target, which taught us how much a strategic game AI
+depends on the quality of its training data. The project still showed that language-model
+techniques are a workable way to evaluate chess positions.

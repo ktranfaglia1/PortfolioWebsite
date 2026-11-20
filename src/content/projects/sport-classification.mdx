@@ -1,0 +1,43 @@
+---
+title: Classifying Collision and Contact Sports
+summary: A data-driven look at whether sports are really "collision" or "contact," using survey data on sleep, attention, and concussion history.
+tier: featured
+order: 6
+categories: [data-science, research]
+stack: [Python, pandas, scikit-learn, PCA, Clustering]
+role: Team lead & data scientist
+team: 3
+context: DSCI 490 Capstone
+start: 2024-12-01
+end: 2025-05-01
+links:
+  repo: https://github.com/ktranfaglia1/SportClassification
+  paper: https://github.com/ktranfaglia1/SportClassification
+cover:
+  # TODO(kyle): replace the paper's title page with a chart from the analysis (e.g. the PCA clusters).
+  src: ../../assets/images/projects/sport-classification.png
+  alt: Title page of the research paper Classification and Analysis of Collision and Contact Sports
+recognition:
+  - Salisbury University Student Research Conference (SUSRC), April 2025
+---
+
+## Overview
+
+Sports are traditionally labeled "collision" or "contact." I led a team of three data
+scientists testing that split against survey data on participants' behavior, cognition,
+sleep, and concussion history.
+
+## Approach
+
+- Cleaned the survey data, normalized free-text answers, and ran statistical tests to find the sleep and attention features linked to concussion history.
+- Used PCA and several clustering methods to look for natural groupings.
+
+## Findings
+
+- A two-cluster solution fit best, which supports the traditional binary classification.
+- Sleep features lined up most closely with the conventional labels, especially for football.
+- Attention features showed patterns that didn't always match the existing categories.
+
+These results show where traditional labels fall short and how cognitive-behavioral data
+could better reflect repeated head-impact exposure. The work sets up future studies using
+position-specific and neurological data to improve athlete-safety models.

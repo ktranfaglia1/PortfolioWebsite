@@ -1,0 +1,36 @@
+---
+title: Chess Openings and Elo
+summary: An analysis of six million Lichess games on how Elo ratings and opening choices relate to game outcomes, with predictive models.
+tier: featured
+order: 7
+categories: [data-science, research]
+stack: [Python, pandas, scikit-learn, Jupyter]
+role: Sole researcher
+context: DSCI 470 · Research Methods in Data Science
+start: 2024-10-01
+end: 2024-12-01
+links:
+  repo: https://github.com/ktranfaglia1/ChessAnalysis
+  paper: https://github.com/ktranfaglia1/ChessAnalysis
+cover:
+  # TODO(kyle): replace the paper's title page with a chart from the analysis.
+  src: ../../assets/images/projects/chess-openings-elo.png
+  alt: Title page of the research paper Chess Openings and Elo, Patterns and Predictions of Game Outcomes
+---
+
+## Overview
+
+How much do player ratings and opening choices actually predict who wins a chess game? I
+cleaned and analyzed more than six million games from Lichess.org to find out.
+
+## Approach
+
+- Cleaned and preprocessed the full dataset in Python.
+- Mapped opening preferences across Elo groups and event types to see how strategy changes with skill.
+- Built logistic regression and random forest models to test how well Elo and opening choice predict results.
+
+## Findings
+
+Elo difference was by far the strongest predictor. Adding opening features improved
+accuracy only slightly, which points to the limits of Elo-based prediction and the need
+for more contextual data.

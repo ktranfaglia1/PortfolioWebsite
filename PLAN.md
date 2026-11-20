@@ -1,6 +1,6 @@
 # Portfolio Redesign Plan
 
-> **Status: APPROVED · Phases 0–1 done · Phase 2 in progress.** Deploy approach (§7) is pending the server admin's answers.
+> **Status: APPROVED · Phases 0–1 done · Phase 2 awaiting review.** Deploy approach (§7) is pending the server admin's answers.
 > Branch: `redesign` · Legacy site preserved on `legacy` · Production: `main` → https://kyletranfaglia.top
 > Last updated: 2026-11-19
 
@@ -79,29 +79,35 @@ Tagline source (LinkedIn): *Full-Stack Development, Data & Analytics, AI*.
 
 ## 4. Content model
 
-All content lives in `src/content/` and `src/site.config.ts`. Schemas are defined in `src/content.config.ts`. A typo or missing field fails the build with a clear message.
+All content lives in `src/content/` and `src/site.config.ts`. Schemas are defined in `src/content.config.ts`. A typo, unknown value, end-before-start date, or unknown icon slug fails the build with a message naming the file and field. Pages read content through `src/lib/content.ts` (drafts filtered, sorting in one place).
 
-**`site.config.ts`:** name, headline, tagline, location, email, socials, resume/transcript paths, `now` (current role summary), Formspree ID, Cloudflare analytics token.
+**`site.config.ts`:** name, headline, tagline, location, email, socials, GitHub username, resume/transcript paths, Formspree ID, Cloudflare analytics token. The "Now" card is derived from the experience entry with `group: professional` and `end: present`, so it isn't duplicated here.
 
-**`projects/*.mdx`** (frontmatter + case-study body)
+**`projects/*.mdx`** (featured/standard: frontmatter + case-study body) and **`projects/*.md`** (archive: frontmatter only). The file name is the URL slug.
 ```
-title, slug, summary (≤ 160 chars), tier: featured | standard | archive,
+title, summary (≤ 160 chars), tier: featured | standard | archive,
 categories: [software | ai-ml | data-science | research | web],
-stack: string[], role, team?: number, start, end?: date | "present",
-links: { live?, repo?, paper? }, cover?: image, gallery?: image[],
-recognition?: string[], order?: number, draft?: boolean
+stack: string[], role, team?: number (incl. Kyle), context?: string (course, client, internship),
+start, end?: date | "present", links: { live?, repo?, paper? },
+cover?: { src: image, alt }, gallery?: [{ src, alt }],
+recognition?: string[], order?: number (within tier), draft?: boolean
 ```
 
-**`experience/*.md`** (frontmatter + optional long-form body)
+**`experience/<group>/*.md`**
 ```
-org, orgUrl?, orgLogo?, role, group: professional | teaching | leadership | volunteer | other,
-location?, start, end?: date | "present", summary, highlights: string[],
-skills?: string[], positions?: [{ role, start, end }]   # role progression (e.g. SoDel)
-showLink?: boolean, order?, draft?
+org, orgDescription?, orgUrl?, showLink (default true), orgLogo?: { src, alt }, logoPlaceholder?,
+role, group: professional | teaching | leadership | volunteer | other, location?,
+start, end?: date | "present", dateLabel? (overrides the formatted range),
+summary, highlights: string[], skills: string[],
+positions: [{ role, detail?, start?, end? }]   # role progression (e.g. SoDel)
+project?: reference to a project (e.g. City of Cambridge → cambridge-fema-tool), order?, draft?
 ```
 
-**`education.yaml`**: school, degrees, minor, GPA, dates, honors[].
-**`skills.yaml`**: groups → items (name, icon slug).
+**`education.yaml`**: school, location, dates, degrees (name + tracks), minors, GPA, distinction, honors (title, when?, detail?).
+**`skills.yaml`**: groups (label, order) → items (name, Simple Icons slug or none for a text badge).
+**`pages.yaml`**: per-page title, meta description (≤ 160), heading, intro. Keeps page copy out of components.
+
+**Images:** `src/assets/images/{projects,profile}/`, named after the content slug, downsized to ≤ 2400 px. Astro generates responsive AVIF/WebP at build time.
 
 ---
 
@@ -246,7 +252,8 @@ Each phase ends with a commit on `redesign` and a short review. ★ marks phases
 ### Assets Kyle will supply (placeholders until then)
 - [ ] Pitchfire logo (SVG preferred) and 2–4 product screenshots
 - [ ] Updated headshot (optional; the current `Headshot.jpg` is used otherwise)
-- [ ] Replacement screenshots for any project whose current image is low quality (flagged in Phase 2)
+- [ ] Replacement screenshots (flagged in Phase 2): **Pynacle Games** (current image is only a Snake game-over screen), **Sport Classification** and **Chess Openings & Elo** (current images are paper title pages; a chart from each analysis would be better)
+- [ ] Confirm dates and one-line summaries for the four archive projects (marked `TODO(kyle)`)
 
 ---
 

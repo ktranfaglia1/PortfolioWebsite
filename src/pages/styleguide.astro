@@ -4,6 +4,18 @@
  * the sitemap, and marked noindex. Sample copy here is for review only.
  */
 import { ArrowRight, ArrowUpRight, Download, MapPin } from "@lucide/astro";
+import { Image } from "astro:assets";
+import { site } from "../site.config";
+import {
+  getCurrentRole,
+  getEducation,
+  getExperience,
+  getProjects,
+  getSkillGroups,
+} from "../lib/content";
+import { getSkillIcon } from "../lib/skill-icons";
+import { formatDateRange } from "../lib/dates";
+import BrandIcon from "../components/ui/BrandIcon.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/layout/Container.astro";
 import BentoCell from "../components/ui/BentoCell.astro";
@@ -41,7 +53,19 @@ const stack = [
   "Python",
   "PyTorch",
 ];
-const d = (iso: string) => new Date(iso);
+
+// Real content (Phase 2): proves every entry, image, and reference resolves.
+const now = await getCurrentRole();
+const projects = await getProjects();
+const featured = projects.filter((p) => p.data.tier === "featured");
+const professional = await getExperience("professional");
+const experience = await getExperience();
+const [education] = await getEducation();
+const skillGroups = await getSkillGroups();
+const groupCounts = Object.entries(
+  Object.groupBy(experience, (e) => e.data.group),
+).map(([group, entries]) => ({ group, count: entries?.length ?? 0 }));
+const chessBot = featured.find((p) => p.id === "transformer-chess-bot");
 ---
 
 <BaseLayout
@@ -188,31 +212,39 @@ const d = (iso: string) => new Date(iso);
             Now
           </p>
         </div>
-        <h3 class="mt-4 text-2xl font-semibold">
-          Co-Founder &amp; Lead Software Engineer
-        </h3>
-        <p class="mt-1 text-fg-muted">Pitchfire · AI deal-flow platform</p>
-        <p class="mt-4 text-fg-muted">
-          Sole engineer for a multi-tenant TypeScript platform serving 145 users
-          across 111 venture and private-equity firms.
-        </p>
-        <div class="mt-auto flex flex-wrap gap-2 pt-6">
-          {["TypeScript", "React", "PostgreSQL", "pgvector", "Claude"].map(
-            (s) => (
-              <Tag>{s}</Tag>
-            ),
-          )}
-        </div>
+        {now && (
+          <>
+            <h3 class="mt-4 text-2xl font-semibold">{now.data.role}</h3>
+            <p class="mt-1 text-fg-muted">
+              {now.data.org}
+              {now.data.orgDescription && (
+                <span>{` · ${now.data.orgDescription}`}</span>
+              )}
+            </p>
+            <p class="mt-4 text-fg-muted">{now.data.summary}</p>
+            <div class="mt-auto flex flex-wrap gap-2 pt-6">
+              {now.data.skills.slice(0, 5).map((s) => (
+                <Tag>{s}</Tag>
+              ))}
+            </div>
+          </>
+        )}
       </BentoCell>
       <BentoCell cols={2} padding="none" href="#bento">
-        <ImagePlaceholder
-          label="Transformer Chess Bot GUI"
-          aspect="21 / 9"
-          class="rounded-none border-0 border-b"
-        />
+        {chessBot?.data.cover && (
+          <Image
+            src={chessBot.data.cover.src}
+            alt={chessBot.data.cover.alt}
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            class="aspect-21/9 w-full border-b border-line object-cover object-top"
+          />
+        )}
         <div class="p-5">
-          <h3 class="font-semibold">Transformer Chess Bot</h3>
-          <p class="mt-1 text-sm text-fg-muted">PyTorch evaluator + MCTS</p>
+          <h3 class="font-semibold">{chessBot?.data.title}</h3>
+          <p class="mt-1 text-sm text-fg-muted">
+            {chessBot?.data.stack.join(" · ")}
+          </p>
         </div>
       </BentoCell>
       <BentoCell>
@@ -220,10 +252,13 @@ const d = (iso: string) => new Date(iso);
           Education
         </p>
         <p class="mt-auto text-lg font-semibold">
-          B.S. CS &amp; B.S. Data Science
+          {education?.data.degrees.map((deg) => deg.name).join(" & ")}
         </p>
         <p class="text-sm text-fg-muted">
-          Salisbury University · Summa Cum Laude
+          {education?.data.school}
+          {education?.data.distinction && (
+            <span>{` · ${education.data.distinction}`}</span>
+          )}
         </p>
       </BentoCell>
       <BentoCell>
@@ -231,7 +266,8 @@ const d = (iso: string) => new Date(iso);
           Based in
         </p>
         <p class="mt-auto flex items-center gap-2 text-lg font-semibold">
-          <MapPin size={18} aria-hidden="true" class="text-accent" /> Durham, NC
+          <MapPin size={18} aria-hidden="true" class="text-accent" />
+          {site.location}
         </p>
       </BentoCell>
       <BentoCell cols={4}>
@@ -239,16 +275,19 @@ const d = (iso: string) => new Date(iso);
           Stack
         </p>
         <div class="mt-4 flex flex-wrap gap-2">
-          {[
-            ...stack,
-            "Express",
-            "Tailwind CSS",
-            "scikit-learn",
-            "Pandas",
-            "AWS",
-          ].map((s) => (
-            <Tag>{s}</Tag>
-          ))}
+          {skillGroups
+            .flatMap((g) => g.data.items)
+            .filter((i) => i.icon)
+            .slice(0, 14)
+            .map((item) => {
+              const icon = getSkillIcon(item.icon!);
+              return (
+                <Tag>
+                  {icon && <BrandIcon icon={icon} size={12} />}
+                  {item.name}
+                </Tag>
+              );
+            })}
         </div>
       </BentoCell>
     </BentoGrid>
@@ -256,32 +295,93 @@ const d = (iso: string) => new Date(iso);
 
   <Section id="timeline" eyebrow="Components" title="Timeline">
     <Timeline>
-      <TimelineItem
-        position="Co-Founder & Lead Software Engineer"
-        org="Pitchfire"
-        start={d("2025-12-01")}
-        end="present"
-        summary="Two-sided AI deal-flow platform, incubated by New North Ventures."
-      >
-        <ul class="list-disc space-y-1.5 pl-5 marker:text-fg-subtle">
-          <li>
-            Designed the PostgreSQL schema and pgvector semantic search behind
-            matching across nearly 5,000 VC firms.
-          </li>
-          <li>
-            Built the AI layer: deck analysis, thesis-match scoring, and a
-            permission-aware assistant.
-          </li>
-        </ul>
-      </TimelineItem>
-      <TimelineItem
-        position="Software Engineering Intern"
-        org="City of Cambridge"
-        start={d("2025-02-01")}
-        end={d("2025-04-01")}
-        summary="FEMA flood visualization and cost-benefit analysis."
-      />
+      {professional.map((e) => (
+        <TimelineItem
+          position={e.data.role}
+          org={e.data.org}
+          start={e.data.start}
+          end={e.data.end}
+          location={e.data.location}
+          summary={e.data.summary}
+        >
+          {e.data.highlights.length > 0 && (
+            <ul class="list-disc space-y-1.5 pl-5 marker:text-fg-subtle">
+              {e.data.highlights.slice(0, 3).map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+          )}
+        </TimelineItem>
+      ))}
     </Timeline>
+  </Section>
+
+  <Section
+    id="content"
+    eyebrow="Phase 2"
+    title="Content inventory"
+    description="Every project in src/content, rendered from the validated collections, plus experience counts by group. Archive projects have no cover by design."
+  >
+    <div class="overflow-x-auto rounded-2xl border border-line">
+      <table class="w-full min-w-xl text-left text-sm">
+        <caption class="sr-only">Projects</caption>
+        <thead class="bg-surface-2 font-mono text-xs text-fg-subtle">
+          <tr>
+            <th scope="col" class="px-4 py-3 font-normal">
+              Cover
+            </th>
+            <th scope="col" class="px-4 py-3 font-normal">
+              Project
+            </th>
+            <th scope="col" class="px-4 py-3 font-normal">
+              Tier
+            </th>
+            <th scope="col" class="px-4 py-3 font-normal">
+              Dates
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line">
+          {projects.map((p) => (
+            <tr>
+              <td class="w-28 px-4 py-3">
+                {p.data.cover ? (
+                  <Image
+                    src={p.data.cover.src}
+                    alt=""
+                    width={96}
+                    class="aspect-video w-24 rounded-md border border-line object-cover object-top"
+                  />
+                ) : (
+                  <span class="font-mono text-xs text-fg-subtle">none</span>
+                )}
+              </td>
+              <td class="px-4 py-3">
+                <p class="font-medium text-fg">{p.data.title}</p>
+                <p class="mt-0.5 text-fg-muted">{p.data.summary}</p>
+              </td>
+              <td class="px-4 py-3">
+                <Tag
+                  variant={p.data.tier === "featured" ? "accent" : "default"}
+                >
+                  {p.data.tier}
+                </Tag>
+              </td>
+              <td class="px-4 py-3 font-mono text-xs whitespace-nowrap text-fg-subtle">
+                {formatDateRange(p.data.start, p.data.end)}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <ul class="mt-6 flex flex-wrap gap-2">
+      {groupCounts.map(({ group, count }) => (
+        <li>
+          <Tag>{`${group}: ${count}`}</Tag>
+        </li>
+      ))}
+    </ul>
   </Section>
 
   <Section id="placeholder" eyebrow="Components" title="Image placeholder">

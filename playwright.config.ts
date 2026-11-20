@@ -18,7 +18,10 @@ export default defineConfig({
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
-    command: `pnpm preview --host 127.0.0.1 --port ${PORT}`,
+    // --ignore-lock: always a one-off foreground server. Without it, Astro 7
+    // backgrounds the preview when it detects an AI agent, and Playwright
+    // sees the process exit early.
+    command: `pnpm preview --host 127.0.0.1 --port ${PORT} --ignore-lock`,
     url: `http://127.0.0.1:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
