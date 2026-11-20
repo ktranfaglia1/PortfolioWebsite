@@ -1,0 +1,31 @@
+---
+import { ArrowLeft } from "@lucide/astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/layout/Container.astro";
+import PageHeader from "../../components/page/PageHeader.astro";
+import ExperienceItem from "../../components/content/ExperienceItem.astro";
+import Timeline from "../../components/ui/Timeline.astro";
+import { getExperience, getPage } from "../../lib/content";
+
+const page = await getPage("experience-other");
+const entries = await getExperience("other");
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Container class="pt-10 sm:pt-14">
+    <a
+      href="/experience"
+      class="inline-flex items-center gap-1.5 rounded-md text-sm text-fg-muted transition-colors hover:text-fg"
+    >
+      <ArrowLeft size={16} aria-hidden="true" /> Experience
+    </a>
+  </Container>
+  <PageHeader heading={page.heading} intro={page.intro} class="pt-8 sm:pt-10" />
+  <Container class="py-8">
+    <Timeline>
+      {entries.map((e) => (
+        <ExperienceItem entry={e} level={2} />
+      ))}
+    </Timeline>
+  </Container>
+</BaseLayout>

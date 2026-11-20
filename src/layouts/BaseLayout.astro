@@ -4,8 +4,10 @@ import "@fontsource-variable/geist-mono";
 import "../styles/global.css";
 import Footer from "../components/layout/Footer.astro";
 import Header from "../components/layout/Header.astro";
+import { formatTitle } from "../lib/seo";
 
 interface Props {
+  /** Page title; " | Kyle Tranfaglia" is appended unless it already names Kyle. */
   title: string;
   description: string;
   /** Keep the page out of search results (e.g. the style guide). */
@@ -24,7 +26,7 @@ const { title, description, noindex = false } = Astro.props;
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
+    <title>{formatTitle(title)}</title>
 
     <!--
       Apply the theme before first paint (no flash). A choice saved by the

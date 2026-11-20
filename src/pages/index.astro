@@ -1,18 +1,249 @@
 ---
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Download,
+  GraduationCap,
+  Mail,
+  MapPin,
+} from "@lucide/astro";
+import { Image } from "astro:assets";
+import headshot from "../assets/images/profile/headshot.jpg";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/layout/Container.astro";
+import SkillTag from "../components/content/SkillTag.astro";
+import BentoCell from "../components/ui/BentoCell.astro";
+import BentoGrid from "../components/ui/BentoGrid.astro";
+import Button from "../components/ui/Button.astro";
+import ImagePlaceholder from "../components/ui/ImagePlaceholder.astro";
+import Tag from "../components/ui/Tag.astro";
 import { site } from "../site.config";
+import {
+  getCurrentRole,
+  getEducation,
+  getPage,
+  getProjects,
+  getSkillGroups,
+} from "../lib/content";
+import { formatDateRange } from "../lib/dates";
+
+const page = await getPage("home");
+const now = await getCurrentRole();
+const [lead, ...others] = (await getProjects("featured")).slice(0, 3);
+const [education] = await getEducation();
+const skillGroups = await getSkillGroups();
+
+// Home "Stack" card: the first few items with icons from each group.
+const stackHighlights = skillGroups.flatMap((g) =>
+  g.data.items.filter((i) => i.icon).slice(0, 4),
+);
+
+const label =
+  "font-mono text-xs tracking-widest text-fg-subtle uppercase flex items-center gap-2";
 ---
 
-<BaseLayout
-  title={`${site.name} | Software Engineer`}
-  description="Portfolio of Kyle Tranfaglia, software engineer and data scientist. Redesign in progress."
->
-  <Container class="py-24 sm:py-32">
-    <p class="font-mono text-xs tracking-widest text-accent uppercase">
-      Redesign in progress
-    </p>
-    <h1 class="mt-4 text-display font-semibold">{site.name}</h1>
-    <p class="mt-4 text-lg text-fg-muted">{site.headline}</p>
+<BaseLayout title={page.title} description={page.description}>
+  <!-- Hero -->
+  <Container class="pt-14 pb-12 sm:pt-24 sm:pb-16">
+    <div class="flex flex-col-reverse gap-10 lg:flex-row lg:items-center lg:justify-between">
+      <div class="max-w-2xl">
+        {now && (
+          <a
+            href="/experience#professional"
+            class="inline-flex items-center gap-2 rounded-full border border-line bg-surface py-1 pr-3 pl-2 text-sm text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
+          >
+            <span class="relative flex size-2" aria-hidden="true">
+              <span class="absolute inline-flex size-full animate-ping rounded-full bg-accent opacity-60 motion-reduce:hidden" />
+              <span class="relative inline-flex size-2 rounded-full bg-accent" />
+            </span>
+            {`${now.data.role} at ${now.data.org}`}
+          </a>
+        )}
+        <h1 class="mt-6 text-display font-semibold">{page.heading}</h1>
+        <p class="mt-4 font-mono text-sm text-accent sm:text-base">
+          {site.headline}
+        </p>
+        <p class="mt-6 text-lg text-fg-muted sm:text-xl">{page.intro}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <Button href="/projects" size="lg">
+            View projects <ArrowRight size={18} aria-hidden="true" />
+          </Button>
+          <Button href="/resume" variant="secondary" size="lg">
+            Resume
+          </Button>
+          <Button href="/contact" variant="ghost" size="lg">
+            Contact
+          </Button>
+        </div>
+      </div>
+      <Image
+        src={headshot}
+        alt={`Portrait of ${site.name}`}
+        widths={[160, 240, 320, 480]}
+        sizes="(min-width: 1024px) 240px, 160px"
+        loading="eager"
+        fetchpriority="high"
+        class="size-40 shrink-0 rounded-3xl border border-line object-cover shadow-card lg:size-60"
+      />
+    </div>
   </Container>
+
+  <!-- Bento -->
+  <section aria-labelledby="overview-title">
+    <Container>
+      <h2 id="overview-title" class="sr-only">
+        Overview
+      </h2>
+      <BentoGrid>
+        {now && (
+          <BentoCell cols={2} rows={2} padding="lg">
+            <div class="flex items-start justify-between gap-4">
+              <p class={label}>
+                <span
+                  class="size-1.5 rounded-full bg-accent"
+                  aria-hidden="true"
+                />
+                Now
+              </p>
+              {now.data.logoPlaceholder && !now.data.orgLogo && (
+                <ImagePlaceholder
+                  size="icon"
+                  label={now.data.logoPlaceholder}
+                />
+              )}
+            </div>
+            <h3 class="mt-5 text-2xl font-semibold">{now.data.role}</h3>
+            <p class="mt-1 text-fg-muted">
+              {now.data.org}
+              <span class="text-fg-subtle">
+                {` · ${formatDateRange(now.data.start, now.data.end)}`}
+              </span>
+            </p>
+            {now.data.orgDescription && (
+              <p class="mt-1 text-sm text-fg-subtle">
+                {now.data.orgDescription}
+              </p>
+            )}
+            <p class="mt-5 text-fg-muted">{now.data.summary}</p>
+            <ul class="mt-auto flex flex-wrap gap-1.5 pt-6" aria-label="Stack">
+              {now.data.skills.slice(0, 6).map((s) => (
+                <li>
+                  <Tag>{s}</Tag>
+                </li>
+              ))}
+            </ul>
+          </BentoCell>
+        )}
+
+        {lead && (
+          <BentoCell cols={2} padding="none" href={`/projects/${lead.id}`}>
+            {lead.data.cover && (
+              <Image
+                src={lead.data.cover.src}
+                alt=""
+                widths={[480, 720, 960]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                class="aspect-21/9 w-full border-b border-line object-cover"
+              />
+            )}
+            <div class="flex items-start justify-between gap-3 p-5">
+              <div>
+                <p class={label}>Featured project</p>
+                <h3 class="mt-2 font-semibold">{lead.data.title}</h3>
+                <p class="mt-1 text-sm text-fg-muted">{lead.data.summary}</p>
+              </div>
+              <ArrowUpRight
+                size={18}
+                aria-hidden="true"
+                class="shrink-0 text-fg-subtle"
+              />
+            </div>
+          </BentoCell>
+        )}
+
+        {others.map((p) => (
+          <BentoCell href={`/projects/${p.id}`}>
+            <p class={label}>Project</p>
+            <h3 class="mt-auto pt-6 font-semibold">{p.data.title}</h3>
+            <p class="mt-1 line-clamp-3 text-sm text-fg-muted">
+              {p.data.summary}
+            </p>
+          </BentoCell>
+        ))}
+
+        {education && (
+          <BentoCell cols={2}>
+            <p class={label}>
+              <GraduationCap size={14} aria-hidden="true" /> Education
+            </p>
+            <h3 class="mt-auto pt-6 text-lg font-semibold">
+              {education.data.degrees.map((d) => d.name).join(" & ")}
+            </h3>
+            <p class="mt-1 text-sm text-fg-muted">
+              {[
+                education.data.minors.length > 0 &&
+                  `Minor in ${education.data.minors.join(", ")}`,
+                education.data.school,
+                education.data.distinction,
+                `GPA ${education.data.gpa}`,
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </p>
+          </BentoCell>
+        )}
+
+        <BentoCell>
+          <p class={label}>
+            <MapPin size={14} aria-hidden="true" /> Based in
+          </p>
+          <p class="mt-auto pt-6 text-lg font-semibold">{site.location}</p>
+        </BentoCell>
+
+        <BentoCell href={site.files.resume} class="group">
+          <p class={label}>
+            <Download size={14} aria-hidden="true" /> Resume
+          </p>
+          <p class="mt-auto pt-6 text-lg font-semibold">
+            Download PDF
+            <span class="sr-only">(resume)</span>
+          </p>
+        </BentoCell>
+
+        <BentoCell cols={3}>
+          <p class={label}>Stack</p>
+          <ul class="mt-5 flex flex-wrap gap-2" aria-label="Core technologies">
+            {stackHighlights.map((s) => (
+              <li>
+                <SkillTag name={s.name} icon={s.icon} />
+              </li>
+            ))}
+          </ul>
+          <a
+            href="/resume#skills"
+            class="mt-auto inline-flex items-center gap-1 pt-5 text-sm font-medium text-accent underline-offset-4 hover:underline"
+          >
+            All skills <ArrowRight size={14} aria-hidden="true" />
+          </a>
+        </BentoCell>
+
+        <BentoCell href="/contact" class="bg-accent-subtle">
+          <p class={label}>
+            <Mail size={14} aria-hidden="true" /> Contact
+          </p>
+          <p class="mt-auto pt-6 text-lg font-semibold">Get in touch</p>
+          <p class="text-sm text-fg-muted">{site.email}</p>
+        </BentoCell>
+      </BentoGrid>
+
+      <div class="mt-8 flex justify-end">
+        <a
+          href="/projects"
+          class="inline-flex items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline"
+        >
+          See all projects <ArrowRight size={14} aria-hidden="true" />
+        </a>
+      </div>
+    </Container>
+  </section>
 </BaseLayout>

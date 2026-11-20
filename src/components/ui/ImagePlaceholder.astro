@@ -6,30 +6,42 @@ interface Props {
   label: string;
   /** CSS aspect-ratio, e.g. "16 / 9". */
   aspect?: string;
+  /** "icon" renders a small square with only the icon (logos). */
+  size?: "default" | "icon";
   class?: string;
 }
 
-const { label, aspect = "16 / 9", class: className } = Astro.props;
+const {
+  label,
+  aspect = "16 / 9",
+  size = "default",
+  class: className,
+} = Astro.props;
 ---
 
 <!-- TODO(kyle): replace with the real image when supplied. -->
 <div
   role="img"
   aria-label={`Image placeholder: ${label}`}
-  style={{ aspectRatio: aspect }}
+  style={{ aspectRatio: size === "icon" ? "1 / 1" : aspect }}
   class:list={[
-    "placeholder-stripes grid w-full place-items-center rounded-xl border border-dashed border-line-strong",
+    "placeholder-stripes grid place-items-center border border-dashed border-line-strong",
+    size === "icon" ? "size-10 shrink-0 rounded-lg" : "w-full rounded-xl",
     className,
   ]}
 >
-  <div
-    class="flex flex-col items-center gap-2 px-4 text-center"
-    aria-hidden="true"
-  >
-    <ImageOff size={22} class="text-fg-subtle" />
-    <span class="font-mono text-xs text-fg-subtle">Image coming soon</span>
-    <span class="text-sm text-fg-muted">{label}</span>
-  </div>
+  {size === "icon" ? (
+    <ImageOff size={16} class="text-fg-subtle" aria-hidden="true" />
+  ) : (
+    <div
+      class="flex flex-col items-center gap-2 px-4 text-center"
+      aria-hidden="true"
+    >
+      <ImageOff size={22} class="text-fg-subtle" />
+      <span class="font-mono text-xs text-fg-subtle">Image coming soon</span>
+      <span class="text-sm text-fg-muted">{label}</span>
+    </div>
+  )}
 </div>
 
 <style>

@@ -1,8 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
-
-/** Every public route. Extend this list as pages are added. */
-const routes = ["/", "/styleguide"];
+import { routes } from "./routes";
 const themes = ["dark", "light"] as const;
 
 async function useTheme(page: Page, theme: (typeof themes)[number]) {
@@ -35,3 +33,15 @@ for (const route of routes) {
     }
   });
 }
+
+test("unknown routes get the 404 page with a 404 status", async ({ page }) => {
+  const response = await page.goto("/this-page-does-not-exist");
+  expect(response?.status()).toBe(404);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Page not found",
+  );
+  const results = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
+  expect(results.violations).toEqual([]);
+});

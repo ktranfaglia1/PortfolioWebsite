@@ -1,0 +1,190 @@
+---
+import { ArrowRight, Award, GraduationCap } from "@lucide/astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Container from "../../components/layout/Container.astro";
+import PageHeader from "../../components/page/PageHeader.astro";
+import ExperienceItem from "../../components/content/ExperienceItem.astro";
+import Card from "../../components/ui/Card.astro";
+import Section from "../../components/ui/Section.astro";
+import Timeline from "../../components/ui/Timeline.astro";
+import { getEducation, getExperience, getPage } from "../../lib/content";
+import { formatDateRange } from "../../lib/dates";
+
+const page = await getPage("experience");
+const otherPage = await getPage("experience-other");
+const professional = await getExperience("professional");
+const teaching = await getExperience("teaching");
+const leadership = await getExperience("leadership");
+const volunteer = await getExperience("volunteer");
+const education = await getEducation();
+
+const sections = [
+  { id: "professional", label: "Professional" },
+  { id: "teaching", label: "Teaching & Tutoring" },
+  { id: "leadership", label: "Leadership & Community" },
+  { id: "education", label: "Education & Honors" },
+];
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <PageHeader heading={page.heading} intro={page.intro} />
+
+  <Container>
+    <nav aria-label="On this page">
+      <ul class="flex flex-wrap gap-2">
+        {sections.map((s) => (
+          <li>
+            <a
+              href={`#${s.id}`}
+              class="inline-block rounded-full border border-line px-3 py-1.5 text-sm text-fg-muted transition-colors hover:border-line-strong hover:text-fg"
+            >
+              {s.label}
+            </a>
+          </li>
+        ))}
+        <li>
+          <a
+            href="/experience/other"
+            class="inline-block rounded-full border border-dashed border-line-strong px-3 py-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
+          >
+            {otherPage.heading}
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </Container>
+
+  <Section id="professional" eyebrow="01" title="Professional">
+    <Timeline>
+      {professional.map((e) => (
+        <ExperienceItem entry={e} />
+      ))}
+    </Timeline>
+  </Section>
+
+  <Section
+    id="teaching"
+    eyebrow="02"
+    title="Teaching & Tutoring"
+    description={`${teaching.length} roles tutoring and teaching Math and Computer Science.`}
+  >
+    <Timeline>
+      {teaching.map((e) => (
+        <ExperienceItem entry={e} />
+      ))}
+    </Timeline>
+  </Section>
+
+  <Section id="leadership" eyebrow="03" title="Leadership & Community">
+    <Timeline>
+      {leadership.map((e) => (
+        <ExperienceItem entry={e} />
+      ))}
+    </Timeline>
+    {volunteer.length > 0 && (
+      <div class="mt-12">
+        <h3 class="font-mono text-xs tracking-widest text-fg-subtle uppercase">
+          Volunteering
+        </h3>
+        <ul class="mt-4 divide-y divide-line rounded-2xl border border-line">
+          {volunteer.map((v) => (
+            <li class="flex flex-col gap-1 p-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
+              <p>
+                <span class="font-medium text-fg">{v.data.role}</span>
+                <span class="text-fg-muted">{` · ${v.data.org}`}</span>
+                <span class="mt-0.5 block text-sm text-fg-muted">
+                  {v.data.summary}
+                </span>
+              </p>
+              <p class="shrink-0 font-mono text-xs text-fg-subtle">
+                {v.data.dateLabel ?? formatDateRange(v.data.start, v.data.end)}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </Section>
+
+  <Section id="education" eyebrow="04" title="Education & Honors">
+    {education.map(({ data: ed }) => (
+      <div class="grid gap-6 lg:grid-cols-2">
+        <Card padding="lg">
+          <p class="flex items-center gap-2 font-mono text-xs text-fg-subtle">
+            <GraduationCap size={14} aria-hidden="true" />
+            {formatDateRange(ed.start, ed.end)}
+            {ed.location && <span>{` · ${ed.location}`}</span>}
+          </p>
+          <h3 class="mt-3 text-xl font-semibold">{ed.school}</h3>
+          <ul class="mt-4 space-y-3">
+            {ed.degrees.map((deg) => (
+              <li>
+                <p class="font-medium text-fg">{deg.name}</p>
+                <p class="text-sm text-fg-muted">
+                  {`${deg.tracks.length > 1 ? "Tracks" : "Track"}: ${deg.tracks.join("; ")}`}
+                </p>
+              </li>
+            ))}
+            {ed.minors.length > 0 && (
+              <li>
+                <p class="font-medium text-fg">
+                  {`Minor in ${ed.minors.join(", ")}`}
+                </p>
+              </li>
+            )}
+          </ul>
+          <dl class="mt-6 flex gap-8 border-t border-line pt-5">
+            <div>
+              <dt class="font-mono text-xs text-fg-subtle">GPA</dt>
+              <dd class="mt-0.5 text-2xl font-semibold text-fg">{ed.gpa}</dd>
+            </div>
+            {ed.distinction && (
+              <div>
+                <dt class="font-mono text-xs text-fg-subtle">Distinction</dt>
+                <dd class="mt-0.5 text-2xl font-semibold text-fg">
+                  {ed.distinction}
+                </dd>
+              </div>
+            )}
+          </dl>
+        </Card>
+
+        {ed.honors.length > 0 && (
+          <div>
+            <h3 class="flex items-center gap-2 font-mono text-xs tracking-widest text-fg-subtle uppercase">
+              <Award size={14} aria-hidden="true" /> Honors & awards
+            </h3>
+            <ul class="mt-4 divide-y divide-line">
+              {ed.honors.map((h) => (
+                <li class="py-3">
+                  <p class="font-medium text-fg">{h.title}</p>
+                  {(h.when || h.detail) && (
+                    <p class="text-sm text-fg-muted">
+                      {[h.detail, h.when].filter(Boolean).join(" · ")}
+                    </p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    ))}
+  </Section>
+
+  <Container>
+    <Card href="/experience/other" padding="lg" class="group">
+      <div class="flex items-center justify-between gap-6">
+        <div>
+          <h2 class="text-xl font-semibold">{otherPage.heading}</h2>
+          <p class="mt-2 max-w-2xl text-fg-muted">{otherPage.intro}</p>
+        </div>
+        <ArrowRight
+          size={22}
+          aria-hidden="true"
+          class="shrink-0 text-fg-subtle transition-transform group-hover:translate-x-1 group-hover:text-accent"
+        />
+      </div>
+    </Card>
+  </Container>
+</BaseLayout>

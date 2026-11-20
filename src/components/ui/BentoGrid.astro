@@ -9,7 +9,7 @@ const { class: className } = Astro.props;
 <!-- 1 column on phones, 2 on tablets, 4 on desktop. Cells set their own spans. -->
 <div
   class:list={[
-    "grid auto-rows-[minmax(11rem,auto)] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
+    "grid sm:auto-rows-[minmax(11rem,auto)] grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
     className,
   ]}
 >

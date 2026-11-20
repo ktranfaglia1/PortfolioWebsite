@@ -8,6 +8,12 @@ interface Props {
   start: Date;
   end?: EndDate;
   location?: string;
+  /** Replaces the formatted date range, e.g. "Mar 2024 & Apr 2025". */
+  dateLabel?: string;
+  /** Links the org name (opens in a new tab). */
+  orgHref?: string;
+  /** Short line under the heading, e.g. what the org does. */
+  orgNote?: string;
   summary?: string;
   /** Marks the current role with an accent dot. */
   current?: boolean;
@@ -20,6 +26,9 @@ const {
   start,
   end,
   location,
+  dateLabel,
+  orgHref,
+  orgNote,
   summary,
   current = end === "present",
   level = 3,
@@ -36,14 +45,31 @@ const Heading = `h${level}` as "h2" | "h3";
       current ? "bg-accent" : "bg-line-strong",
     ]}
   ></span>
+  {Astro.slots.has("logo") && <slot name="logo" />}
   <p class="font-mono text-xs text-fg-subtle">
-    {formatDateRange(start, end)}
+    {dateLabel ?? formatDateRange(start, end)}
     {location && <span>{` · ${location}`}</span>}
   </p>
   <Heading class="mt-1.5 text-lg font-semibold">
     {position}
-    <span class="font-normal text-fg-muted">{` · ${org}`}</span>
+    <span class="font-normal text-fg-muted">
+      {" · "}
+      {orgHref ? (
+        <a
+          href={orgHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline decoration-line-strong underline-offset-4 transition-colors hover:text-fg hover:decoration-accent"
+        >
+          {org}
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+      ) : (
+        org
+      )}
+    </span>
   </Heading>
+  {orgNote && <p class="mt-1 text-sm text-fg-subtle">{orgNote}</p>}
   {summary && <p class="mt-2 max-w-2xl text-fg-muted">{summary}</p>}
   <div class="mt-3 max-w-2xl text-fg-muted">
     <slot />

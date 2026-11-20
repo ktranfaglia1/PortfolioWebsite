@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { routes } from "./routes";
 
 test.describe("theme", () => {
   test("first visit follows the OS setting, live", async ({ page }) => {
@@ -83,7 +84,7 @@ test.describe("mobile menu", () => {
 
   test("has no horizontal scroll at 360px", async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 740 });
-    for (const route of ["/", "/styleguide"]) {
+    for (const route of routes) {
       await page.goto(route);
       const overflow = await page.evaluate(
         () =>

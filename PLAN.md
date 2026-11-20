@@ -1,6 +1,6 @@
 # Portfolio Redesign Plan
 
-> **Status: APPROVED · Phases 0–1 done · Phase 2 awaiting review.** Deploy approach (§7) is pending the server admin's answers.
+> **Status: APPROVED · Phases 0–2 done · Phase 3 awaiting review ★.** Deploy approach (§7) is pending the server admin's answers.
 > Branch: `redesign` · Legacy site preserved on `legacy` · Production: `main` → https://kyletranfaglia.top
 > Last updated: 2026-11-19
 
@@ -126,8 +126,9 @@ project?: reference to a project (e.g. City of Cambridge → cambridge-fema-tool
 ├── src/
 │   ├── assets/images/
 │   ├── components/
-│   │   └── islands/        # CommandPalette, ProjectFilter, ContactForm, GitHubActivity
-│   │                       # (theme toggle and mobile menu are plain .astro + tiny inline scripts: no React needed)
+│   │   └── islands/        # CommandPalette (React + cmdk, Phase 4)
+│   │                       # Theme toggle, mobile menu, project filter, and contact form are plain .astro
+│   │                       # + small scripts in src/scripts/ (progressive enhancement, no React runtime)
 │   ├── content/            # projects/, experience/, education.yaml, skills.yaml
 │   ├── content.config.ts
 │   ├── layouts/

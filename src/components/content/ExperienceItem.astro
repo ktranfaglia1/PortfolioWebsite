@@ -1,0 +1,86 @@
+---
+import { ArrowRight } from "@lucide/astro";
+import type { Experience } from "../../lib/content";
+import { formatDateRange } from "../../lib/dates";
+import ImagePlaceholder from "../ui/ImagePlaceholder.astro";
+import Tag from "../ui/Tag.astro";
+import TimelineItem from "../ui/TimelineItem.astro";
+
+interface Props {
+  entry: Experience;
+  level?: 2 | 3;
+  /** Hide highlights/skills for a condensed list (e.g. the resume page). */
+  compact?: boolean;
+}
+
+const { entry, level = 3, compact = false } = Astro.props;
+const d = entry.data;
+const orgHref = d.showLink ? d.orgUrl : undefined;
+---
+
+<TimelineItem
+  position={d.role}
+  org={d.org}
+  orgHref={orgHref}
+  orgNote={d.orgDescription}
+  start={d.start}
+  end={d.end}
+  dateLabel={d.dateLabel}
+  location={d.location}
+  summary={d.summary}
+  level={level}
+>
+  {d.logoPlaceholder && !d.orgLogo && (
+    <ImagePlaceholder
+      slot="logo"
+      size="icon"
+      label={d.logoPlaceholder}
+      class="mb-3"
+    />
+  )}
+  {!compact && (
+    <>
+      {d.positions.length > 0 && (
+        <ol class="mb-4 space-y-2 border-l border-dashed border-line-strong pl-4">
+          {d.positions.map((p) => (
+            <li>
+              <p class="font-medium text-fg">{p.role}</p>
+              {(p.detail || p.start) && (
+                <p class="text-sm text-fg-subtle">
+                  {[p.start && formatDateRange(p.start, p.end), p.detail]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
+              )}
+            </li>
+          ))}
+        </ol>
+      )}
+      {d.highlights.length > 0 && (
+        <ul class="list-disc space-y-1.5 pl-5 marker:text-fg-subtle">
+          {d.highlights.map((h) => (
+            <li>{h}</li>
+          ))}
+        </ul>
+      )}
+      {d.skills.length > 0 && (
+        <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Skills">
+          {d.skills.map((s) => (
+            <li>
+              <Tag>{s}</Tag>
+            </li>
+          ))}
+        </ul>
+      )}
+      {d.project && (
+        <a
+          href={`/projects/${d.project.id}`}
+          class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent underline-offset-4 hover:underline"
+        >
+          Read the case study
+          <ArrowRight size={14} aria-hidden="true" />
+        </a>
+      )}
+    </>
+  )}
+</TimelineItem>

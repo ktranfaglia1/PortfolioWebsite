@@ -11,7 +11,7 @@ Node 26 (`nvm use`), pnpm. **See PLAN.md** for all decisions, the phase plan, an
 - E2E tests run against `astro preview` on port 4322 with `--ignore-lock`, so build first. (Astro 7 auto-backgrounds `preview`/`dev` when it detects an AI agent; `--ignore-lock` keeps the test server in the foreground and avoids colliding with a running `pnpm dev`.)
 
 ## Content rules
-- All copy lives in `src/content/` and `src/site.config.ts`. Never hard-code copy in components.
+- All copy lives in `src/content/` and `src/site.config.ts`. Never hard-code sentences in components; short UI labels ("Now", "Send message", "All projects") are fine.
 - Schema changes go through `src/content.config.ts`; the field reference is PLAN.md §4. Pages read content through `src/lib/content.ts`, not `getCollection` directly.
 - Page titles, meta descriptions, and intros live in `src/content/pages.yaml`.
 - Images go in `src/assets/images/` (named after the content slug) and render with `astro:assets` `<Image>`, never from `public/`. Only downloadable files (PDFs) live in `public/`.
@@ -19,10 +19,12 @@ Node 26 (`nvm use`), pnpm. **See PLAN.md** for all decisions, the phase plan, an
 - `reference/` (git-ignored) holds private source material such as the hospitality resume. Use it for writing content; never publish or commit it.
 
 ## Conventions
-- `.astro` components by default; React only in `src/components/islands/`, hydrated with the lightest `client:*` directive that works.
+- `.astro` components by default; React only in `src/components/islands/`, hydrated with the lightest `client:*` directive that works. Small behaviors (filter, form, toggle) are plain scripts in `src/scripts/` that enhance server-rendered HTML, so pages work without JS.
+- Components: `ui/` (generic), `layout/` (shell), `content/` (render one content entry: ProjectCard, ExperienceItem, SkillTag), `page/` (page chrome: PageHeader).
+- Absolutely positioned children (e.g. `sr-only` text) inside an `overflow-x-auto` box escape it unless the box is `relative`, causing page-wide horizontal scroll.
 - Style with Tailwind utilities that reference design tokens; no raw hex values in components.
 - Pure logic goes in `src/lib/` with Vitest tests next to it (`*.test.ts`).
-- New routes get added to the `routes` list in `tests/e2e/smoke.spec.ts`.
+- New routes get added to `tests/e2e/routes.ts` (case studies are picked up automatically).
 - Whitespace between an `{expression}` and a following element can be dropped by the Astro compiler, and Prettier rewrites `{" "}` back to a plain space. Put separators inside a string expression instead: `<span>{` · ${org}`}</span>`.
 - Design tokens live in `src/styles/global.css`. Tailwind's default palette is disabled, so only semantic colors exist (`bg-canvas`, `bg-surface`, `text-fg-muted`, `border-line`, `bg-accent`, ...). Review components on `/styleguide` (noindex, not in the sitemap).
 - Theme: follows the OS setting until the toggle saves a choice (dark if no OS preference); `<html data-theme>` is set before paint by the inline script in `BaseLayout.astro`; changes go through `src/scripts/theme.ts`.

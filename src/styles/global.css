@@ -125,6 +125,56 @@
   }
 }
 
+/* ==========================================================================
+   Prose: long-form Markdown/MDX (case studies). Small and token-based; no
+   typography plugin needed.
+   ========================================================================== */
+
+@layer components {
+  .prose {
+    @apply max-w-2xl text-fg-muted;
+    line-height: 1.75;
+  }
+  .prose > * + * {
+    margin-top: 1.25em;
+  }
+  .prose h2 {
+    @apply mt-12 text-xl font-semibold text-fg sm:text-2xl;
+  }
+  .prose h3 {
+    @apply mt-8 text-lg font-semibold text-fg;
+  }
+  .prose h2 + *,
+  .prose h3 + * {
+    margin-top: 0.75em;
+  }
+  .prose :first-child {
+    margin-top: 0;
+  }
+  .prose a {
+    @apply text-accent underline underline-offset-4;
+  }
+  .prose strong {
+    @apply font-semibold text-fg;
+  }
+  .prose ul,
+  .prose ol {
+    @apply space-y-2 pl-5;
+  }
+  .prose ul {
+    @apply list-disc;
+  }
+  .prose ol {
+    @apply list-decimal;
+  }
+  .prose li::marker {
+    color: var(--fg-subtle);
+  }
+  .prose code {
+    @apply rounded bg-surface-2 px-1.5 py-0.5 font-mono text-[0.875em] text-fg;
+  }
+}
+
 /* Respect reduced-motion preferences everywhere. */
 @media (prefers-reduced-motion: reduce) {
   *,

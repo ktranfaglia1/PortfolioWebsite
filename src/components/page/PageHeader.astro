@@ -1,0 +1,27 @@
+---
+import Container from "../layout/Container.astro";
+
+interface Props {
+  heading: string;
+  intro?: string;
+  eyebrow?: string;
+  class?: string;
+}
+
+const { heading, intro, eyebrow, class: className } = Astro.props;
+---
+
+<Container class:list={["pt-16 pb-8 sm:pt-24 sm:pb-12", className]}>
+  {eyebrow && (
+    <p class="mb-4 font-mono text-xs tracking-widest text-accent uppercase">
+      {eyebrow}
+    </p>
+  )}
+  <h1 class="text-4xl font-semibold sm:text-5xl">{heading}</h1>
+  {intro && <p class="mt-4 max-w-2xl text-lg text-fg-muted">{intro}</p>}
+  {Astro.slots.has("default") && (
+    <div class="mt-8 flex flex-wrap gap-3">
+      <slot />
+    </div>
+  )}
+</Container>

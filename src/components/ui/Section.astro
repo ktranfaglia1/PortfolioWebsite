@@ -1,7 +1,8 @@
 ---
+import type { HTMLAttributes } from "astro/types";
 import Container from "../layout/Container.astro";
 
-interface Props {
+interface Props extends Omit<HTMLAttributes<"section">, "title"> {
   id?: string;
   /** Small mono label above the title, e.g. "Experience". */
   eyebrow?: string;
@@ -19,6 +20,7 @@ const {
   description,
   level = 2,
   class: className,
+  ...rest
 } = Astro.props;
 const Heading = `h${level}` as "h2" | "h3";
 const headingId = id && title ? `${id}-title` : undefined;
@@ -28,6 +30,7 @@ const headingId = id && title ? `${id}-title` : undefined;
   id={id}
   aria-labelledby={headingId}
   class:list={["py-12 sm:py-16", className]}
+  {...rest}
 >
   <Container>
     {(eyebrow || title || description) && (
