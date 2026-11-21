@@ -343,9 +343,16 @@ Diagnosis:
 - Proofreading: a mechanical scan of the rendered text (doubled words, spacing, punctuation, rare words) found nothing.
 - Still owed by Kyle (`grep -rn "TODO(kyle)" src`):
   - Cloudflare analytics token.
-  - Better covers for Chess Openings, Sport Classification and Pynacle Games.
   - Review of the `pages.yaml` copy, including the About section.
-  - Which Calculus SI claim is right: the site uses LinkedIn's "my sessions helped raise the course pass rate by more than 10%"; the resume PDF says "a program SU data shows raises class averages by over 10%".
+- Follow-ups done 2026-11-21:
+  - Calculus SI uses the resume's wording (Kyle: it's the accurate one): "a program SU data shows raises class averages by over 10%".
+  - New covers and galleries:
+    - Chess Openings: charts from the notebook outputs.
+    - Sport Classification: charts from the repo's `Plots/`.
+    - Pynacle Games: pynaclegames.org pages plus the site's six game images, captured at 2×.
+    - Charts are composed onto white 16:10 (cover) or 4:3 (gallery) panels so card crops don't cut them.
+  - Resume PDF: removed double spaces before the italic text on the Pitchfire and City of Cambridge header lines.
+  - pynaclegames.org bug (Kyle's server): client-side routes such as /games return Apache 404 on direct load or refresh. It needs an SPA fallback, e.g. `FallbackResource /index.html`.
 
 **Phase 7: Launch ★**
 - **Before this phase:** Kyle gets the server admin's answers to the §7 questions and picks the deploy approach.

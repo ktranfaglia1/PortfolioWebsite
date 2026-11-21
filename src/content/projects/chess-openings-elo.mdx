@@ -13,9 +13,17 @@ links:
   repo: https://github.com/ktranfaglia1/ChessAnalysis
   paper: https://github.com/ktranfaglia1/ChessAnalysis/blob/main/Tranfaglia_2024_ChessAnalysis.pdf
 cover:
-  # TODO(kyle): replace the paper's title page with a chart from the analysis.
-  src: ../../assets/images/projects/chess-openings-elo.png
-  alt: Title page of the research paper Chess Openings and Elo, Patterns and Predictions of Game Outcomes
+  src: ../../assets/images/projects/chess-openings-elo/cover.png
+  alt: "Two charts: game outcome probabilities by Elo difference, with White's wins rising and Black's falling as White's edge grows; and a heatmap of White's win probability by Elo group and Elo difference, reaching about 0.93 at a 500+ point edge"
+gallery:
+  - src: ../../assets/images/projects/chess-openings-elo/win-curve.png
+    alt: Line chart of White's win ratio by Elo difference, climbing from 0.50 at even ratings to about 0.93 beyond 500 points
+  - src: ../../assets/images/projects/chess-openings-elo/logistic.png
+    alt: Bar chart comparing observed White win probability with the logistic model's prediction for each Elo-difference bin
+  - src: ../../assets/images/projects/chess-openings-elo/openings-by-group.png
+    alt: Stacked bar chart of how often each skill group plays seven common openings, led by the Sicilian Defense
+  - src: ../../assets/images/projects/chess-openings-elo/elo-distribution.png
+    alt: Histogram of average player Elo across the 6.25 million games, centered near 1,750
 outcomes:
   - value: "6.25M"
     label: Lichess games
