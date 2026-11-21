@@ -115,7 +115,14 @@ const experience = defineCollection({
         orgUrl: z.url().optional(),
         /** Set false to hide the org link (Pitchfire, for now). */
         showLink: z.boolean().default(true),
-        orgLogo: z.object({ src: image(), alt: z.string() }).optional(),
+        /** `srcDark` is an optional variant shown in the dark theme. */
+        orgLogo: z
+          .object({
+            src: image(),
+            srcDark: image().optional(),
+            alt: z.string(),
+          })
+          .optional(),
         /** Label for the logo placeholder while the logo is missing. */
         logoPlaceholder: z.string().optional(),
         role: z.string(),

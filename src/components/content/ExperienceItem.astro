@@ -1,5 +1,6 @@
 ---
 import { ArrowRight } from "@lucide/astro";
+import { Image } from "astro:assets";
 import type { Experience } from "../../lib/content";
 import { formatDateRange } from "../../lib/dates";
 import ImagePlaceholder from "../ui/ImagePlaceholder.astro";
@@ -30,6 +31,29 @@ const orgHref = d.showLink ? d.orgUrl : undefined;
   summary={d.summary}
   level={level}
 >
+  {d.orgLogo && (
+    <div slot="logo" class="mb-3 size-10">
+      <Image
+        src={d.orgLogo.src}
+        alt={d.orgLogo.alt}
+        width={80}
+        height={80}
+        class:list={[
+          "size-10 object-contain",
+          d.orgLogo.srcDark && "hidden [[data-theme=light]_&]:block",
+        ]}
+      />
+      {d.orgLogo.srcDark && (
+        <Image
+          src={d.orgLogo.srcDark}
+          alt={d.orgLogo.alt}
+          width={80}
+          height={80}
+          class="size-10 object-contain [[data-theme=light]_&]:hidden"
+        />
+      )}
+    </div>
+  )}
   {d.logoPlaceholder && !d.orgLogo && (
     <ImagePlaceholder
       slot="logo"

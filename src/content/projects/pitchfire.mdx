@@ -22,12 +22,28 @@ context: Startup · Incubated by New North Ventures
 start: 2025-12-01
 end: present
 # No links: the Pitchfire link stays hidden while showLink is false on the
-# experience entry. TODO(kyle): add product screenshots (cover + gallery).
+# experience entry. Screenshots use demo accounts only, never customer data.
+cover:
+  src: ../../assets/images/projects/pitchfire/deal-first-look.png
+  alt: Pitchfire's First Look page for a demo deal, with status, source, sponsor, pitch deck viewer, and team activity
+gallery:
+  - src: ../../assets/images/projects/pitchfire/founder-dashboard.png
+    alt: Founder dashboard with investor matches, share-link views, and processed pitch decks
+  - src: ../../assets/images/projects/pitchfire/investor-dashboard.png
+    alt: Investor dashboard with deck upload, pipeline metrics, an Up Next voting queue, and recent opportunities
+  - src: ../../assets/images/projects/pitchfire/ai-assistant.png
+    alt: The Pitchfire AI assistant panel open beside the investor dashboard, with suggested questions
+  - src: ../../assets/images/projects/pitchfire/pipeline-automation.png
+    alt: Pipeline stage settings with team-voting thresholds and automated founder emails
+  - src: ../../assets/images/projects/pitchfire/news-feed.png
+    alt: News feed of AI-synthesized venture and private-markets stories, tagged by category and sector
+  - src: ../../assets/images/projects/pitchfire/pe-criteria.png
+    alt: Private equity investment criteria form with target sectors, revenue and EBITDA ranges, and deal types
 outcomes:
-  - value: "145"
+  - value: "150+"
     label: active users
-  - value: "111"
-    label: VC and PE firms
+  - value: "100+"
+    label: firms
   - value: "1,600+"
     label: pitch decks ingested
   - value: "~5,000"
@@ -49,13 +65,12 @@ it's mine.
 
 ## Where it started
 
-When I joined in December 2025, Pitchfire was an internal Python/AWS tool built for
-venture capital firms. I rebuilt it as a multi-tenant, production TypeScript platform,
+When I joined in December 2025, Pitchfire was an internal Python/AWS deal-flow management
+and opportunity analysis tool built for venture capital firms. I rebuilt it as a multi-tenant, production TypeScript platform,
 moved it to Replit, and widened it from a VC-only tool into a two-sided product: a
 workspace for investment teams (now including private equity) and a workspace for the
 founders pitching them. The AI layer evolved alongside it, from a local model to OpenAI
 and then to Anthropic Claude.
-{/* TODO(kyle): confirm the origin story wording. */}
 
 ## What I built
 
