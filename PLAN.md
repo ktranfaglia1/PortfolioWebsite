@@ -1,8 +1,8 @@
 # Portfolio Redesign Plan
 
-> **Status: APPROVED · Phases 0–5 done · Redesign detour (Phase 5.5): R1–R6 done 2026-11-21 (Kyle picked A, with B's commit graph on /experience). Phase 6 next, pending Kyle's review of the R5 copy.** Deploy approach (§7) is pending the server admin's answers.
+> **Status: APPROVED · Phases 0–5 done · Redesign detour (Phase 5.5): R1–R6 done 2026-11-21 (Kyle picked A, with B's commit graph on /experience). Phase 6 done 2026-11-21 apart from the items Kyle owes. Phase 7 (launch) next.** Deploy approach (§7) is pending the server admin's answers.
 > Branch: `redesign` · Legacy site preserved on `legacy` · Production: `main` → https://kyletranfaglia.top
-> Last updated: 2026-11-20
+> Last updated: 2026-11-21
 
 ---
 
@@ -279,8 +279,7 @@ Diagnosis:
     - Teaching details from LinkedIn: Calculus SI pass rate up more than 10%, lab-assistant goal. The Clayton Theatre description was updated too.
   - Writing rules for Pitchfire, from the privacy review notes: no absolute claims (not "every AI write is confirmed", "no cross-firm leakage", or "all links expire"). Keep security high-level, with no thresholds or internal file paths.
   - Gap list (Kyle):
-    - Pitchfire screenshots (cover and gallery) and logo. The case study and the home row show placeholders until then.
-    - Confirm the Pitchfire origin-story wording ("an internal Python/AWS tool built for venture capital firms").
+    - ~~Pitchfire screenshots and logo~~ and ~~origin wording~~: done in Phase 6.
     - Review the home About copy and page headlines (`pages.yaml`).
     - The resume PDF's Pitchfire section is unchanged. It already matched the site's figures.
   - Sources:
@@ -334,9 +333,19 @@ Diagnosis:
         - Chess bot: "92% on grandmaster games" is now "about 91% validation accuracy predicting game outcomes".
 - **R6. Verify.** ✅ Done 2026-11-21. `pnpm verify` green (187 e2e including axe in both themes and the viewport checks; 46 unit). Lighthouse is 100 in every category on all audited pages (the Pitchfire case study is now in the audit list). Screenshots were reviewed at 390 and 1440 in both themes.
 
-**Phase 6: Final content pass** (on hold until 5.5 is done; shrinks to whatever R5 doesn't cover)
-- Kyle supplies updated content and images (Pitchfire logo and screenshots, anything else marked `TODO(kyle)`).
-- Proofreading. Check every link.
+**Phase 6: Final content pass** ✅ Done 2026-11-21, except the items Kyle owes.
+- Pitchfire:
+  - Origin wording confirmed: "an internal Python/AWS deal-flow management and opportunity analysis tool".
+  - User figures generalized to 150+ users across 100+ firms. "Firms" includes startups, so never say "VC and PE firms" for the count. Updated on the site and in the resume PDF.
+  - Logo added (with a dark-theme variant), plus the case-study cover and a six-image gallery.
+  - Screenshots use demo accounts only ("Pitchfire Demo", "Sample Ventures"). Kyle's older screenshots showed real deal names and emails and were not used. The source folder was removed from `reference/`; Kyle keeps a local copy.
+- Links: no broken internal links in 20 built pages. Every external link returns 200; LinkedIn returns 999 to bots, which is expected.
+- Proofreading: a mechanical scan of the rendered text (doubled words, spacing, punctuation, rare words) found nothing.
+- Still owed by Kyle (`grep -rn "TODO(kyle)" src`):
+  - Cloudflare analytics token.
+  - Better covers for Chess Openings, Sport Classification and Pynacle Games.
+  - Review of the `pages.yaml` copy, including the About section.
+  - Which Calculus SI claim is right: the site uses LinkedIn's "my sessions helped raise the course pass rate by more than 10%"; the resume PDF says "a program SU data shows raises class averages by over 10%".
 
 **Phase 7: Launch ★**
 - **Before this phase:** Kyle gets the server admin's answers to the §7 questions and picks the deploy approach.
