@@ -50,7 +50,14 @@ const Heading = `h${level}` as "h2" | "h3";
       {[d.context, formatDateRange(d.start, d.end)].filter(Boolean).join(" · ")}
     </p>
     {d.outcomes.length > 0 && (
-      <dl class="mt-8 grid max-w-xl grid-cols-3 gap-6 border-t border-line pt-6">
+      <dl
+        class:list={[
+          "mt-8 grid max-w-xl gap-6 border-t border-line pt-6",
+          d.outcomes.length === 4
+            ? "grid-cols-2 sm:grid-cols-4"
+            : "grid-cols-3",
+        ]}
+      >
         {d.outcomes.map((o) => (
           <div class="flex flex-col-reverse justify-end">
             <dt class="mt-2 text-xs leading-snug text-fg-subtle">{o.label}</dt>

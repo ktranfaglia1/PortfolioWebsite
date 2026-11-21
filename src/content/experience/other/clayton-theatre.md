@@ -1,7 +1,7 @@
 ---
 org: Clayton Theatre
 role: Cashier
-orgDescription: Concessions, ticket booth, and theatre operations
+orgDescription: Historic single-screen movie theatre, Dagsboro, DE
 group: other
 start: 2019-05-01
 end: 2024-01-01

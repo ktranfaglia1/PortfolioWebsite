@@ -10,6 +10,6 @@ end: 2025-05-01
 order: 3
 summary: Assisted weekly lab sessions for COSC 117 Programming Fundamentals (Java) and COSC 120 Computer Science I (C++), supporting about 40 students.
 highlights:
-  - Answered questions, reviewed code, and helped students through programming problems during labs.
+  - Circulated during one lab session a week to answer questions, review code, and help students through programming problems, with the goal of raising the course average.
   - Held two office hours a week for tutoring and coding help.
 ---

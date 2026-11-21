@@ -1,0 +1,180 @@
+---
+title: Pitchfire
+summary: An AI platform for startups and investment teams that I architected, built, and run as co-founder and sole engineer.
+tier: featured
+order: 0
+categories: [software, web, ai-ml]
+stack:
+  [
+    TypeScript,
+    React,
+    Node.js,
+    Express,
+    PostgreSQL,
+    pgvector,
+    Drizzle,
+    Claude,
+    OpenAI,
+  ]
+role: Co-founder & sole engineer
+teamLabel: Sole engineer on a founding team
+context: Startup · Incubated by New North Ventures
+start: 2025-12-01
+end: present
+# No links: the Pitchfire link stays hidden while showLink is false on the
+# experience entry. TODO(kyle): add product screenshots (cover + gallery).
+outcomes:
+  - value: "145"
+    label: active users
+  - value: "111"
+    label: VC and PE firms
+  - value: "1,600+"
+    label: pitch decks ingested
+  - value: "~5,000"
+    label: VC firms in the matching catalog
+---
+
+import FlowDiagram from "../../components/content/FlowDiagram.astro";
+
+## Overview
+
+Pitchfire is an AI-powered platform for both sides of a fundraise. Founders use it to
+prepare and run their raise. Venture capital and private equity firms use it to source,
+evaluate, and manage the deals that come in.
+
+I'm a co-founder and the only engineer. I own the platform end to end: system
+architecture, the full stack, AI systems, data infrastructure, the product roadmap,
+releases, and production operations. When something ships, breaks, or needs to scale,
+it's mine.
+
+## Where it started
+
+When I joined in December 2025, Pitchfire was an internal Python/AWS tool built for
+venture capital firms. I rebuilt it as a multi-tenant, production TypeScript platform,
+moved it to Replit, and widened it from a VC-only tool into a two-sided product: a
+workspace for investment teams (now including private equity) and a workspace for the
+founders pitching them. The AI layer evolved alongside it, from a local model to OpenAI
+and then to Anthropic Claude.
+{/* TODO(kyle): confirm the origin story wording. */}
+
+## What I built
+
+**For investment teams:**
+
+- Automated deal intake from uploads, embeddable branded intake forms, DocSend links, and inbound email.
+- AI analysis of every deck, plus teaser and CIM analysis for private equity, with deal type, EBITDA, revenue range, and sector filled in automatically.
+- Thesis-match scoring from 0 to 10 against each firm's own criteria, with a breakdown of why a deal scored the way it did.
+- Configurable pipelines with automatic advance or decline rules, team voting, NDA workflows, data rooms, and portfolio tracking.
+- Co-investor intelligence: a catalog of thousands of external VC firms that powers deal sharing and syndication recommendations.
+
+**For founders:**
+
+- Pitch analysis across the seven areas investors evaluate, with benchmarking against similar companies and comparisons between deck versions.
+- Investor discovery and matching, one-click pitching, and outreach tracking.
+- Investor updates with per-recipient engagement analytics, personal data rooms, and cap-table management with vesting and dilution modeling.
+
+## Architecture
+
+Pitchfire is one TypeScript codebase. The browser app is React 18 with Vite, TanStack
+Query, Tailwind, and shadcn/Radix. The API is Node.js and Express. Both sides share the
+same schema types and Zod validation contracts, so a field means the same thing from
+the database to the form.
+
+PostgreSQL, through Drizzle ORM, is the system of record for accounts, firms, deals,
+analyses, pipelines, cap tables, and job state. I kept search inside it too: full-text
+search runs on GIN indexes, and semantic matching runs on pgvector, so there's no
+separate search or vector database to keep in sync. Files live in private object
+storage and are served through short-lived signed URLs after a permission check.
+
+I designed the data model around firm-level isolation. Every deal, document, message,
+and pipeline record is scoped to its firm in the query layer. Access control runs on
+four roles across founder, investor, and shared workflows, and the server checks them
+on every request rather than trusting the UI. I've also spent real time on performance:
+caching, redesigned joins and foreign keys, and removing N+1 queries to cut API, query,
+and page-load latency.
+
+## The AI layer
+
+AI in Pitchfire is part of the structure, not a chat box bolted on top. The core of it
+is the deck pipeline:
+
+<FlowDiagram
+  caption="How an inbound pitch deck becomes a scored, searchable deal."
+  steps={[
+    {
+      label: "Intake",
+      detail: "Upload, embedded form, DocSend link, or inbound email.",
+    },
+    {
+      label: "Validate and scan",
+      detail:
+        "File-type checks and malware scanning before anything is processed.",
+    },
+    {
+      label: "Convert and parse",
+      detail:
+        "Office files converted, PDFs parsed, slides rendered to thumbnails.",
+    },
+    {
+      label: "Analyze",
+      detail:
+        "Vision for slide understanding, then Claude for structured analysis.",
+    },
+    {
+      label: "Score and match",
+      detail:
+        "Thesis-match scores plus embedding similarity against firm theses.",
+    },
+    {
+      label: "Persist and notify",
+      detail: "Results saved, pipeline rules applied, and the team notified.",
+    },
+  ]}
+/>
+
+On top of that pipeline I built:
+
+- **Structured analysis.** Each deck gets a summary, traction highlights, key risks, a business-model breakdown, market research, a valuation range, and an investment recommendation.
+- **An AI advisor panel.** Four distinct investor personas each evaluate a deal on their own, giving a conviction score, diligence questions, and a recommendation.
+- **Embedding-based matching.** OpenAI embeddings in pgvector catch strong fits that keyword filters miss. Matching combines vector similarity with business filters and ranking logic, because a similarity score alone isn't a recommendation.
+- **A permission-aware AI assistant.** It answers questions about the pipeline, deals, and the firm's criteria, and it can act: search deals, draft and send founder emails, move deals, and update criteria. Write actions appear as confirmation cards the user approves, are rate-limited and logged, and each firm can turn AI writes off with one switch.
+- **Model routing and cost control.** Deeper analysis goes to a larger Claude model and lighter tasks to a smaller one, with prompt caching and usage tracking to keep quality up and cost down.
+
+## Reliability
+
+Most of the hard engineering is in what happens when things go wrong. Deck processing,
+investor-catalog enrichment, news synthesis, and email delivery all run as asynchronous
+pipelines, and I built each one to recover:
+
+- Job state is persisted in PostgreSQL, so work interrupted by a restart is picked up by startup sweeps and stale-job detection instead of disappearing.
+- Workers claim jobs through the database, which prevents two processes from doing the same work.
+- Provider calls retry, duplicate articles and records are filtered out, and email delivery is reconciled against delivery events.
+- A news pipeline polls RSS feeds and web search on a schedule, then deduplicates, embeds, clusters, quality-checks, and ranks articles into a feed personalized to each firm.
+
+Around that sit database migrations, monitoring through logs, audit records and admin
+diagnostics, and Vitest regression tests.
+
+## Security
+
+Investors trust Pitchfire with confidential deal flow, so security is part of the
+design rather than a later pass. The platform has firm-scoped data access, role-based
+permissions, two-factor authentication, bcrypt password hashing, Postgres-backed
+sessions with hardened cookies, AES-256-GCM encryption for sensitive fields,
+malware-scanned uploads, watermarked data-room downloads, rate limiting, schema
+validation on every endpoint, and an audit trail for sign-ins, permission changes, and
+admin actions.
+
+## Connected workflows
+
+The part I'm proudest of is how the pieces connect. A founder's deck analysis feeds
+their investor matches. A match becomes outreach. Outreach lands in a firm's intake,
+gets scored against its thesis, moves through its pipeline, and sends the founder a
+status update automatically. Data rooms, NDAs, and cap-table data travel with the deal.
+Making that work across different users and organizations, without leaking anything
+between them, is what turns a set of features into a platform.
+
+## Beyond engineering
+
+As a co-founder, I also shape product strategy and go-to-market direction, customer
+targeting, QA, market research, and hiring. I turn what startups and investment teams
+tell us they need into a platform I design, ship, maintain, and support.

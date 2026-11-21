@@ -41,7 +41,10 @@ const around = neighbors(siblings, project.id);
 
 const facts = [
   { label: "Role", value: d.role },
-  { label: "Team", value: d.team ? `${d.team} people` : "Solo" },
+  {
+    label: "Team",
+    value: d.teamLabel ?? (d.team ? `${d.team} people` : "Solo"),
+  },
   { label: "Timeline", value: formatDateRange(d.start, d.end) },
   d.context && { label: "Context", value: d.context },
 ].filter((f): f is { label: string; value: string } => Boolean(f));
@@ -111,7 +114,10 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
 
         {d.outcomes.length > 0 && (
           <dl
-            class="mt-12 grid gap-6 border-y border-line py-8 sm:grid-cols-3 xl:mt-16"
+            class:list={[
+              "mt-12 grid grid-cols-2 gap-6 border-y border-line py-8 xl:mt-16",
+              d.outcomes.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3",
+            ]}
             aria-label="Outcomes"
           >
             {d.outcomes.map((o) => (

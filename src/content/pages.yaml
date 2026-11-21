@@ -5,13 +5,14 @@
   title: Kyle Tranfaglia | Software Engineer
   description: Kyle Tranfaglia is a software engineer building full-stack, AI-powered products, with dual degrees in computer science and data science.
   heading: Kyle Tranfaglia
-  intro: I build full-stack products end to end, from the database schema to the AI layer, with a data scientist's habit of measuring what matters.
+  intro: I'm the co-founder and sole engineer of Pitchfire, an AI platform for startups and investors. I build products end to end, from the database schema to the AI layer, with a data scientist's habit of measuring what matters.
   headline: Software engineer who *thinks in systems*.
   # TODO(kyle): review the About copy (drafted from your LinkedIn About section).
   about:
-    - I hold dual bachelor's degrees in computer science and data science, and the question I keep coming back to is how to design a complex system so that it behaves simply.
-    - Today I'm the co-founder and sole engineer of Pitchfire, an AI platform for startups and investment teams. I own the whole stack, from architecture and the React, TypeScript, and Node.js codebase to PostgreSQL, AI systems, infrastructure, and production.
-    - Before that, I built research software. That includes a music visualizer accepted at five conferences, cellular-automata simulators for a mathematics professor, a flood-risk tool for the City of Cambridge, and machine learning studies of chess and sports data. I also spent nearly three years tutoring math and computer science, which taught me to explain hard things plainly.
+    - The question I keep coming back to is how you design a complex system so it behaves simply. The best systems feel inevitable in hindsight. Every layer exists for a reason, and the architecture absorbs the complexity so the user never has to.
+    - That question is my day job at Pitchfire, where I'm a co-founder and the only engineer. I architected its AI analysis engine and the deal-flow infrastructure around it, and I own everything from the PostgreSQL data model and the React and TypeScript codebase to model routing, background pipelines, security, and production. I build knowing that the decisions made on day one are the ones you live with at scale.
+    - I got here through dual degrees in computer science and data science at Salisbury University, where I built research software. That includes a music visualizer accepted at five conferences, cellular-automata simulators for a mathematics professor, a flood-risk tool for the City of Cambridge, and machine learning studies of chess and of athletes' sleep and concussions. Along the way I tutored more than 1,000 students in math and computer science, which taught me to explain hard things plainly.
+    - Before and alongside software, I spent seven years in hospitality, from my first host job to formal service for nearly 200 weddings. I still work that way, staying calm under pressure and owning the outcome. And I'm drawn to the rare problems where the technical and domain challenges are equally steep. The future of venture capital turned out to be one of them.
 - id: projects
   title: Projects
   description: Software, AI, and data science projects by Kyle Tranfaglia, from desktop apps and web platforms to published research.

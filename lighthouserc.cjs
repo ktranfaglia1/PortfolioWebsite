@@ -8,6 +8,7 @@ const pages = [
   "/",
   "/projects",
   "/projects/music-painter",
+  "/projects/pitchfire",
   "/experience",
   "/experience/other",
   "/resume",

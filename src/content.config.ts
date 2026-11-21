@@ -62,6 +62,8 @@ const projects = defineCollection({
         role: z.string(),
         /** Team size including Kyle. Omit for solo work. */
         team: z.number().int().min(2).optional(),
+        /** Overrides the team label on the case study, e.g. "Sole engineer". */
+        teamLabel: z.string().optional(),
         /** Where it came from, e.g. "COSC 425/426 · Software Engineering". */
         context: z.string().optional(),
         start: date,

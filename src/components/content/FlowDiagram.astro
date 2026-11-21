@@ -1,0 +1,31 @@
+---
+/**
+ * A numbered left-to-right pipeline (stacked on phones) for case studies.
+ * Copy comes from the MDX that uses it, so the component stays content-free.
+ */
+interface Step {
+  label: string;
+  detail?: string;
+}
+
+interface Props {
+  steps: Step[];
+  caption: string;
+}
+
+const { steps, caption } = Astro.props;
+const pad = (n: number) => String(n).padStart(2, "0");
+---
+
+<figure class="my-10 max-w-none">
+  <ol class="grid list-none gap-px space-y-0 overflow-hidden pl-0 rounded-2xl border border-line bg-line sm:grid-cols-2 xl:grid-cols-3">
+    {steps.map((s, i) => (
+      <li class="bg-canvas p-4">
+        <p class="font-mono text-xs text-accent">{pad(i + 1)}</p>
+        <p class="mt-1 font-medium text-fg">{s.label}</p>
+        {s.detail && <p class="mt-1 text-sm text-fg-muted">{s.detail}</p>}
+      </li>
+    ))}
+  </ol>
+  <figcaption class="mt-3 text-sm text-fg-subtle">{caption}</figcaption>
+</figure>

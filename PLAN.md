@@ -1,6 +1,6 @@
 # Portfolio Redesign Plan
 
-> **Status: APPROVED · Phases 0–5 done · Redesign detour (Phase 5.5): R1–R4 done (Kyle picked A, with B's commit graph on /experience); R5 content depth and R6 verify remain. Phase 6 on hold.** Deploy approach (§7) is pending the server admin's answers.
+> **Status: APPROVED · Phases 0–5 done · Redesign detour (Phase 5.5): R1–R6 done 2026-11-21 (Kyle picked A, with B's commit graph on /experience). Phase 6 next, pending Kyle's review of the R5 copy.** Deploy approach (§7) is pending the server admin's answers.
 > Branch: `redesign` · Legacy site preserved on `legacy` · Production: `main` → https://kyletranfaglia.top
 > Last updated: 2026-11-20
 
@@ -87,7 +87,7 @@ All content lives in `src/content/` and `src/site.config.ts`. Schemas are define
 ```
 title, summary (≤ 160 chars), tier: featured | standard | archive,
 categories: [software | ai-ml | data-science | research | web],
-stack: string[], role, team?: number (incl. Kyle), context?: string (course, client, internship),
+stack: string[], role, team?: number (incl. Kyle), teamLabel?: string (overrides the team label), context?: string (course, client, internship),
 start, end?: date | "present", links: { live?, repo?, paper? },
 cover?: { src: image, alt }, gallery?: [{ src, alt }],
 recognition?: string[], order?: number (within tier), draft?: boolean
@@ -272,7 +272,17 @@ Diagnosis:
 - **R4. Apply.** ✅ Done 2026-11-20: A's editorial system on every page, B's commit graph on /experience, /lab removed, bento components retired.
   - Update tokens, components and `/styleguide` first.
   - Then the pages in order: Home, Projects, Case study, Experience, Resume, Contact, 404.
-- **R5. Content depth and accuracy.**
+- **R5. Content depth and accuracy.** ✅ Done 2026-11-21.
+  - Done:
+    - New Pitchfire case study (`projects/pitchfire.mdx`, featured, first), written from LinkedIn and the Pitchfire docs in `reference/` (feature overview, security overview, tech stack, privacy review notes). It has no links and doesn't name the acquiring LLC. The experience entry links to it and is regrouped under LinkedIn's four engineering pillars.
+    - Home intro and About narrative now tell the story: systems thinking, Pitchfire, the Salisbury research work and tutoring, then hospitality.
+    - Teaching details from LinkedIn: Calculus SI pass rate up more than 10%, lab-assistant goal. The Clayton Theatre description was updated too.
+  - Writing rules for Pitchfire, from the privacy review notes: no absolute claims (not "every AI write is confirmed", "no cross-firm leakage", or "all links expire"). Keep security high-level, with no thresholds or internal file paths.
+  - Gap list (Kyle):
+    - Pitchfire screenshots (cover and gallery) and logo. The case study and the home row show placeholders until then.
+    - Confirm the Pitchfire origin-story wording ("an internal Python/AWS tool built for venture capital firms").
+    - Review the home About copy and page headlines (`pages.yaml`).
+    - The resume PDF's Pitchfire section is unchanged. It already matched the site's figures.
   - Sources:
     - The repos, which now all have READMEs written from their code, papers and commit history (pushed 2026-11-20).
     - The `legacy` branch.
@@ -322,7 +332,7 @@ Diagnosis:
         - Music Painter stack: now PySide2, NumPy.
         - Pynacle: the "iterative deepening" claim is gone.
         - Chess bot: "92% on grandmaster games" is now "about 91% validation accuracy predicting game outcomes".
-- **R6. Verify.** `pnpm verify`, the screenshot checks, Lighthouse, and axe in both themes.
+- **R6. Verify.** ✅ Done 2026-11-21. `pnpm verify` green (187 e2e including axe in both themes and the viewport checks; 46 unit). Lighthouse is 100 in every category on all audited pages (the Pitchfire case study is now in the audit list). Screenshots were reviewed at 390 and 1440 in both themes.
 
 **Phase 6: Final content pass** (on hold until 5.5 is done; shrinks to whatever R5 doesn't cover)
 - Kyle supplies updated content and images (Pitchfire logo and screenshots, anything else marked `TODO(kyle)`).
