@@ -43,3 +43,4 @@ coverage/
 dist.prev/
 dist.failed/
 .deploy.lock
+CLAUDE.local.md
