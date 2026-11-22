@@ -11,7 +11,7 @@ export default defineConfig({
   // Static output: every page is emitted as `<route>/index.html` in dist/.
   output: "static",
   // URLs have no trailing slash (/projects). Canonicals and the sitemap match;
-  // the server should serve <route>/index.html without redirecting (DEPLOY.md).
+  // the server should serve <route>/index.html without redirecting (README).
   trailingSlash: "never",
   integrations: [
     react(),

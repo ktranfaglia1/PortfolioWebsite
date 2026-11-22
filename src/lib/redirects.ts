@@ -1,6 +1,6 @@
 /**
  * Old URLs from the legacy site and where they now live. The server config
- * should return real 301s for all of these (see DEPLOY.md). As host-agnostic
+ * should return real 301s for all of these (see README, "Web server configuration"). As host-agnostic
  * fallbacks:
  * - Paths in their own folder (/CarMart/...) get static redirect pages.
  * - Root .html paths can't: dist/projects.html would shadow

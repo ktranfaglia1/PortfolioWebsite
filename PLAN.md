@@ -121,7 +121,6 @@ project?: reference to a project (e.g. City of Cambridge → cambridge-fema-tool
 ```
 .
 ├── .github/workflows/ci.yml
-├── deploy/                 # Phase 7: files matching the server's real setup (see §7)
 ├── public/                 # favicon set, robots.txt, resume/*.pdf, Laridae PDF
 ├── src/
 │   ├── assets/images/
@@ -138,7 +137,6 @@ project?: reference to a project (e.g. City of Cambridge → cambridge-fema-tool
 │   └── site.config.ts
 ├── tests/e2e/
 ├── CLAUDE.md
-├── DEPLOY.md               # handoff for the server admin
 └── PLAN.md
 ```
 
@@ -180,7 +178,7 @@ project?: reference to a project (e.g. City of Cambridge → cambridge-fema-tool
 
 **Fallback if the admin is hard to reach:** the GitHub Action `deploy` branch needs the smallest change on his side (a branch name) and nothing on the server has to change. It's also a good default because it doesn't depend on any of the unknowns.
 
-**Either way (server requirements for DEPLOY.md):**
+**Either way (server requirements, written up in the README):**
 - Serve `dist/` as-is with clean URLs: `/projects` → `dist/projects/index.html` **without** a trailing-slash redirect (nginx: `try_files $uri $uri/index.html =404;`). Canonicals and the sitemap use no trailing slash.
 - Serve `dist/404.html` with status 404 for unknown paths (it also forwards old `.html` URLs).
 - 301s from `src/lib/redirects.ts`: `/projects.html` → `/projects`, `/resume.html` → `/resume`, `/contact.html` → `/contact`, `/CarMart/*` → `/projects/carmart`.
@@ -189,7 +187,7 @@ project?: reference to a project (e.g. City of Cambridge → cambridge-fema-tool
 - Cloudflare: DNS and proxy stay as they are. Purge the cache once after cutover. Web Analytics is already on with automatic setup (Cloudflare injects the beacon into proxied HTML), so `cloudflareAnalyticsToken` stays empty. This needs the record proxied (orange cloud) and HTML served without `Cache-Control: no-transform`.
 - Rollback: redeploy the previous build, or as a last resort the `legacy` branch.
 
-**`DEPLOY.md`** is written for the server admin (Kyle's friend) once the approach is chosen. It covers what changed, the exact commands, the update and rollback steps, and what to check after cutover.
+**Decided 2026-11-22:** the admin asked for a detailed README instead of answering the questions above. The README's "Running it on a server" section is the handoff: requirements, build commands (host or Docker), `scripts/deploy.sh` (fetch → build into `.build-tmp/` → swap into `dist/`, keeping `dist.prev/` for `rollback`; no-op when `main` hasn't changed; `flock` guards overlapping runs), Apache and nginx configs for the requirements above, post-deploy curl checks, and the cutover order. Tested on a fresh clone; the Apache/nginx configs couldn't be tested locally (neither is installed).
 
 **Previews:** there are no hosted PR previews on this setup. Review happens locally with `pnpm dev` / `pnpm preview`. CI still runs on every PR.
 
@@ -354,9 +352,9 @@ Diagnosis:
   - pynaclegames.org bug (Kyle's server): client-side routes such as /games return Apache 404 on direct load or refresh. It needs an SPA fallback, e.g. `FallbackResource /index.html`.
 
 **Phase 7: Launch ★**
-- **Before this phase:** Kyle gets the server admin's answers to the §7 questions and picks the deploy approach.
-- Add the matching deploy files and write `DEPLOY.md`. Kyle sends it to the server admin.
-- Merge `redesign` → `main`. The admin applies the change.
+- Done: deploy handoff in the README plus `scripts/deploy.sh` (see §7).
+- Kyle pushes `redesign` and sends the admin the README. Optional: the admin test-builds `redesign`.
+- At an agreed time: merge `redesign` → `main`; the admin runs `deploy.sh`, points the document root at `dist/`, and switches the daily job.
 - Purge the Cloudflare cache.
 - Verify pages, redirects, form, analytics, OG previews (LinkedIn Post Inspector), and Lighthouse on production.
 
@@ -407,7 +405,7 @@ Node 26 (`nvm use`), pnpm. See PLAN.md for decisions and phases.
 - Home page JS budget: < 100 KB gzipped. Check accessibility in both themes; respect `prefers-reduced-motion`.
 - Pitchfire: no outbound link while `showLink: false`; never name the acquiring LLC.
 - No phone number on web pages. Don't commit secrets or `*:Zone.Identifier` files.
-- The build must stay a plain static `dist/`. When routes change, update the redirects and the files in `deploy/` (see DEPLOY.md).
+- The build must stay a plain static `dist/`. When routes change, update the redirects and the server configs in README.md.
 
 ## Workflow
 - Work on `redesign` (or feature branches off it). Never push to `main` without Kyle's approval.

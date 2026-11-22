@@ -38,7 +38,7 @@ Node 26 (`nvm use`), pnpm. **See PLAN.md** for all decisions, the phase plan, an
 - Home page JS budget: < 100 KB gzipped. Check accessibility in both themes; respect `prefers-reduced-motion`.
 - Pitchfire: no outbound link while `showLink: false`; never name the acquiring LLC.
 - No phone number on web pages. Don't commit secrets or `*:Zone.Identifier` files.
-- The build must stay a plain static `dist/`. When routes change, update the redirects and the files in `deploy/` (see PLAN.md §7).
+- The build must stay a plain static `dist/`. When routes change, update the redirects and the server configs in README.md ("Running it on a server"). `scripts/deploy.sh` is what the server runs to build and swap `dist/`.
 - `GITHUB_TOKEN` (optional, build-time) feeds the GitHub heatmap; without it the card is skipped and the build still succeeds. Never commit a token.
 - Pinned versions: TypeScript stays on 6.0.x until `astro check` and typescript-eslint support 7. `pnpm-workspace.yaml` allows eslint-plugin-jsx-a11y's outdated ESLint peer range.
 

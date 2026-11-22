@@ -37,3 +37,9 @@ coverage/
 
 # Lighthouse under WSL creates Chrome profiles at a literal Windows path
 /C:*
+
+# deploy.sh build swap
+.build-tmp/
+dist.prev/
+dist.failed/
+.deploy.lock
