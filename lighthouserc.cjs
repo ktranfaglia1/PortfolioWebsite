@@ -1,6 +1,6 @@
 /**
  * Lighthouse CI: mobile audits of every page type against the built site.
- * Non-blocking in CI (reports only); targets are in PLAN.md §9.
+ * Non-blocking in CI (reports only); target: 95+ in every category (the warn thresholds below).
  * Run locally: pnpm build && pnpm lighthouse
  */
 const port = 4325;

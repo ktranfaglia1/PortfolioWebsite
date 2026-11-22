@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { routes } from "./routes";
 
 /**
- * The priority viewports from PLAN.md (Phase 5.5 R3): a phone, then laptop to
+ * The priority viewports from the redesign plan: a phone, then laptop to
  * large-desktop widths. Every route must fit without horizontal scrolling.
  */
 const widths = [390, 1280, 1440, 1920, 2560];

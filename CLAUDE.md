@@ -1,7 +1,7 @@
 # Kyle Tranfaglia — Portfolio
 
 Astro + TypeScript static site. React only for interactive islands. Tailwind v4 with CSS-variable tokens.
-Node 26 (`nvm use`), pnpm. **See PLAN.md** for all decisions, the phase plan, and current status.
+Node 26 (`nvm use`), pnpm. The original redesign plan (decisions, phases, content-model field reference) is in `reference/PLAN.md`: private and git-ignored, so never commit it. The plan is complete; treat it as history.
 
 ## Commands
 - `pnpm dev` — local dev server (for agents: `pnpm astro dev --background`, then `pnpm astro dev status | logs | stop`)
@@ -12,7 +12,7 @@ Node 26 (`nvm use`), pnpm. **See PLAN.md** for all decisions, the phase plan, an
 
 ## Content rules
 - All copy lives in `src/content/` and `src/site.config.ts`. Never hard-code sentences in components; short UI labels ("Now", "Send message", "All projects") are fine.
-- Schema changes go through `src/content.config.ts`; the field reference is PLAN.md §4. Pages read content through `src/lib/content.ts`, not `getCollection` directly.
+- Schema changes go through `src/content.config.ts`; the field reference is `reference/PLAN.md` §4 (the schemas themselves are the source of truth). Pages read content through `src/lib/content.ts`, not `getCollection` directly.
 - Page titles, meta descriptions, and intros live in `src/content/pages.yaml`.
 - Images go in `src/assets/images/` (named after the content slug) and render with `astro:assets` `<Image>`, never from `public/`. Only downloadable files (PDFs) live in `public/`.
 - Missing images use `<ImagePlaceholder>` and get a `TODO(kyle)` comment. `grep -rn "TODO(kyle)" src` lists everything Kyle still owes.
