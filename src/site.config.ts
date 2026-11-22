@@ -35,7 +35,9 @@ export const site = {
   formspreeId: "xdoqywoa",
   /**
    * Cloudflare Web Analytics beacon token. Empty means no beacon is loaded.
-   * TODO(kyle): paste the token from the Cloudflare dashboard before launch.
+   * Leave empty: kyletranfaglia.top uses Cloudflare's automatic setup, which
+   * injects the beacon at the edge. Setting a token too would double-count.
+   * Only fill this in if the site moves to manual (JS snippet) setup.
    */
   cloudflareAnalyticsToken: "",
   nav: [

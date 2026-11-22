@@ -186,7 +186,7 @@ project?: reference to a project (e.g. City of Cambridge → cambridge-fema-tool
 - 301s from `src/lib/redirects.ts`: `/projects.html` → `/projects`, `/resume.html` → `/resume`, `/contact.html` → `/contact`, `/CarMart/*` → `/projects/carmart`.
 - Cache headers: `/_astro/*` is content-hashed (cache 1 year, immutable); HTML, `/og/*`, and PDFs short or revalidate.
 - Optional `GITHUB_TOKEN` (read-only) for the contribution heatmap: a build secret wherever the build runs. Without it, the build still succeeds and the heatmap is hidden.
-- Cloudflare: DNS and proxy stay as they are. Purge the cache once after cutover. Enable Web Analytics in the dashboard.
+- Cloudflare: DNS and proxy stay as they are. Purge the cache once after cutover. Web Analytics is already on with automatic setup (Cloudflare injects the beacon into proxied HTML), so `cloudflareAnalyticsToken` stays empty. This needs the record proxied (orange cloud) and HTML served without `Cache-Control: no-transform`.
 - Rollback: redeploy the previous build, or as a last resort the `legacy` branch.
 
 **`DEPLOY.md`** is written for the server admin (Kyle's friend) once the approach is chosen. It covers what changed, the exact commands, the update and rollback steps, and what to check after cutover.
@@ -342,7 +342,6 @@ Diagnosis:
 - Links: no broken internal links in 20 built pages. Every external link returns 200; LinkedIn returns 999 to bots, which is expected.
 - Proofreading: a mechanical scan of the rendered text (doubled words, spacing, punctuation, rare words) found nothing.
 - Still owed by Kyle (`grep -rn "TODO(kyle)" src`):
-  - Cloudflare analytics token.
   - Review of the `pages.yaml` copy, including the About section.
 - Follow-ups done 2026-11-21:
   - Calculus SI uses the resume's wording (Kyle: it's the accurate one): "a program SU data shows raises class averages by over 10%".
