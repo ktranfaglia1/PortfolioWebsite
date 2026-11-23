@@ -5,7 +5,6 @@ tier: archive
 categories: [software, ai-ml]
 stack: [C++]
 role: Developer
-context: COSC 320 · Advanced Data Structures & Algorithms
 start: 2023-10-01
 end: 2023-11-01
 links:

@@ -5,7 +5,7 @@
  * ratio (never cropped). The title link is
  * stretched over the whole row. data-* attributes drive the /projects filter.
  */
-import { ArrowUpRight, ExternalLink } from "@lucide/astro";
+import { ArrowUpRight } from "@lucide/astro";
 import { Image } from "astro:assets";
 import type { Project } from "../../lib/content";
 import { formatDateRange } from "../../lib/dates";
@@ -24,6 +24,10 @@ interface Props {
 const { project, number, level = 3, priority = false } = Astro.props;
 const d = project.data;
 const Heading = `h${level}` as "h2" | "h3";
+/** "musicpainter.org" from the live URL, shown as the visit link. */
+const liveHost = d.links.live
+  ? new URL(d.links.live).hostname.replace(/^www\./, "")
+  : undefined;
 ---
 
 <article
@@ -73,16 +77,19 @@ const Heading = `h${level}` as "h2" | "h3";
         ))}
       </dl>
     )}
-    {d.links.live && (
-      <a
-        href={d.links.live}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="relative z-10 mt-8 inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 text-sm font-medium text-fg transition-colors hover:border-line-strong hover:bg-surface-2"
-      >
-        <ExternalLink size={15} aria-hidden="true" /> Live site
-        <span class="sr-only">{` for ${d.title} (opens in a new tab)`}</span>
-      </a>
+    {liveHost && (
+      <div class="mt-10 flex max-w-xl justify-center xl:mt-12">
+        <a
+          href={d.links.live}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="relative z-10 inline-flex items-center gap-1.5 font-mono text-lg text-accent decoration-accent/40 underline-offset-[6px] hover:underline sm:text-xl"
+        >
+          {liveHost}
+          <ArrowUpRight size={18} aria-hidden="true" />
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+      </div>
     )}
   </div>
   <div class="lg:col-span-5 xl:col-span-6">

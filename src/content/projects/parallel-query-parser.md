@@ -6,7 +6,6 @@ categories: [software]
 stack: [C, MPI, OpenMP]
 role: Search algorithms & parallelization
 team: 5
-context: COSC 420 · High-Performance Computing
 start: 2024-11-01
 end: 2024-12-01
 links:

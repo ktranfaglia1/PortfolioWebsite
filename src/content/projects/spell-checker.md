@@ -5,7 +5,6 @@ tier: archive
 categories: [software]
 stack: [C++]
 role: Developer
-context: COSC 120 · Computer Science I
 start: 2022-10-01
 end: 2022-11-01
 links:
