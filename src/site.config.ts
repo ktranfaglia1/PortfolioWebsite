@@ -12,11 +12,13 @@ export const site = {
   tagline: "Full-Stack Development, Data & Analytics, AI",
   /** Home fact rail "Focus" card: the kind of work, not a tool list. */
   focus: {
-    primary: "Full-stack & applied AI",
-    secondary: "Systems architecture, data & analytics",
+    primary: "Full-Stack & Applied AI",
+    secondary: "Systems Architecture, Data & Analytics",
   },
   url: "https://kyletranfaglia.top",
   location: "Raleigh-Durham-Chapel Hill Area",
+  /** Subtext under "Based in" on the home fact rail. */
+  locationNote: "Open to Remote & Hybrid Work",
   /** Structured-data address (JSON-LD); the display string above stays general. */
   address: { region: "NC", country: "US" },
   email: "kyletranfaglia@gmail.com",
