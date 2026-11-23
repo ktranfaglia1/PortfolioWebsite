@@ -32,13 +32,14 @@ const featured = await getProjects("featured");
 const caseStudies = featured.slice(0, 4);
 const moreWork = featured.slice(4);
 const [education] = await getEducation();
-// A short list on the home page (/experience has everything): both
-// professional roles, the main tutoring role, and the latest leadership role,
+// A short list on the home page (/experience has everything): the two
+// latest professional roles (HydroClean, from high school, stays on
+// /experience), the main tutoring role, and the latest leadership role,
 // newest first so the years read in order.
 const byStartDesc = <T extends { data: { start: Date } }>(a: T, b: T) =>
   b.data.start.getTime() - a.data.start.getTime();
 const experience = [
-  ...(await getExperience("professional")),
+  ...(await getExperience("professional")).slice(0, 2),
   ...(await getExperience("teaching")).slice(0, 1),
   ...(await getExperience("leadership")).toSorted(byStartDesc).slice(0, 1),
 ].toSorted(byStartDesc);
