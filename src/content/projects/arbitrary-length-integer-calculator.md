@@ -1,6 +1,6 @@
 ---
 title: Arbitrary-Length Integer Calculator
-summary: A C++ expression calculator that parses input into an expression tree and evaluates it with the InfInt big-integer library, plus factorial, Fibonacci, and file I/O.
+summary: A C++ calculator that parses expressions into a tree and evaluates them with the InfInt big-integer library, adding factorial, Fibonacci, and file I/O.
 tier: archive
 categories: [software]
 stack: [C++, InfInt]
