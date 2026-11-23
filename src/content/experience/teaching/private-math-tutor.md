@@ -10,4 +10,5 @@ summary: Gave one-on-one transitional algebra instruction once or twice a week; 
 highlights:
   - Went beyond textbook problems to build conceptual understanding and show how topics connect.
   - Covered linear equations, inequalities, geometry, graphing, transformations, and working with variables.
+skills: [Algebra, One-on-one instruction, Lesson planning]
 ---

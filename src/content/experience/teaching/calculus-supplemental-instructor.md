@@ -2,6 +2,9 @@
 org: Salisbury University
 orgDescription: Supplemental Instruction
 orgUrl: https://www.salisbury.edu/administration/academic-affairs/center-for-student-achievement/si.aspx
+orgLogo:
+  src: ../../../assets/images/logos/salisbury-university.png
+  alt: Salisbury University logo
 role: Calculus I Supplemental Instructor
 group: teaching
 location: Salisbury, MD
@@ -12,4 +15,5 @@ summary: Attended every Calculus I lecture, four days a week, and led two weekly
 highlights:
   - Reviewed each lecture and built a lesson plan around the current topic, with an hour and a half of weekly planning time.
   - Led three hours of sessions a week, favoring group discussion and collaborative problem-solving over direct lecturing.
+skills: [Calculus I, Lesson planning, Group facilitation]
 ---

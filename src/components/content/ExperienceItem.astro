@@ -31,27 +31,20 @@ const orgHref = d.showLink ? d.orgUrl : undefined;
   summary={d.summary}
   level={level}
 >
+  {/* Logos sit on a white tile in both themes, so marks in any color stay
+       legible and every logo reads at the same size. */}
   {d.orgLogo && (
-    <div slot="logo" class="mb-3 size-10">
+    <div
+      slot="logo"
+      class="mb-3 flex size-11 items-center justify-center rounded-xl border border-line bg-[white] p-1.5"
+    >
       <Image
         src={d.orgLogo.src}
         alt={d.orgLogo.alt}
         width={80}
         height={80}
-        class:list={[
-          "size-10 object-contain",
-          d.orgLogo.srcDark && "hidden [[data-theme=light]_&]:block",
-        ]}
+        class="max-h-full max-w-full object-contain"
       />
-      {d.orgLogo.srcDark && (
-        <Image
-          src={d.orgLogo.srcDark}
-          alt={d.orgLogo.alt}
-          width={80}
-          height={80}
-          class="size-10 object-contain [[data-theme=light]_&]:hidden"
-        />
-      )}
     </div>
   )}
   {d.logoPlaceholder && !d.orgLogo && (

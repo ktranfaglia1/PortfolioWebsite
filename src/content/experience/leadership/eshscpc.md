@@ -11,4 +11,5 @@ summary: Moderated a high school programming competition and gave a 45-minute ta
 highlights:
   - Set up computers and logins, and moderated 20+ competitors during the two-hour programming round.
   - Presented my projects, shared advice on studying computer science, and hosted a Q&A.
+skills: [Event moderation, Public speaking, Mentoring]
 ---

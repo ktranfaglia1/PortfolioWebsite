@@ -25,9 +25,9 @@ highlights:
 skills:
   [
     Formal banquet service,
-    Event setup,
+    Event setup and breakdown,
     Bartending,
     Toast POS,
-    Working independently,
+    Team coordination,
   ]
 ---

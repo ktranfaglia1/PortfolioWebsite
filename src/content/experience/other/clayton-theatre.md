@@ -11,4 +11,6 @@ highlights:
   - Tracked inventory and recorded daily sales.
   - Trained to operate and monitor the digital projection system.
   - Served as the main point of contact for guests and for any building, equipment, or service issues when running the theatre alone.
+skills:
+  [Cash handling, Inventory tracking, Digital projection, Customer service]
 ---

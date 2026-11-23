@@ -11,4 +11,6 @@ highlights:
   - Designed the format and timeline, recruited and assigned student and faculty volunteers, and wrote coding challenges.
   - Promoted the event with posters and classroom presentations, and built a Computer Science Jeopardy game.
   - Ran sign-ins, team setup, and event flow on the day, hosted a challenge, and co-hosted the closing Jeopardy game (about 20 volunteer hours).
+skills:
+  [Event planning, Volunteer coordination, Problem writing, Public speaking]
 ---

@@ -5,7 +5,6 @@ orgDescription: Two-sided AI deal-flow platform, incubated by New North Ventures
 showLink: false
 orgLogo:
   src: ../../../assets/images/logos/pitchfire.png
-  srcDark: ../../../assets/images/logos/pitchfire-dark.png
   alt: Pitchfire logo
 role: Co-Founder & Lead Software Engineer
 group: professional

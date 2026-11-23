@@ -2,6 +2,9 @@
 org: Salisbury University
 orgDescription: Math Emporium
 orgUrl: https://www.salisbury.edu/academic-offices/science-and-technology/mathematical-sciences/tutoring-center.aspx
+orgLogo:
+  src: ../../../assets/images/logos/salisbury-university.png
+  alt: Salisbury University logo
 role: Math & Computer Science Tutor
 group: teaching
 location: Salisbury, MD
@@ -12,4 +15,5 @@ summary: Tutored 1,000+ students across 10+ courses in an open-door tutoring cen
 highlights:
   - Guided students through problems and built on-the-spot mini-lessons to reinforce course material.
   - Worked with 5 to 20 students a week, and occasionally helped with Physics, Chemistry, and Business courses.
+skills: [Calculus, Java, C++, Small-group instruction]
 ---

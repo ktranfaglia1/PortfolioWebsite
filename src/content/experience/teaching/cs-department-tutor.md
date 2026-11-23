@@ -2,6 +2,9 @@
 org: Salisbury University
 orgDescription: Department of Computer Science
 orgUrl: https://www.salisbury.edu/academic-offices/science-and-technology/computer-science/
+orgLogo:
+  src: ../../../assets/images/logos/salisbury-university.png
+  alt: Salisbury University logo
 role: Computer Science Department Tutor
 group: teaching
 location: Salisbury, MD
@@ -12,4 +15,5 @@ summary: One of two senior department tutors, covering every computer science co
 highlights:
   - Held five hours of weekly sessions focused on fundamentals and independent problem-solving, at a time when AI coding assistants were changing how students study.
   - Students who came regularly showed clear gains in understanding hard concepts and in their programming.
+skills: [Data structures, Algorithms, Debugging, Java, C++, Python]
 ---
