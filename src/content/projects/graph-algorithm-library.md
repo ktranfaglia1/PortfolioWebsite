@@ -1,6 +1,6 @@
 ---
 title: Graph Algorithm Library
-summary: A C++ graph library that loads weighted graphs from adjacency-matrix files and runs BFS, DFS, Dijkstra's shortest paths, and Bellman-Ford.
+summary: A C++ graph library that runs BFS, DFS, Dijkstra's, and Bellman-Ford on weighted graphs from files, on an instructor-provided adjacency structure.
 tier: archive
 categories: [software]
 stack: [C++]
