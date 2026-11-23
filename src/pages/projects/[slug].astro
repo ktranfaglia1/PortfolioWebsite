@@ -37,6 +37,8 @@ const { project, siblings } = Astro.props;
 const d = project.data;
 const { Content, headings } = await render(project);
 const toc = headings.filter((h) => h.depth === 2);
+// A contents list only helps on longer write-ups.
+const showToc = toc.length > 2;
 const around = neighbors(siblings, project.id);
 
 const facts = [
@@ -71,7 +73,16 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
             <p class="font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
               {d.categories.map((c) => categoryLabels[c]).join(" · ")}
             </p>
-            <h1 class="mt-4 text-[clamp(2.75rem,1.2rem+4.4vw,6.5rem)] leading-[0.95] font-semibold tracking-[-0.04em]">
+            <h1
+              class:list={[
+                "mt-4 leading-[0.95] font-semibold tracking-[-0.04em]",
+                // Long titles (the Laridae paper) step down so they don't run
+                // to four lines.
+                d.title.length > 32
+                  ? "text-[clamp(2.25rem,1.2rem+2.6vw,4rem)] leading-[1.02]"
+                  : "text-[clamp(2.75rem,1.2rem+4.4vw,6.5rem)]",
+              ]}
+            >
               {d.title}
             </h1>
             <p class="mt-6 max-w-[56ch] text-lg text-fg-muted sm:text-xl">
@@ -135,21 +146,24 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
 
     <Container>
       {d.cover ? (
-        <Image
-          src={d.cover.src}
-          alt={d.cover.alt}
-          widths={[640, 960, 1280, 1920, 2560]}
-          sizes="(min-width: 1760px) 1616px, 92vw"
-          loading="eager"
-          fetchpriority="high"
-          class="w-full rounded-2xl border border-line shadow-card"
-        />
+        <div class="mx-auto max-w-5xl">
+          <Image
+            src={d.cover.src}
+            alt={d.cover.alt}
+            widths={[640, 960, 1280, 1600, 2048]}
+            sizes="(min-width: 1120px) 1024px, 92vw"
+            loading="eager"
+            fetchpriority="high"
+            class="mx-auto w-full rounded-2xl border border-line shadow-card"
+            style={`max-width: ${d.cover.src.width}px`}
+          />
+        </div>
       ) : (
         <ImagePlaceholder label={`${d.title} screenshot`} />
       )}
 
       <div class="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-10 xl:mt-24">
-        {toc.length > 1 && (
+        {showToc && (
           <nav
             aria-label="On this page"
             data-toc
@@ -176,7 +190,7 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
         <div
           class:list={[
             "prose min-w-0",
-            toc.length > 1
+            showToc
               ? "lg:col-span-6 xl:col-span-7"
               : "lg:col-span-8 xl:col-span-9",
           ]}
@@ -221,15 +235,28 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
           <h2 id="gallery-title" class="text-2xl font-semibold">
             Gallery
           </h2>
-          <div class="mt-6 grid gap-4 sm:grid-cols-2">
-            {d.gallery.map((g) => (
-              <Image
-                src={g.src}
-                alt={g.alt}
-                widths={[480, 800, 1200]}
-                sizes="(min-width: 640px) 50vw, 100vw"
-                class="w-full rounded-xl border border-line"
-              />
+          <div class="mt-6 grid gap-x-4 gap-y-8 sm:grid-cols-2">
+            {d.gallery.map((g, i) => (
+              <figure
+                class:list={[
+                  // An odd last image is centered instead of leaving a hole.
+                  d.gallery.length % 2 === 1 &&
+                    i === d.gallery.length - 1 &&
+                    "sm:col-span-2 sm:mx-auto sm:w-[calc(50%-0.5rem)]",
+                ]}
+              >
+                {/* The caption describes the image, so the image itself is decorative. */}
+                <Image
+                  src={g.src}
+                  alt=""
+                  widths={[480, 800, 1200]}
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  class="w-full rounded-xl border border-line"
+                />
+                <figcaption class="mt-2 text-sm text-fg-subtle">
+                  {g.alt}
+                </figcaption>
+              </figure>
             ))}
           </div>
         </section>

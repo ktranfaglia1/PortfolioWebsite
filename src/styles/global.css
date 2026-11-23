@@ -256,3 +256,10 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* The footer's top margin is each page's closing space. Drop the last block's
+   own bottom padding so the two don't stack into a large empty band. */
+main > :last-child,
+main > :last-child > :last-child {
+  padding-bottom: 0;
+}
