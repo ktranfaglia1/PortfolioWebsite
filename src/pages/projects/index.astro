@@ -128,10 +128,10 @@ const iconLink =
     id="featured"
     title="Featured"
     rule={false}
-    class="pt-4 sm:pt-6"
+    class="pt-4 pb-8 sm:pt-6 sm:pb-10 xl:pt-6 xl:pb-12"
     data-filter-section
   >
-    <div class="border-b border-line [&>article:first-child]:pt-2">
+    <div class="[&>article:first-child]:pt-2">
       {featured.map((p, i) => (
         <ProjectRow project={p} number={i + 1} priority={i === 0} />
       ))}
@@ -195,7 +195,7 @@ const iconLink =
                 {d.stack.join(", ")}
               </p>
               <div class="flex items-start gap-1 sm:justify-end">
-                {d.tier === "standard" && d.links.repo && (
+                {d.links.repo && (
                   <a
                     href={d.links.repo}
                     target="_blank"
