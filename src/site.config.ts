@@ -12,8 +12,8 @@ export const site = {
   tagline: "Full-Stack Development, Data & Analytics, AI",
   /** Home fact rail "Focus" card: the kind of work, not a tool list. */
   focus: {
-    primary: "Full-stack AI products",
-    secondary: "Web platforms, LLM pipelines, data & analytics",
+    primary: "Full-stack & applied AI",
+    secondary: "Systems architecture, data & analytics",
   },
   url: "https://kyletranfaglia.top",
   location: "Raleigh-Durham-Chapel Hill Area",

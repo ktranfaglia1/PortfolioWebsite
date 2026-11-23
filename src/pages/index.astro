@@ -106,7 +106,7 @@ const moreLink =
           {now && (
             <a
               href="/experience#professional"
-              class="inline-flex items-center gap-2 text-sm text-fg-muted transition-colors hover:text-fg"
+              class="inline-flex items-center gap-2.5 text-base text-fg-muted transition-colors hover:text-fg"
             >
               <span class="relative flex size-2" aria-hidden="true">
                 <span class="absolute inline-flex size-full animate-ping rounded-full bg-warm opacity-60 motion-reduce:hidden" />
@@ -115,11 +115,11 @@ const moreLink =
               {`${now.data.role} at ${now.data.org}`}
             </a>
           )}
-          <h1 class="mt-6 text-[clamp(3.125rem,1rem+5.4vw,7.25rem)] leading-[0.91] font-semibold tracking-[-0.045em]">
+          <h1 class="mt-6 text-[clamp(3.125rem,1rem+5.556vw,7.5rem)] leading-[0.91] font-semibold tracking-[-0.045em]">
             {home.heading}
           </h1>
           {home.headline && (
-            <p class="mt-5 max-w-[23ch] text-[clamp(1.625rem,1rem+2.05vw,3.125rem)] leading-[1.06] font-medium tracking-[-0.02em] text-fg-muted">
+            <p class="mt-5 max-w-[23ch] text-[clamp(1.625rem,1rem+2.222vw,3.25rem)] leading-[1.06] font-medium tracking-[-0.02em] text-fg-muted">
               <AccentText text={home.headline} />
             </p>
           )}
@@ -136,7 +136,7 @@ const moreLink =
         </div>
 
         <div class="lg:col-span-4">
-          <div class="relative mx-auto w-48 sm:w-56 lg:ml-auto lg:w-full lg:max-w-[21.5rem]">
+          <div class="relative mx-auto w-48 sm:w-56 lg:ml-auto lg:w-full lg:max-w-[22rem]">
             <div
               aria-hidden="true"
               class="absolute -inset-4 -z-10 rounded-[2.5rem] opacity-40 blur-2xl"
@@ -146,7 +146,7 @@ const moreLink =
               src={headshot}
               alt={`Portrait of ${site.name}`}
               widths={[240, 360, 480, 720]}
-              sizes="(min-width: 1024px) 21.5rem, 14rem"
+              sizes="(min-width: 1024px) 22rem, 14rem"
               loading="eager"
               fetchpriority="high"
               class="aspect-[4/5] w-full rounded-[2rem] object-cover"

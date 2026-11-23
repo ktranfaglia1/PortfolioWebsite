@@ -18,7 +18,7 @@ const links = [
 
 <footer class="mt-24 border-t border-line">
   <Container class="py-8">
-    <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
       <div class="flex items-center gap-3">
         <span
           aria-hidden="true"
@@ -34,22 +34,7 @@ const links = [
         </div>
       </div>
 
-      <nav aria-label="Footer">
-        <ul class="flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          {site.nav.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class="text-fg-muted transition-colors hover:text-fg"
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-
-      <ul class="-ml-2 flex items-center gap-1 lg:ml-0">
+      <ul class="-ml-2 flex items-center gap-1 sm:ml-0">
         {links.map((link) => (
           <li>
             <a
