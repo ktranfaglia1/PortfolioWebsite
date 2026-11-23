@@ -132,7 +132,7 @@ const iconLink =
     class="pt-4 pb-8 sm:pt-6 sm:pb-10 xl:pt-6 xl:pb-12"
     data-filter-section
   >
-    <div class="[&>article:first-child]:pt-2">
+    <div class="border-t border-line">
       {featured.map((p, i) => (
         <ProjectRow project={p} number={i + 1} priority={i === 0} />
       ))}

@@ -1,10 +1,10 @@
 ---
 title: Cambridge FEMA Flood Tool
-summary: A Python GIS application that combines LiDAR and DEM data to visualize FEMA flood and storm-surge projections for Dorchester County.
+summary: A Python desktop GIS tool that visualizes FEMA flood and storm-surge scenarios for Cambridge, Maryland, and estimates their damage and insurance costs.
 tier: featured
 order: 5
 categories: [data-science, software]
-stack: [Python, GIS, LiDAR, DEM]
+stack: [Python, PyQt6, rasterio, Folium, NumPy, pandas, Matplotlib]
 role: Software engineering intern
 context: Internship · City of Cambridge
 start: 2025-02-01
@@ -15,27 +15,50 @@ cover:
   src: ../../assets/images/projects/cambridge-fema-tool.png
   alt: 3D elevation flood simulation of Cambridge, Maryland, with water level and hurricane category controls
 outcomes:
+  - value: "4"
+    label: flood simulators
   - value: "5"
     label: hurricane categories modeled
   - value: "100 yr"
     label: insurance cost projections
-  - value: "3"
-    label: "tools: flood simulation, damage, insurance"
 ---
 
 ## Overview
 
-The City of Cambridge needed a clearer way to understand FEMA's numerical model predictions
-for future flooding in Dorchester County. I built a Python GIS application that turns
-those predictions into interactive, map-based views.
+Cambridge is a low-lying waterfront city in Dorchester County, Maryland, and is highly
+exposed to hurricanes and storm surge. During my internship with the city, I built a desktop
+GIS application that turns FEMA's flood-model predictions into interactive views and cost
+estimates, designed for local decision-makers rather than GIS specialists.
 
-## Approach
+## What I built
 
-- Combined LiDAR and DEM elevation data to model the terrain.
-- Visualized flood and storm-surge projections for hurricanes and other storm events, with controls for water level, year, and hurricane category.
-- Ran cost-benefit analyses on different prediction outcomes to estimate the financial and infrastructure impact of each scenario.
+**Flood simulators.** Four views of the same scenarios, each with controls for projected year
+and hurricane category (1–5):
+
+- A 3D elevation model of the county rendered from DEM rasters, with preset camera angles
+  and export.
+- A 3D surface model from LiDAR data that includes buildings and vegetation.
+- A street-level map of Cambridge.
+- An interactive Folium map with a flood-risk legend.
+
+**Damage estimator.** For a given property value, it estimates building, contents, and
+infrastructure losses under each hurricane category using vulnerability curves, plus
+citywide effects such as displacement, debris, and cleanup. Results show as tables and
+charts and export to CSV.
+
+**Insurance projections.** Enter an address and home value, and the tool geocodes the address
+and projects annual insurance costs up to 100 years out, combining a base rate, inflation,
+and rising hurricane frequency and intensity based on NOAA projections.
+
+## Engineering
+
+- Built in Python with PyQt6, using QtWebEngine to embed the web maps in the desktop app.
+- Processed elevation data with rasterio (masking and reprojection) and Shapely, with charts
+  and 3D surfaces in Matplotlib.
+- Loaded large DEM tiles on background threads with on-disk caching, so the app stays
+  responsive and each tile loads only once.
 
 ## Outcome
 
-The tool gives local decision-makers a data-driven, easy-to-use way to plan for disaster
-preparedness and mitigation.
+The tool gives the city one place to explore flood scenarios and what they would cost, to
+support planning for disaster preparedness and mitigation.

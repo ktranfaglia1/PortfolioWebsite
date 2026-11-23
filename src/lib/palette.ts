@@ -51,7 +51,9 @@ export function buildPaletteItems(input: Input): PaletteItem[] {
     group: "Projects",
     label: p.title,
     hint: p.stack.slice(0, 3).join(" · "),
-    keywords: p.stack,
+    // A few headline techs only: long keyword lists make cmdk's fuzzy match
+    // pick up unrelated queries (e.g. "copy email").
+    keywords: p.stack.slice(0, 4),
     action: { type: "link", href: `/projects/${p.id}` },
   }));
 

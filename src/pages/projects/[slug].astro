@@ -18,7 +18,7 @@ import HeroGlow from "../../components/ui/HeroGlow.astro";
 import Tag from "../../components/ui/Tag.astro";
 import { getProjectsWithPages, type Project } from "../../lib/content";
 import { formatDateRange } from "../../lib/dates";
-import { categoryLabels, neighbors } from "../../lib/projects";
+import { categoryLabels, languages, neighbors } from "../../lib/projects";
 
 export async function getStaticPaths() {
   const projects = await getProjectsWithPages();
@@ -54,6 +54,8 @@ const facts = [
 // A paper link that points at the same place as the repo is shown once.
 const showPaper = d.links.paper && d.links.paper !== d.links.repo;
 const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
+// Language tags link to the Projects page filtered to that language.
+const isLanguage = (s: string) => (languages as readonly string[]).includes(s);
 ---
 
 <BaseLayout title={d.title} description={d.summary} ogType="article">
@@ -206,7 +208,19 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
             <ul class="mt-4 flex flex-wrap gap-1.5">
               {d.stack.map((s) => (
                 <li>
-                  <Tag>{s}</Tag>
+                  {isLanguage(s) ? (
+                    <a
+                      href={`/projects?tech=${encodeURIComponent(s)}`}
+                      title={`All ${s} projects`}
+                      class="rounded-md transition-opacity hover:opacity-80"
+                    >
+                      <Tag class="hover:border-line-strong hover:text-fg">
+                        {s}
+                      </Tag>
+                    </a>
+                  ) : (
+                    <Tag>{s}</Tag>
+                  )}
                 </li>
               ))}
             </ul>

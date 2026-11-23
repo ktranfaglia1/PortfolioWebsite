@@ -4,7 +4,7 @@ summary: "Six hand-coded, cross-platform Python games with AI opponents and solv
 tier: featured
 order: 2
 categories: [software, ai-ml]
-stack: [Python, PyQt5, Minimax, A*, React, Vite]
+stack: [Python, PyQt5, PySide6, python-chess, React, Vite]
 role: Designer & developer
 context: Independent research
 start: 2024-09-01
@@ -29,14 +29,14 @@ outcomes:
     label: hand-coded games
   - value: "4"
     label: games with AI opponents or solvers
-  - value: "3"
-    label: "AI methods: minimax, A*, annealing"
+  - value: "20K+"
+    label: average 2048 AI score after tuning
 ---
 
 ## Overview
 
 Pynacle Games is a collection of six downloadable games: Chess, Connect Four, 2048,
-15-puzzle, Snake, and Tic-Tac-Toe. Each one pairs a playable PyQt5 interface with an AI
+15-puzzle, Snake, and Tic-Tac-Toe. Each one pairs a playable Qt interface (PyQt5, or PySide6 for Chess) with an AI
 that explores how solvable the game is and what optimal play looks like.
 
 ## Approach
@@ -44,7 +44,8 @@ that explores how solvable the game is and what optimal play looks like.
 - Hand-coded every game and its solver in Python, with no game engine.
 - Connect Four's Hard and Master bots use alpha-beta minimax with memoized positions, center-first move ordering, and search depth that grows as the game goes on (up to 6 plies).
 - The 15-puzzle solves any position with A\* and a Manhattan-distance heuristic.
-- 2048's AI scores moves on empty cells, monotonicity, merge potential, and smoothness, with weights tuned by grid search and then simulated annealing.
+- 2048's AI scores moves on empty cells, monotonicity, merge potential, and smoothness. I tuned its weights with a grid search and then simulated annealing, raising its average score from about 15,000 to over 20,000 points per game.
+- Measured the Connect Four bots by playing them against each other and logging the results, which guided the changes behind the stronger Hard and Master levels.
 - Tic-Tac-Toe has rule-based bots at three levels; Chess is two-player, built on python-chess.
 - Studied how UI and GUI design choices affect the player's experience, and kept each interface simple and consistent across games.
 - Packaged the games as standalone Windows and Linux executables, and built a website where people can download them and read documentation on the gameplay and the AI behind it.

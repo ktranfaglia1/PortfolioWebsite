@@ -18,13 +18,28 @@ cover:
 
 ## Overview
 
-CarMart is an internal tool for a fictional pre-owned car dealership. Employees can list
-vehicles for sale, search by owner or model, edit vehicle details, and view the full
-inventory stored in the database.
+CarMart is an internal sales-operations tool for a fictional pre-owned car dealership.
+Employees manage owners, vehicles, and sales through simple forms, without touching SQL. It
+began as a database course's final project, and I later expanded it into a fuller app.
 
-## Focus
+## What it does
 
-The interface stays simple so employees can work with the database without friction, and
-vehicle records are shown in a clear, structured layout that's easy to read and update.
+- **Sell:** record a sale in one form, covering the seller's contact details, the vehicle
+  (make, model, year, mileage), and the registration (number, sale date, price).
+- **Search:** find a vehicle or look up a seller, or list the full inventory with each
+  vehicle's owner and sale details.
+- **Modify:** update a vehicle's or owner's details, unlist a vehicle, or remove a seller.
 
-The app is no longer hosted; the screenshots and source code show how it worked.
+## Database design
+
+A normalized MySQL schema with three tables: `Owner`, `Vehicle`, and `Registration`.
+`Registration` links each sale to an owner and a vehicle through foreign keys, and the
+inventory view joins all three tables to show each vehicle with its owner and sale.
+
+## Limits
+
+CarMart was built to show relational design and full create, read, update, and delete
+operations in PHP and MySQL. It builds queries by string concatenation and has no
+authentication; a production version would need parameterized queries, input validation,
+and access control. The app is no longer hosted; the screenshots and source code show how it
+worked.
