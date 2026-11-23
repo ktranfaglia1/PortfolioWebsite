@@ -16,10 +16,10 @@ function isActive(href: string): boolean {
   data-site-header
   class="sticky top-0 z-40 border-b border-line bg-canvas/80 backdrop-blur-md supports-[backdrop-filter]:bg-canvas/70"
 >
-  <Container class="flex h-16 items-center justify-between gap-4">
+  <Container class="flex h-16 items-center justify-between gap-4 md:grid md:grid-cols-[1fr_auto_1fr]">
     <a
       href="/"
-      class="group inline-flex items-center gap-2.5 rounded-md text-[0.9375rem] font-semibold tracking-tight text-fg"
+      class="group inline-flex items-center gap-2.5 justify-self-start rounded-md text-[0.9375rem] font-semibold tracking-tight text-fg"
     >
       <span
         aria-hidden="true"
@@ -27,15 +27,7 @@ function isActive(href: string): boolean {
       >
         KT
       </span>
-      <span>
-        {site.name}
-        <span
-          class="text-accent transition-colors group-hover:text-fg"
-          aria-hidden="true"
-        >
-          .
-        </span>
-      </span>
+      {site.name}
     </a>
 
     <nav aria-label="Main" class="hidden md:block">
@@ -54,7 +46,7 @@ function isActive(href: string): boolean {
       </ul>
     </nav>
 
-    <div class="flex items-center gap-1">
+    <div class="flex items-center justify-end gap-1">
       <button
         type="button"
         data-palette-trigger

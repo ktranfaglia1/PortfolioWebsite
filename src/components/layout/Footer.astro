@@ -7,6 +7,9 @@ import Container from "./Container.astro";
 
 const year = new Date().getFullYear();
 
+const heading = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
+const linkClass = "text-fg-muted transition-colors hover:text-fg";
+
 const links = [
   { label: "GitHub", href: site.socials.github, brand: github },
   { label: "LinkedIn", href: site.socials.linkedin, brand: linkedin },
@@ -14,40 +17,81 @@ const links = [
 ---
 
 <footer class="mt-24 border-t border-line">
-  <Container class="flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between">
-    <div>
-      <p class="font-medium text-fg">{site.name}</p>
-      <p class="mt-1 text-sm text-fg-subtle">{site.headline}</p>
+  <Container class="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+    <div class="lg:col-span-5">
+      <p class="flex items-center gap-2.5 font-medium text-fg">
+        <span
+          aria-hidden="true"
+          class="inline-flex size-7 items-center justify-center rounded-lg border border-line bg-surface-2 font-mono text-[0.6875rem] tracking-[-0.04em] text-accent"
+        >
+          KT
+        </span>
+        {site.name}
+      </p>
+      <p class="mt-3 max-w-[40ch] text-sm text-fg-muted">
+        {`${site.headline} · ${site.location}`}
+      </p>
     </div>
 
-    <div class="flex flex-col gap-4 sm:items-end">
-      <ul class="flex items-center gap-1">
+    <nav aria-label="Footer" class="lg:col-span-3 lg:col-start-7">
+      <p class={heading}>Site</p>
+      <ul class="mt-3 grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
+        {site.nav.map((item) => (
+          <li>
+            <a href={item.href} class={linkClass}>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="lg:col-span-3 lg:col-start-10">
+      <p class={heading}>Elsewhere</p>
+      <ul class="mt-3 space-y-2 text-sm">
         {links.map((link) => (
           <li>
             <a
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex size-9 items-center justify-center rounded-lg text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
+              class:list={[linkClass, "inline-flex items-center gap-2"]}
             >
-              <BrandIcon icon={link.brand} />
-              <span class="sr-only">{link.label} (opens in a new tab)</span>
+              <BrandIcon icon={link.brand} size={15} />
+              {link.label}
+              <span class="sr-only">(opens in a new tab)</span>
             </a>
           </li>
         ))}
         <li>
           <a
             href={`mailto:${site.email}`}
-            class="inline-flex size-9 items-center justify-center rounded-lg text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
+            class:list={[linkClass, "inline-flex items-center gap-2"]}
           >
-            <Mail size={18} aria-hidden="true" />
-            <span class="sr-only">Email</span>
+            <Mail size={15} aria-hidden="true" />
+            Email
           </a>
         </li>
       </ul>
-      <p class="font-mono text-xs text-fg-subtle">
-        © {year} {site.name}
-      </p>
     </div>
   </Container>
+
+  <div class="border-t border-line">
+    <Container class="flex flex-col gap-2 py-6 font-mono text-xs text-fg-subtle sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        © {year} {site.name}
+      </p>
+      <p>
+        {"Built with Astro and Tailwind · "}
+        <a
+          href={site.repo}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="underline decoration-line-strong underline-offset-4 transition-colors hover:text-fg"
+        >
+          View source<span class="sr-only"> (opens in a new tab)</span>
+        </a>
+      </p>
+    </Container>
+  </div>
 </footer>

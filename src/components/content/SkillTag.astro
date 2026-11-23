@@ -1,19 +1,25 @@
 ---
 import { getSkillIcon } from "../../lib/skill-icons";
 import BrandIcon from "../ui/BrandIcon.astro";
+import SkillGlyph from "../ui/SkillGlyph.astro";
 import Tag from "../ui/Tag.astro";
 
 interface Props {
   name: string;
   /** Simple Icons slug; omitted means a plain text tag. */
   icon?: string;
+  glyph?: "prompt" | "embeddings" | "vector" | "chart" | "security";
 }
 
-const { name, icon } = Astro.props;
+const { name, icon, glyph } = Astro.props;
 const mark = icon ? getSkillIcon(icon) : undefined;
 ---
 
 <Tag>
-  {mark && <BrandIcon icon={mark} size={12} />}
+  {mark ? (
+    <BrandIcon icon={mark} size={12} />
+  ) : (
+    glyph && <SkillGlyph glyph={glyph} size={12} />
+  )}
   {name}
 </Tag>

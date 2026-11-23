@@ -1,0 +1,27 @@
+---
+/** Generic icon for a skill without a brand mark (see `glyph` in skills.yaml). */
+import {
+  Axis3d,
+  ChartLine,
+  MessageSquareText,
+  ShieldCheck,
+  Waypoints,
+} from "@lucide/astro";
+
+interface Props {
+  glyph: "prompt" | "embeddings" | "vector" | "chart" | "security";
+  size?: number;
+  class?: string;
+}
+
+const { glyph, size = 16, class: className } = Astro.props;
+const Icon = {
+  prompt: MessageSquareText,
+  embeddings: Waypoints,
+  vector: Axis3d,
+  chart: ChartLine,
+  security: ShieldCheck,
+}[glyph];
+---
+
+<Icon size={size} aria-hidden="true" class={className} />

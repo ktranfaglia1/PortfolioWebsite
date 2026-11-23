@@ -8,6 +8,7 @@ import GitHubActivity from "../components/content/GitHubActivity.astro";
 import ProjectRow from "../components/content/ProjectRow.astro";
 import AccentText from "../components/ui/AccentText.astro";
 import BrandIcon from "../components/ui/BrandIcon.astro";
+import SkillGlyph from "../components/ui/SkillGlyph.astro";
 import Button from "../components/ui/Button.astro";
 import HeroGlow from "../components/ui/HeroGlow.astro";
 import Section from "../components/ui/Section.astro";
@@ -31,20 +32,19 @@ const featured = await getProjects("featured");
 const caseStudies = featured.slice(0, 4);
 const moreWork = featured.slice(4);
 const [education] = await getEducation();
-// A short list on the home page; /experience has everything.
+// A short list on the home page (/experience has everything): both
+// professional roles, the main tutoring role, and the latest leadership role,
+// newest first so the years read in order.
+const byStartDesc = <T extends { data: { start: Date } }>(a: T, b: T) =>
+  b.data.start.getTime() - a.data.start.getTime();
 const experience = [
   ...(await getExperience("professional")),
-  ...(await getExperience("teaching")).slice(0, 2),
-  ...(await getExperience("leadership"))
-    .toSorted((a, b) => b.data.start.getTime() - a.data.start.getTime())
-    .slice(0, 1),
-];
+  ...(await getExperience("teaching")).slice(0, 1),
+  ...(await getExperience("leadership")).toSorted(byStartDesc).slice(0, 1),
+].toSorted(byStartDesc);
 const skillGroups = await getSkillGroups();
 
 const portrait = await getImage({ src: headshot, width: 400, format: "jpg" });
-const [locality = "", region = ""] = site.location
-  .split(",")
-  .map((s) => s.trim());
 const jsonLd = personJsonLd({
   name: site.name,
   url: site.url,
@@ -53,8 +53,7 @@ const jsonLd = personJsonLd({
   email: site.email,
   image: new URL(portrait.src, site.url).href,
   sameAs: [site.socials.github, site.socials.linkedin],
-  locality,
-  region,
+  region: site.address.region,
   alumniOf: education?.data.school,
   worksFor: now?.data.org,
   knowsAbout: skillGroups.flatMap((g) =>
@@ -116,11 +115,11 @@ const moreLink =
               {`${now.data.role} at ${now.data.org}`}
             </a>
           )}
-          <h1 class="mt-6 text-[clamp(3.25rem,1rem+6vw,8rem)] leading-[0.9] font-semibold tracking-[-0.045em]">
+          <h1 class="mt-6 text-[clamp(3rem,1rem+4.8vw,6.5rem)] leading-[0.92] font-semibold tracking-[-0.045em]">
             {home.heading}
           </h1>
           {home.headline && (
-            <p class="mt-6 max-w-[22ch] text-[clamp(1.75rem,1rem+2.4vw,3.5rem)] leading-[1.05] font-medium tracking-[-0.02em] text-fg-muted">
+            <p class="mt-5 max-w-[24ch] text-[clamp(1.5rem,1rem+1.7vw,2.75rem)] leading-[1.08] font-medium tracking-[-0.02em] text-fg-muted">
               <AccentText text={home.headline} />
             </p>
           )}
@@ -137,17 +136,17 @@ const moreLink =
         </div>
 
         <div class="lg:col-span-4">
-          <div class="relative mx-auto w-48 sm:w-56 lg:ml-auto lg:w-full lg:max-w-sm">
+          <div class="relative mx-auto w-44 sm:w-52 lg:ml-auto lg:w-full lg:max-w-[19rem]">
             <div
               aria-hidden="true"
-              class="absolute -inset-6 -z-10 rounded-[2.5rem] opacity-50 blur-2xl"
-              style="background: linear-gradient(135deg, var(--accent-subtle), color-mix(in oklch, var(--warm) 35%, transparent));"
+              class="absolute -inset-4 -z-10 rounded-[2.5rem] opacity-40 blur-2xl"
+              style="background: linear-gradient(135deg, var(--accent-subtle), color-mix(in oklch, var(--warm) 25%, transparent));"
             ></div>
             <Image
               src={headshot}
               alt={`Portrait of ${site.name}`}
               widths={[240, 360, 480, 720]}
-              sizes="(min-width: 1024px) 24rem, 14rem"
+              sizes="(min-width: 1024px) 19rem, 13rem"
               loading="eager"
               fetchpriority="high"
               class="aspect-[4/5] w-full rounded-[2rem] object-cover"
@@ -169,9 +168,8 @@ const moreLink =
           <div class="bg-surface/85 p-5 backdrop-blur">
             <dt class={label}>Education</dt>
             <dd class="mt-2 font-medium">
-              {education.data.degrees
-                .map((d) => d.name.replace("B.S. ", ""))
-                .join(" & ")}
+              {education.data.degreeSummary ??
+                education.data.degrees.map((d) => d.name).join(" & ")}
             </dd>
             <dd class="text-sm text-fg-muted">
               {[education.data.school, education.data.distinction]
@@ -185,9 +183,9 @@ const moreLink =
           <dd class="mt-2 font-medium">{site.location}</dd>
         </div>
         <div class="bg-surface/85 p-5 backdrop-blur">
-          <dt class={label}>Stack</dt>
-          <dd class="mt-2 font-medium">{site.stack.primary}</dd>
-          <dd class="text-sm text-fg-muted">{site.stack.secondary}</dd>
+          <dt class={label}>Focus</dt>
+          <dd class="mt-2 font-medium">{site.focus.primary}</dd>
+          <dd class="text-sm text-fg-muted">{site.focus.secondary}</dd>
         </div>
       </dl>
     </Container>
@@ -229,7 +227,7 @@ const moreLink =
                   alt=""
                   widths={[360, 540, 720]}
                   sizes="(min-width: 1280px) 22rem, (min-width: 640px) 45vw, 100vw"
-                  class="aspect-[16/10] w-full object-cover object-left-top transition-transform duration-500 ease-snappy group-hover:scale-[1.03] motion-reduce:transition-none"
+                  class="aspect-[16/10] w-full object-cover object-top transition-transform duration-500 ease-snappy group-hover:scale-[1.03] motion-reduce:transition-none"
                 />
               </div>
             )}
@@ -291,12 +289,13 @@ const moreLink =
                       class="shrink-0 text-fg-subtle"
                     />
                   ) : (
-                    <span
-                      aria-hidden="true"
-                      class="inline-flex size-[15px] shrink-0 items-center justify-center"
-                    >
-                      <span class="size-1.5 rounded-full bg-line-strong" />
-                    </span>
+                    s.glyph && (
+                      <SkillGlyph
+                        glyph={s.glyph}
+                        size={15}
+                        class="shrink-0 text-fg-subtle"
+                      />
+                    )
                   )}
                   {s.name}
                 </li>
@@ -314,8 +313,8 @@ const moreLink =
     aria-labelledby="contact-cta"
     class="relative isolate overflow-hidden border-t border-line"
   >
-    <HeroGlow class="opacity-70" />
-    <Container class="grid gap-14 py-24 lg:grid-cols-12 lg:items-end lg:gap-10 xl:py-36">
+    <HeroGlow class="opacity-50" />
+    <Container class="grid gap-14 pt-24 pb-4 lg:grid-cols-12 lg:items-end lg:gap-10 xl:pt-28">
       <div class="lg:col-span-7">
         <p class={label} aria-hidden="true">
           05

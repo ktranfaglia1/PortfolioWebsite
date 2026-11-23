@@ -163,6 +163,8 @@ const education = defineCollection({
   schema: z
     .object({
       school: z.string(),
+      /** One-line degree summary for tight spaces (home fact rail). */
+      degreeSummary: z.string().optional(),
       location: z.string().optional(),
       start: date,
       end: date,
@@ -204,6 +206,10 @@ const skills = defineCollection({
           icon: z
             .string()
             .refine(isIconSlug, { message: "Unknown Simple Icons slug" })
+            .optional(),
+          /** Generic icon for skills without a brand mark (concepts, small tools). */
+          glyph: z
+            .enum(["prompt", "embeddings", "vector", "chart", "security"])
             .optional(),
         }),
       )

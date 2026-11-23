@@ -1,7 +1,8 @@
 ---
 /**
  * Editorial case-study teaser: number, categories, large title, summary,
- * an outcome strip of headline figures, and the cover. The title link is
+ * an outcome strip of headline figures, and the cover at its natural aspect
+ * ratio (never cropped). The title link is
  * stretched over the whole row. data-* attributes drive the /projects filter.
  */
 import { ArrowUpRight } from "@lucide/astro";
@@ -37,12 +38,16 @@ const Heading = `h${level}` as "h2" | "h3";
       <span class="text-accent">{String(number).padStart(2, "0")}</span>
       <span>{d.categories.map((c) => categoryLabels[c]).join(" · ")}</span>
     </p>
-    <Heading class="mt-4 pr-8 text-[clamp(2rem,1.2rem+2.6vw,3.75rem)] leading-[1] font-semibold tracking-[-0.03em]">
+    <Heading class="mt-4 text-[clamp(2rem,1.2rem+2.6vw,3.75rem)] leading-[1] font-semibold tracking-[-0.03em]">
       <a
         href={`/projects/${project.id}`}
         class="rounded-sm transition-colors after:absolute after:inset-0 after:content-[''] group-hover:text-accent focus-visible:outline-none"
       >
         {d.title}
+        <ArrowUpRight
+          aria-hidden="true"
+          class="ml-1 inline-block size-[0.45em] align-top text-fg-subtle transition-colors group-hover:text-accent"
+        />
       </a>
     </Heading>
     <p class="mt-4 max-w-[52ch] text-lg text-fg-muted">{d.summary}</p>
@@ -71,25 +76,22 @@ const Heading = `h${level}` as "h2" | "h3";
   </div>
   <div class="lg:col-span-5 xl:col-span-6">
     {d.cover ? (
-      <Image
-        src={d.cover.src}
-        alt=""
-        widths={[480, 720, 960, 1280]}
-        sizes="(min-width: 1280px) 46vw, (min-width: 1024px) 40vw, 100vw"
-        quality={70}
-        loading={priority ? "eager" : "lazy"}
-        fetchpriority={priority ? "high" : "auto"}
-        class="aspect-[16/10] w-full rounded-2xl border border-line object-cover object-left-top transition-transform duration-500 ease-snappy group-hover:scale-[1.015] motion-reduce:transition-none"
-      />
+      <div class="overflow-hidden rounded-2xl border border-line">
+        <Image
+          src={d.cover.src}
+          alt=""
+          widths={[480, 720, 960, 1280]}
+          sizes="(min-width: 1280px) 46vw, (min-width: 1024px) 40vw, 100vw"
+          quality={70}
+          loading={priority ? "eager" : "lazy"}
+          fetchpriority={priority ? "high" : "auto"}
+          class="h-auto w-full transition-transform duration-500 ease-snappy group-hover:scale-[1.015] motion-reduce:transition-none"
+        />
+      </div>
     ) : (
       <ImagePlaceholder label={d.title} />
     )}
   </div>
-  <ArrowUpRight
-    size={22}
-    aria-hidden="true"
-    class="absolute top-12 right-0 text-fg-subtle transition-colors group-hover:text-accent xl:top-16"
-  />
 </article>
 
 <style>

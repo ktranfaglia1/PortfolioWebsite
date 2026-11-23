@@ -1,6 +1,7 @@
 # Education and honors. One entry per school.
 - id: salisbury-university
   school: Salisbury University
+  degreeSummary: Dual B.S. in CS & Data Science
   location: Salisbury, MD
   start: 2021-08-01
   end: 2025-05-01

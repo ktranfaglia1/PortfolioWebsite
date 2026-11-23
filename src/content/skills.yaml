@@ -1,5 +1,6 @@
 # Skill groups, matching the resume. `icon` is a Simple Icons slug
-# (https://simpleicons.org); leave it out to show a text badge.
+# (https://simpleicons.org) or a custom mark in src/icons/brands.ts (openai, aws);
+# `glyph` is a generic icon for concepts and tools without a brand mark.
 - id: languages
   label: Languages
   order: 1
@@ -25,7 +26,7 @@
     - { name: Radix, icon: radixui }
     - { name: TanStack Query, icon: reactquery }
     - { name: Zod, icon: zod }
-    - { name: Recharts }
+    - { name: Recharts, glyph: chart }
     - { name: HTML, icon: html5 }
     - { name: CSS, icon: css }
 - id: backend-data
@@ -36,7 +37,7 @@
     - { name: Express, icon: express }
     - { name: PostgreSQL, icon: postgresql }
     - { name: Drizzle ORM, icon: drizzle }
-    - { name: pgvector }
+    - { name: pgvector, glyph: vector }
     - { name: Passport, icon: passport }
     - { name: Flask, icon: flask }
     - { name: PySide/PyQt, icon: qt }
@@ -45,22 +46,22 @@
   order: 4
   items:
     - { name: Anthropic API, icon: anthropic }
-    - { name: OpenAI API }
-    - { name: Prompt engineering }
-    - { name: Embeddings }
+    - { name: OpenAI API, icon: openai }
+    - { name: Prompt engineering, glyph: prompt }
+    - { name: Embeddings, glyph: embeddings }
     - { name: Coding agents, icon: claude }
     - { name: PyTorch, icon: pytorch }
     - { name: scikit-learn, icon: scikitlearn }
     - { name: Pandas, icon: pandas }
 - id: infrastructure-tools
-  label: Infrastructure & Tools
+  label: Infra & Tools
   order: 5
   items:
     - { name: Replit, icon: replit }
-    - { name: AWS }
+    - { name: AWS, icon: aws }
     - { name: Google Cloud Storage, icon: googlecloudstorage }
     - { name: Resend, icon: resend }
     - { name: Vitest, icon: vitest }
-    - { name: ClamAV }
+    - { name: ClamAV, glyph: security }
     - { name: Git, icon: git }
     - { name: Linux, icon: linux }

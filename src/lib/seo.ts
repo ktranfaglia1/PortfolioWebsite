@@ -26,7 +26,8 @@ interface PersonInput {
   email: string;
   image?: string;
   sameAs: string[];
-  locality: string;
+  /** Omit to publish only the region (e.g. a metro area, not a city). */
+  locality?: string;
   region: string;
   alumniOf?: string;
   worksFor?: string;
@@ -47,7 +48,7 @@ export function personJsonLd(p: PersonInput): Record<string, unknown> {
     sameAs: p.sameAs,
     address: {
       "@type": "PostalAddress",
-      addressLocality: p.locality,
+      ...(p.locality && { addressLocality: p.locality }),
       addressRegion: p.region,
       addressCountry: "US",
     },
