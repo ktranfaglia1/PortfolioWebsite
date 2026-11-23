@@ -23,7 +23,7 @@ Node 26 (`nvm use`), pnpm. The original redesign plan (decisions, phases, conten
 ## Conventions
 
 - `.astro` components by default; React only in `src/components/islands/`, hydrated with the lightest `client:*` directive that works. Small behaviors (filter, form, toggle) are plain scripts in `src/scripts/` that enhance server-rendered HTML, so pages work without JS.
-- Components: `ui/` (generic), `layout/` (shell), `content/` (render one content entry: ProjectCard, ExperienceItem, SkillTag), `page/` (page chrome: PageHeader).
+- Components: `ui/` (generic), `layout/` (shell), `content/` (render one content entry: ProjectRow, ExperienceItem, SkillTag), `page/` (page chrome: PageHeader).
 - Absolutely positioned children (e.g. `sr-only` text) inside an `overflow-x-auto` box escape it unless the box is `relative`, causing page-wide horizontal scroll.
 - Style with Tailwind utilities that reference design tokens; no raw hex values in components. Exceptions: `src/lib/og.ts` and `scripts/generate-icons.ts` (Satori can't read CSS variables; keep their hex in sync with the dark tokens) and the `theme-color` metas.
 - Pure logic goes in `src/lib/` with Vitest tests next to it (`*.test.ts`).

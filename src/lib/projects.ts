@@ -10,22 +10,42 @@ export const categoryLabels = {
 
 export type Category = keyof typeof categoryLabels;
 
+/** Programming languages shown as filter chips, in display order. */
+export const languages = [
+  "TypeScript",
+  "JavaScript",
+  "Python",
+  "C++",
+  "C",
+  "Java",
+  "PHP",
+  "R",
+] as const;
+
 /**
- * Technologies used by at least `min` projects, most common first (ties
- * alphabetical). Feeds the tech filter, so one-off tools don't clutter it.
+ * Languages used by at least one project, with how many use each, most
+ * common first (ties keep the order of `languages`).
  */
-export function techOptions(
+export function languageOptions(
   projects: { stack: readonly string[] }[],
-  min = 2,
-): string[] {
-  const counts = new Map<string, number>();
-  for (const p of projects) {
-    for (const t of new Set(p.stack)) counts.set(t, (counts.get(t) ?? 0) + 1);
-  }
-  return [...counts]
-    .filter(([, n]) => n >= min)
-    .sort(([a, x], [b, y]) => y - x || a.localeCompare(b))
-    .map(([t]) => t);
+): { name: string; count: number }[] {
+  return languages
+    .map((name) => ({
+      name,
+      count: projects.filter((p) => p.stack.includes(name)).length,
+    }))
+    .filter((l) => l.count > 0)
+    .sort((a, b) => b.count - a.count);
+}
+
+/** How many projects carry each category, for the filter chips. */
+export function categoryCounts(
+  projects: { categories: readonly string[] }[],
+): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const p of projects)
+    for (const c of p.categories) counts[c] = (counts[c] ?? 0) + 1;
+  return counts;
 }
 
 /** Previous and next items around `id`, wrapping at the ends. */

@@ -1,28 +1,43 @@
 ---
-import { ExternalLink } from "@lucide/astro";
+import { ArrowRight, ArrowUpRight, FileText } from "@lucide/astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHeader from "../../components/page/PageHeader.astro";
-import ProjectCard from "../../components/content/ProjectCard.astro";
+import BrandIcon from "../../components/ui/BrandIcon.astro";
 import ProjectRow from "../../components/content/ProjectRow.astro";
 import Section from "../../components/ui/Section.astro";
 import Container from "../../components/layout/Container.astro";
 import { getPage, getProjects } from "../../lib/content";
-import { categoryLabels, techOptions, type Category } from "../../lib/projects";
+import { github } from "../../icons/brands";
+import {
+  categoryCounts,
+  categoryLabels,
+  languageOptions,
+  type Category,
+} from "../../lib/projects";
 
 const page = await getPage("projects");
 const projects = await getProjects();
 const featured = projects.filter((p) => p.data.tier === "featured");
-const standard = projects.filter((p) => p.data.tier === "standard");
-const archive = projects.filter((p) => p.data.tier === "archive");
+// Everything that isn't featured shares one list, newest first. Standard
+// projects have their own page; archive projects link to their source.
+const more = projects
+  .filter((p) => p.data.tier !== "featured")
+  .toSorted((a, b) => b.data.start.getTime() - a.data.start.getTime());
 
-const categories = (Object.keys(categoryLabels) as Category[]).filter((c) =>
-  projects.some((p) => p.data.categories.includes(c)),
+// "Software" covers nearly every project, so it isn't offered as a filter.
+const counts = categoryCounts(projects.map((p) => p.data));
+const categories = (Object.keys(categoryLabels) as Category[]).filter(
+  (c) => c !== "software" && counts[c],
 );
-const techs = techOptions(projects.map((p) => p.data));
+const langs = languageOptions(projects.map((p) => p.data));
 
-const year = (d: Date) => d.getUTCFullYear();
 const chip =
-  "rounded-full border border-line px-3 py-1.5 text-sm text-fg-muted transition-colors hover:border-line-strong hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent-subtle aria-pressed:text-fg";
+  "inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-sm text-fg-muted transition-colors hover:border-line-strong hover:text-fg aria-pressed:border-accent aria-pressed:bg-accent-subtle aria-pressed:text-fg";
+const count = "font-mono text-xs text-fg-subtle";
+const groupLabel =
+  "w-full font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase sm:w-24 sm:shrink-0";
+const iconLink =
+  "relative z-10 inline-flex size-8 items-center justify-center rounded-lg text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg";
 ---
 
 <BaseLayout title={page.title} description={page.description}>
@@ -42,17 +57,17 @@ const chip =
     </style>
   </noscript>
   <Container>
-    <div
-      data-filter
-      class="flex flex-col gap-4 border-y border-line py-4 sm:flex-row sm:items-center sm:justify-between"
-    >
+    <div data-filter class="space-y-3 border-y border-line py-4">
       <div
         role="group"
-        aria-label="Filter by category"
-        class="flex flex-wrap gap-2"
+        aria-label="Filter by type"
+        class="flex flex-wrap items-center gap-2"
       >
+        <span class={groupLabel} aria-hidden="true">
+          Type
+        </span>
         <button type="button" class={chip} data-category="" aria-pressed="true">
-          All
+          All <span class={count}>{projects.length}</span>
         </button>
         {categories.map((c) => (
           <button
@@ -61,24 +76,31 @@ const chip =
             data-category={c}
             aria-pressed="false"
           >
-            {categoryLabels[c]}
+            {categoryLabels[c]} <span class={count}>{counts[c]}</span>
           </button>
         ))}
       </div>
-      <div class="flex items-center gap-2">
-        <label for="tech-filter" class="text-sm text-fg-subtle">
-          Tech
-        </label>
-        <select
-          id="tech-filter"
-          data-tech
-          class="h-9 rounded-lg border border-line bg-surface-2 px-2 text-sm text-fg"
-        >
-          <option value="">Any</option>
-          {techs.map((t) => (
-            <option value={t}>{t}</option>
-          ))}
-        </select>
+      <div
+        role="group"
+        aria-label="Filter by language"
+        class="flex flex-wrap items-center gap-2"
+      >
+        <span class={groupLabel} aria-hidden="true">
+          Language
+        </span>
+        <button type="button" class={chip} data-tech="" aria-pressed="true">
+          Any
+        </button>
+        {langs.map((l) => (
+          <button
+            type="button"
+            class={chip}
+            data-tech={l.name}
+            aria-pressed="false"
+          >
+            {l.name} <span class={count}>{l.count}</span>
+          </button>
+        ))}
       </div>
     </div>
     <p
@@ -106,90 +128,95 @@ const chip =
     id="featured"
     title="Featured"
     rule={false}
-    class="pt-6 sm:pt-8 xl:pt-10"
+    class="pt-4 sm:pt-6"
     data-filter-section
   >
-    <div class="border-b border-line">
+    <div class="border-b border-line [&>article:first-child]:pt-2">
       {featured.map((p, i) => (
         <ProjectRow project={p} number={i + 1} priority={i === 0} />
       ))}
     </div>
   </Section>
 
-  {standard.length > 0 && (
-    <Section id="more" title="More projects" data-filter-section>
-      <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {standard.map((p) => (
-          <ProjectCard project={p} />
-        ))}
-      </div>
-    </Section>
-  )}
-
-  {archive.length > 0 && (
+  {more.length > 0 && (
     <Section
-      id="archive"
-      title="Archive"
-      description="Smaller course projects. Source code on GitHub."
+      id="more"
+      title="More projects"
+      description="Smaller builds, coursework, and writing."
       data-filter-section
     >
-      <div class="relative overflow-x-auto border-y border-line">
-        <table class="w-full text-left text-sm">
-          <caption class="sr-only">Archived projects</caption>
-          <thead class="border-b border-line font-mono text-xs text-fg-subtle">
-            <tr>
-              <th scope="col" class="px-4 py-3 font-normal">
-                Year
-              </th>
-              <th scope="col" class="px-4 py-3 font-normal">
-                Project
-              </th>
-              <th
-                scope="col"
-                class="hidden px-4 py-3 font-normal sm:table-cell"
-              >
-                Built with
-              </th>
-              <th scope="col" class="px-4 py-3 font-normal">
-                <span class="sr-only">Link</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody class="divide-y divide-line">
-            {archive.map((p) => (
-              <tr
-                data-project
-                data-categories={p.data.categories.join(" ")}
-                data-stack={JSON.stringify(p.data.stack)}
-              >
-                <td class="px-4 py-3 align-top font-mono text-xs text-fg-subtle">
-                  {year(p.data.start)}
-                </td>
-                <td class="px-4 py-3 align-top">
-                  <p class="font-medium text-fg">{p.data.title}</p>
-                  <p class="mt-0.5 text-fg-muted">{p.data.summary}</p>
-                </td>
-                <td class="hidden px-4 py-3 align-top font-mono text-xs text-fg-muted sm:table-cell">
-                  {p.data.stack.join(", ")}
-                </td>
-                <td class="px-4 py-3 align-top">
-                  {p.data.links.repo && (
-                    <a
-                      href={p.data.links.repo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex size-8 items-center justify-center rounded-lg text-fg-muted hover:bg-surface-2 hover:text-fg"
-                    >
-                      <ExternalLink size={16} aria-hidden="true" />
-                      <span class="sr-only">{`${p.data.title} source code (opens in a new tab)`}</span>
-                    </a>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ol class="divide-y divide-line border-y border-line">
+        {more.map((p) => {
+          const d = p.data;
+          const href =
+            d.tier === "standard" ? `/projects/${p.id}` : d.links.repo;
+          const external = d.tier !== "standard";
+          return (
+            <li
+              data-project
+              data-categories={d.categories.join(" ")}
+              data-stack={JSON.stringify(d.stack)}
+              class="group relative grid gap-x-8 gap-y-1 py-5 sm:grid-cols-[4rem_1fr_4.5rem] lg:grid-cols-[4rem_1fr_16rem_4.5rem]"
+            >
+              <p class="font-mono text-xs leading-6 text-fg-subtle">
+                {d.start.getUTCFullYear()}
+              </p>
+              <div class="min-w-0">
+                <h3 class="font-medium text-fg">
+                  <a
+                    href={href}
+                    {...(external
+                      ? { target: "_blank", rel: "noopener noreferrer" }
+                      : {})}
+                    class="transition-colors after:absolute after:inset-0 group-hover:text-accent"
+                  >
+                    {d.title}
+                    {external ? (
+                      <ArrowUpRight
+                        size={14}
+                        aria-hidden="true"
+                        class="ml-1 inline-block align-[-2px] text-fg-subtle group-hover:text-accent"
+                      />
+                    ) : (
+                      <ArrowRight
+                        size={14}
+                        aria-hidden="true"
+                        class="ml-1 inline-block align-[-2px] text-fg-subtle group-hover:text-accent"
+                      />
+                    )}
+                    {external && (
+                      <span class="sr-only">(opens in a new tab)</span>
+                    )}
+                  </a>
+                </h3>
+                <p class="mt-1 text-sm text-fg-muted">{d.summary}</p>
+              </div>
+              <p class="hidden font-mono text-xs leading-6 text-fg-muted lg:block">
+                {d.stack.join(", ")}
+              </p>
+              <div class="flex items-start gap-1 sm:justify-end">
+                {d.tier === "standard" && d.links.repo && (
+                  <a
+                    href={d.links.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class={iconLink}
+                  >
+                    <BrandIcon icon={github} size={16} />
+                    <span class="sr-only">{`${d.title} source code (opens in a new tab)`}</span>
+                  </a>
+                )}
+                {d.links.paper && (
+                  <a href={d.links.paper} class={iconLink}>
+                    <FileText size={16} aria-hidden="true" />
+                    <span class="sr-only">{`${d.title} paper (PDF)`}</span>
+                  </a>
+                )}
+              </div>
+            </li>
+          );
+        })}
+      </ol>
     </Section>
   )}
 </BaseLayout>
@@ -206,7 +233,9 @@ const chip =
     const chips = [
       ...bar.querySelectorAll<HTMLButtonElement>("[data-category]"),
     ];
-    const select = bar.querySelector<HTMLSelectElement>("[data-tech]")!;
+    const techChips = [
+      ...bar.querySelectorAll<HTMLButtonElement>("[data-tech]"),
+    ];
     const status = document.querySelector<HTMLElement>("[data-filter-status]")!;
     const empty = document.querySelector<HTMLElement>("[data-filter-empty]")!;
     const items = [...document.querySelectorAll<HTMLElement>("[data-project]")];
@@ -218,8 +247,7 @@ const chip =
     // Ignore values from the URL that aren't on the page.
     if (!chips.some((c) => c.dataset.category === state.category))
       state.category = "";
-    if (![...select.options].some((o) => o.value === state.tech))
-      state.tech = "";
+    if (!techChips.some((c) => c.dataset.tech === state.tech)) state.tech = "";
 
     const render = () => {
       chips.forEach((c) =>
@@ -228,7 +256,9 @@ const chip =
           String(c.dataset.category === state.category),
         ),
       );
-      select.value = state.tech;
+      techChips.forEach((c) =>
+        c.setAttribute("aria-pressed", String(c.dataset.tech === state.tech)),
+      );
       const shown = applyFilter(items, sections, state);
       empty.hidden = shown > 0;
       const filtered = state.category || state.tech;
@@ -252,10 +282,12 @@ const chip =
         update();
       }),
     );
-    select.addEventListener("change", () => {
-      state = { ...state, tech: select.value };
-      update();
-    });
+    techChips.forEach((c) =>
+      c.addEventListener("click", () => {
+        state = { ...state, tech: c.dataset.tech ?? "" };
+        update();
+      }),
+    );
     document
       .querySelector("[data-filter-clear]")
       ?.addEventListener("click", () => {

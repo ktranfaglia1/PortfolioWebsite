@@ -1,15 +1,30 @@
 import { describe, expect, it } from "vitest";
-import { neighbors, techOptions } from "./projects";
+import { categoryCounts, languageOptions, neighbors } from "./projects";
 
-describe("techOptions", () => {
-  it("keeps tech used by 2+ projects, most common first, then A–Z", () => {
+describe("languageOptions", () => {
+  it("counts each language, most common first, skipping unused ones", () => {
     const projects = [
       { stack: ["Python", "PyTorch"] },
       { stack: ["Python", "C++"] },
-      { stack: ["C++", "Python", "Python"] }, // duplicates count once
-      { stack: ["Go"] },
+      { stack: ["TypeScript", "React"] },
+      { stack: ["HTML", "CSS"] },
     ];
-    expect(techOptions(projects)).toEqual(["Python", "C++"]);
+    expect(languageOptions(projects)).toEqual([
+      { name: "Python", count: 2 },
+      { name: "TypeScript", count: 1 },
+      { name: "C++", count: 1 },
+    ]);
+  });
+});
+
+describe("categoryCounts", () => {
+  it("counts every category a project carries", () => {
+    expect(
+      categoryCounts([
+        { categories: ["web", "software"] },
+        { categories: ["web"] },
+      ]),
+    ).toEqual({ web: 2, software: 1 });
   });
 });
 
