@@ -5,7 +5,7 @@
  * ratio (never cropped). The title link is
  * stretched over the whole row. data-* attributes drive the /projects filter.
  */
-import { ArrowUpRight } from "@lucide/astro";
+import { ArrowUpRight, ExternalLink } from "@lucide/astro";
 import { Image } from "astro:assets";
 import type { Project } from "../../lib/content";
 import { formatDateRange } from "../../lib/dates";
@@ -73,10 +73,21 @@ const Heading = `h${level}` as "h2" | "h3";
         ))}
       </dl>
     )}
+    {d.links.live && (
+      <a
+        href={d.links.live}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="relative z-10 mt-8 inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-3.5 py-2 text-sm font-medium text-fg transition-colors hover:border-line-strong hover:bg-surface-2"
+      >
+        <ExternalLink size={15} aria-hidden="true" /> Live site
+        <span class="sr-only">{` for ${d.title} (opens in a new tab)`}</span>
+      </a>
+    )}
   </div>
   <div class="lg:col-span-5 xl:col-span-6">
     {d.cover ? (
-      <div class="overflow-hidden rounded-2xl border border-line">
+      <div class="overflow-hidden rounded-2xl border border-line transition-colors duration-200 group-hover:border-line-strong">
         <Image
           src={d.cover.src}
           alt=""
@@ -85,7 +96,7 @@ const Heading = `h${level}` as "h2" | "h3";
           quality={70}
           loading={priority ? "eager" : "lazy"}
           fetchpriority={priority ? "high" : "auto"}
-          class="h-auto w-full transition-transform duration-500 ease-snappy group-hover:scale-[1.015] motion-reduce:transition-none"
+          class="h-auto w-full"
         />
       </div>
     ) : (
