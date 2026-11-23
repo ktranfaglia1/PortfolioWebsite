@@ -1,0 +1,29 @@
+---
+/**
+ * A screenshot placed inside a case study, next to the section it illustrates.
+ * Import the image in the MDX and pass it in, so copy stays in the MDX.
+ */
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+---
+
+<figure class="my-10 max-w-none">
+  <Image
+    src={src}
+    alt={alt}
+    widths={[640, 960, 1280, 1600]}
+    sizes="(min-width: 1280px) 52rem, (min-width: 1024px) 50vw, 92vw"
+    class="w-full rounded-xl border border-line shadow-card"
+  />
+  {caption && (
+    <figcaption class="mt-3 text-sm text-fg-subtle">{caption}</figcaption>
+  )}
+</figure>

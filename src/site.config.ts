@@ -10,6 +10,11 @@ export const site = {
   headline: "Software Engineer",
   /** From LinkedIn; used under the headline and in meta copy. */
   tagline: "Full-Stack Development, Data & Analytics, AI",
+  /** Home fact rail "Stack" card: main languages, then the tools around them. */
+  stack: {
+    primary: "TypeScript & Python",
+    secondary: "React · Node.js · PostgreSQL · LLM APIs",
+  },
   url: "https://kyletranfaglia.top",
   location: "Durham, NC",
   email: "kyletranfaglia@gmail.com",

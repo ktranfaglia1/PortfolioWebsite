@@ -19,14 +19,22 @@ function isActive(href: string): boolean {
   <Container class="flex h-16 items-center justify-between gap-4">
     <a
       href="/"
-      class="group rounded-md text-[0.9375rem] font-semibold tracking-tight text-fg"
+      class="group inline-flex items-center gap-2.5 rounded-md text-[0.9375rem] font-semibold tracking-tight text-fg"
     >
-      {site.name}
       <span
-        class="text-accent transition-colors group-hover:text-fg"
         aria-hidden="true"
+        class="inline-flex size-7 items-center justify-center rounded-lg border border-line bg-surface-2 font-mono text-[0.6875rem] font-medium tracking-[-0.04em] text-accent transition-colors group-hover:border-accent/50"
       >
-        .
+        KT
+      </span>
+      <span>
+        {site.name}
+        <span
+          class="text-accent transition-colors group-hover:text-fg"
+          aria-hidden="true"
+        >
+          .
+        </span>
       </span>
     </a>
 

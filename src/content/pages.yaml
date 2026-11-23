@@ -6,7 +6,7 @@
   description: Kyle Tranfaglia is a software engineer building full-stack, AI-powered products, with dual degrees in computer science and data science.
   heading: Kyle Tranfaglia
   intro: I'm the co-founder and sole engineer of Pitchfire, an AI platform for startups and investors. I build products end to end, from the database schema to the AI layer, with a data scientist's habit of measuring what matters.
-  headline: Software engineer who *thinks in systems*.
+  headline: Software engineer building *AI products end to end*.
   # TODO(kyle): review the About copy (drafted from your LinkedIn About section).
   about:
     - The question I keep coming back to is how you design a complex system so it behaves simply. The best systems feel inevitable in hindsight. Every layer exists for a reason, and the architecture absorbs the complexity so the user never has to.

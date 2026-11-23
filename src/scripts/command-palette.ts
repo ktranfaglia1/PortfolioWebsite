@@ -19,8 +19,28 @@ function readItems(): PaletteItem[] {
   }
 }
 
+/**
+ * Dev only: React islands get Vite's Fast Refresh preamble from Astro, but the
+ * palette is imported by a plain script, so install the preamble ourselves or
+ * the component throws "can't detect preamble" under `pnpm dev`.
+ */
+async function installDevPreamble(): Promise<void> {
+  if (!import.meta.env.DEV) return;
+  const w = window as unknown as Record<string, unknown>;
+  if (w.__vite_plugin_react_preamble_installed__) return;
+  const runtime = "/@react-refresh";
+  const { default: refresh } = (await import(/* @vite-ignore */ runtime)) as {
+    default: { injectIntoGlobalHook: (w: Window) => void };
+  };
+  refresh.injectIntoGlobalHook(window);
+  w.$RefreshReg$ = () => {};
+  w.$RefreshSig$ = () => (type: unknown) => type;
+  w.__vite_plugin_react_preamble_installed__ = true;
+}
+
 function load(): Promise<void> {
   loading ??= (async () => {
+    await installDevPreamble();
     const [{ createElement }, { createRoot }, mod] = await Promise.all([
       import("react"),
       import("react-dom/client"),

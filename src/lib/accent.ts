@@ -7,7 +7,7 @@ export interface TextRun {
 }
 
 /**
- * Splits "Software engineer who *thinks in systems*." into plain and accent
+ * Splits "Software engineer building *AI products end to end*." into plain and accent
  * runs. Asterisks toggle the accent; an unmatched trailing asterisk is literal.
  */
 export function splitAccent(input: string): TextRun[] {

@@ -1,5 +1,5 @@
 ---
-import { ArrowRight, Download, Mail } from "@lucide/astro";
+import { ArrowRight, ArrowUpRight, Download, Mail } from "@lucide/astro";
 import { getImage, Image } from "astro:assets";
 import headshot from "../assets/images/profile/headshot.jpg";
 import BaseLayout from "../layouts/BaseLayout.astro";
@@ -7,9 +7,12 @@ import Container from "../components/layout/Container.astro";
 import GitHubActivity from "../components/content/GitHubActivity.astro";
 import ProjectRow from "../components/content/ProjectRow.astro";
 import AccentText from "../components/ui/AccentText.astro";
+import BrandIcon from "../components/ui/BrandIcon.astro";
 import Button from "../components/ui/Button.astro";
 import HeroGlow from "../components/ui/HeroGlow.astro";
 import Section from "../components/ui/Section.astro";
+import { github, linkedin } from "../icons/brands";
+import { getSkillIcon } from "../lib/skill-icons";
 import { site } from "../site.config";
 import {
   getCurrentRole,
@@ -28,10 +31,13 @@ const featured = await getProjects("featured");
 const caseStudies = featured.slice(0, 4);
 const moreWork = featured.slice(4);
 const [education] = await getEducation();
+// A short list on the home page; /experience has everything.
 const experience = [
   ...(await getExperience("professional")),
-  ...(await getExperience("teaching")),
-  ...(await getExperience("leadership")),
+  ...(await getExperience("teaching")).slice(0, 2),
+  ...(await getExperience("leadership"))
+    .toSorted((a, b) => b.data.start.getTime() - a.data.start.getTime())
+    .slice(0, 1),
 ];
 const skillGroups = await getSkillGroups();
 
@@ -61,6 +67,30 @@ const year = (d: Date | "present" | undefined) =>
   d === "present" || d === undefined ? "Now" : String(d.getFullYear());
 const yearRange = (start: Date, end: Date | "present" | undefined) =>
   year(start) === year(end) ? year(start) : `${year(start)}–${year(end)}`;
+
+const elsewhere = [
+  {
+    label: "Email",
+    href: `mailto:${site.email}`,
+    handle: site.email,
+    icon: undefined,
+    external: false,
+  },
+  {
+    label: "LinkedIn",
+    href: site.socials.linkedin,
+    handle: "in/kyletranfaglia",
+    icon: linkedin,
+    external: true,
+  },
+  {
+    label: "GitHub",
+    href: site.socials.github,
+    handle: site.githubUser,
+    icon: github,
+    external: true,
+  },
+];
 
 const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
 const moreLink =
@@ -129,14 +159,14 @@ const moreLink =
       <!-- Fact rail -->
       <dl class="mt-14 grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 xl:mt-20 xl:grid-cols-4">
         {now && (
-          <div class="bg-canvas/85 p-5 backdrop-blur">
+          <div class="bg-surface/85 p-5 backdrop-blur">
             <dt class={label}>Now</dt>
             <dd class="mt-2 font-medium">{now.data.org}</dd>
             <dd class="text-sm text-fg-muted">{now.data.role}</dd>
           </div>
         )}
         {education && (
-          <div class="bg-canvas/85 p-5 backdrop-blur">
+          <div class="bg-surface/85 p-5 backdrop-blur">
             <dt class={label}>Education</dt>
             <dd class="mt-2 font-medium">
               {education.data.degrees
@@ -150,14 +180,14 @@ const moreLink =
             </dd>
           </div>
         )}
-        <div class="bg-canvas/85 p-5 backdrop-blur">
+        <div class="bg-surface/85 p-5 backdrop-blur">
           <dt class={label}>Based in</dt>
           <dd class="mt-2 font-medium">{site.location}</dd>
         </div>
-        <div class="bg-canvas/85 p-5 backdrop-blur">
-          <dt class={label}>Focus</dt>
-          <dd class="mt-2 font-medium">{site.headline}</dd>
-          <dd class="text-sm text-fg-muted">{site.tagline}</dd>
+        <div class="bg-surface/85 p-5 backdrop-blur">
+          <dt class={label}>Stack</dt>
+          <dd class="mt-2 font-medium">{site.stack.primary}</dd>
+          <dd class="text-sm text-fg-muted">{site.stack.secondary}</dd>
         </div>
       </dl>
     </Container>
@@ -189,13 +219,24 @@ const moreLink =
       ))}
     </div>
     {moreWork.length > 0 && (
-      <ul class="mt-10 grid gap-8 sm:grid-cols-3">
+      <ul class="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-4">
         {moreWork.map((p, i) => (
-          <li class="group relative" data-reveal>
-            <p class="font-mono text-xs text-accent">
+          <li class="group relative flex flex-col" data-reveal>
+            {p.data.cover && (
+              <div class="overflow-hidden rounded-xl border border-line bg-surface">
+                <Image
+                  src={p.data.cover.src}
+                  alt=""
+                  widths={[360, 540, 720]}
+                  sizes="(min-width: 1280px) 22rem, (min-width: 640px) 45vw, 100vw"
+                  class="aspect-[16/10] w-full object-cover object-left-top transition-transform duration-500 ease-snappy group-hover:scale-[1.03] motion-reduce:transition-none"
+                />
+              </div>
+            )}
+            <p class="mt-5 font-mono text-xs text-accent">
               {pad(caseStudies.length + i + 1)}
             </p>
-            <h3 class="mt-2 text-xl font-semibold transition-colors group-hover:text-accent">
+            <h3 class="mt-2 text-lg font-semibold transition-colors group-hover:text-accent">
               <a
                 href={`/projects/${p.id}`}
                 class="after:absolute after:inset-0"
@@ -203,9 +244,7 @@ const moreLink =
                 {p.data.title}
               </a>
             </h3>
-            <p class="mt-1 line-clamp-2 text-sm text-fg-muted">
-              {p.data.summary}
-            </p>
+            <p class="mt-1 text-sm text-fg-muted">{p.data.summary}</p>
           </li>
         ))}
       </ul>
@@ -240,10 +279,29 @@ const moreLink =
       {skillGroups.map((g) => (
         <div>
           <h3 class={label}>{g.data.label}</h3>
-          <ul class="mt-4 space-y-1.5 text-fg">
-            {g.data.items.map((s) => (
-              <li>{s.name}</li>
-            ))}
+          <ul class="mt-4 space-y-2 text-fg">
+            {g.data.items.map((s) => {
+              const mark = s.icon ? getSkillIcon(s.icon) : undefined;
+              return (
+                <li class="flex items-center gap-2.5">
+                  {mark ? (
+                    <BrandIcon
+                      icon={mark}
+                      size={15}
+                      class="shrink-0 text-fg-subtle"
+                    />
+                  ) : (
+                    <span
+                      aria-hidden="true"
+                      class="inline-flex size-[15px] shrink-0 items-center justify-center"
+                    >
+                      <span class="size-1.5 rounded-full bg-line-strong" />
+                    </span>
+                  )}
+                  {s.name}
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}
@@ -257,28 +315,63 @@ const moreLink =
     class="relative isolate overflow-hidden border-t border-line"
   >
     <HeroGlow class="opacity-70" />
-    <Container class="py-24 xl:py-36">
-      <p class={label} aria-hidden="true">
-        05
-      </p>
-      <h2
-        id="contact-cta"
-        class="mt-4 max-w-[20ch] text-[clamp(2.25rem,1.1rem+4vw,5.75rem)] leading-[0.95] font-semibold tracking-[-0.04em]"
-      >
-        <AccentText text={contact.headline ?? contact.heading} />
-      </h2>
-      <p class="mt-6 max-w-[56ch] text-lg text-fg-muted">{contact.intro}</p>
-      <div class="mt-10 flex flex-wrap items-center gap-6">
-        <Button href="/contact" size="lg">
-          <Mail size={18} aria-hidden="true" /> Send a message
-        </Button>
-        <a
-          href={`mailto:${site.email}`}
-          class="font-mono text-sm text-fg-muted underline-offset-4 hover:text-fg hover:underline"
+    <Container class="grid gap-14 py-24 lg:grid-cols-12 lg:items-end lg:gap-10 xl:py-36">
+      <div class="lg:col-span-7">
+        <p class={label} aria-hidden="true">
+          05
+        </p>
+        <h2
+          id="contact-cta"
+          class="mt-4 max-w-[20ch] text-[clamp(2.25rem,1.1rem+4vw,5.75rem)] leading-[0.95] font-semibold tracking-[-0.04em]"
         >
-          {site.email}
-        </a>
+          <AccentText text={contact.headline ?? contact.heading} />
+        </h2>
+        <p class="mt-6 max-w-[56ch] text-lg text-fg-muted">{contact.intro}</p>
+        <div class="mt-10">
+          <Button href="/contact" size="lg">
+            <Mail size={18} aria-hidden="true" /> Send a message
+          </Button>
+        </div>
       </div>
+      <ul class="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface/85 shadow-card backdrop-blur lg:col-span-5 xl:col-span-4 xl:col-start-9">
+        {elsewhere.map((c) => (
+          <li>
+            <a
+              href={c.href}
+              {...(c.external
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
+              class="group flex items-center gap-4 p-5 transition-colors hover:bg-surface-2"
+            >
+              {c.icon ? (
+                <BrandIcon
+                  icon={c.icon}
+                  size={20}
+                  class="shrink-0 text-fg-muted"
+                />
+              ) : (
+                <Mail
+                  size={20}
+                  aria-hidden="true"
+                  class="shrink-0 text-fg-muted"
+                />
+              )}
+              <span class="min-w-0 flex-1">
+                <span class="block font-medium text-fg">{c.label}</span>
+                <span class="block truncate font-mono text-xs text-fg-subtle">
+                  {c.handle}
+                </span>
+              </span>
+              <ArrowUpRight
+                size={16}
+                aria-hidden="true"
+                class="shrink-0 text-fg-subtle transition-colors group-hover:text-accent"
+              />
+              {c.external && <span class="sr-only">(opens in a new tab)</span>}
+            </a>
+          </li>
+        ))}
+      </ul>
     </Container>
   </section>
 </BaseLayout>

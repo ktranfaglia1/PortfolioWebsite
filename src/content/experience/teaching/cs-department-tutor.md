@@ -1,6 +1,7 @@
 ---
 org: Salisbury University
 orgDescription: Department of Computer Science
+orgUrl: https://www.salisbury.edu/academic-offices/science-and-technology/computer-science/
 role: Computer Science Department Tutor
 group: teaching
 location: Salisbury, MD

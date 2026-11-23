@@ -48,11 +48,12 @@
 :root[data-theme="light"] {
   color-scheme: light;
 
-  --canvas: oklch(0.985 0.002 260);
+  /* Canvas sits a step below white so white cards and fields read as raised. */
+  --canvas: oklch(0.975 0.003 260);
   --surface: oklch(1 0 0);
-  --surface-2: oklch(0.965 0.003 260);
-  --line: oklch(0.91 0.004 260);
-  --line-strong: oklch(0.83 0.006 260);
+  --surface-2: oklch(0.955 0.004 260);
+  --line: oklch(0.885 0.005 260);
+  --line-strong: oklch(0.8 0.007 260);
 
   --fg: oklch(0.2 0.006 260);
   --fg-muted: oklch(0.42 0.01 260);
@@ -64,7 +65,7 @@
   --spotlight: oklch(0.5 0.2 var(--accent-hue) / 0.06);
 
   --shadow-card:
-    0 1px 2px 0 oklch(0 0 0 / 0.04), 0 8px 24px -16px oklch(0 0 0 / 0.18);
+    0 1px 2px 0 oklch(0 0 0 / 0.05), 0 12px 32px -16px oklch(0 0 0 / 0.22);
 }
 
 :root[data-theme="light"] {
@@ -130,6 +131,14 @@
 
   p {
     text-wrap: pretty;
+  }
+
+  /* Tailwind v4 dropped the pointer cursor on buttons; restore it. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  select {
+    cursor: pointer;
   }
 
   ::selection {

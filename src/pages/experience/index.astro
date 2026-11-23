@@ -25,6 +25,8 @@ const sections = [
   { id: "leadership", label: "Leadership" },
   { id: "education", label: "Education" },
 ];
+const chip =
+  "inline-flex items-center gap-1.5 rounded-full border border-line bg-surface px-3.5 py-1.5 text-fg-muted transition-colors hover:border-line-strong hover:text-fg";
 const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
 ---
 
@@ -35,23 +37,18 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
     intro={page.intro}
   >
     <nav aria-label="On this page">
-      <ul class="flex flex-wrap gap-x-5 gap-y-2 font-mono text-sm">
+      <ul class="flex flex-wrap gap-2 text-sm">
         {sections.map((s) => (
           <li>
-            <a
-              href={`#${s.id}`}
-              class="text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline"
-            >
+            <a href={`#${s.id}`} class={chip}>
               {s.label}
             </a>
           </li>
         ))}
         <li>
-          <a
-            href="/experience/other"
-            class="text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline"
-          >
+          <a href="/experience/other" class={chip}>
             {otherPage.heading}
+            <ArrowRight size={14} aria-hidden="true" />
           </a>
         </li>
       </ul>

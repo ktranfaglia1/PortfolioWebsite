@@ -152,6 +152,7 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
         {toc.length > 1 && (
           <nav
             aria-label="On this page"
+            data-toc
             class="hidden lg:col-span-3 lg:block xl:col-span-2"
           >
             <div class="sticky top-24">
@@ -161,7 +162,7 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
                   <li>
                     <a
                       href={`#${h.slug}`}
-                      class="-ml-px block border-l border-transparent pl-4 text-fg-muted transition-colors hover:border-accent hover:text-fg"
+                      class="-ml-px block border-l border-transparent pl-4 text-fg-muted transition-colors hover:border-accent hover:text-fg aria-[current=true]:border-accent aria-[current=true]:text-fg"
                     >
                       {h.text}
                     </a>
@@ -270,3 +271,9 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
     </Container>
   )}
 </BaseLayout>
+
+<script>
+  import { initToc } from "../../scripts/toc";
+
+  initToc();
+</script>
