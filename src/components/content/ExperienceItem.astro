@@ -34,7 +34,7 @@ const orgHref = d.showLink ? d.orgUrl : undefined;
   {!compact && (
     <>
       {d.positions.length > 0 && (
-        <ol class="mb-4 space-y-2 border-l border-dashed border-line-strong pl-4">
+        <ol class="mb-4 space-y-5 border-l border-dashed border-line-strong pl-4">
           {d.positions.map((p) => (
             <li>
               <p class="font-medium text-fg">{p.role}</p>
@@ -44,6 +44,13 @@ const orgHref = d.showLink ? d.orgUrl : undefined;
                     .filter(Boolean)
                     .join(" · ")}
                 </p>
+              )}
+              {p.highlights.length > 0 && (
+                <ul class="mt-2 list-disc space-y-1.5 pl-5 marker:text-fg-subtle">
+                  {p.highlights.map((h) => (
+                    <li>{h}</li>
+                  ))}
+                </ul>
               )}
             </li>
           ))}

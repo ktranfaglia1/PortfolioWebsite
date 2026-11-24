@@ -11,9 +11,10 @@ location: Salisbury, MD
 start: 2024-09-01
 end: 2025-05-01
 order: 3
-summary: Assisted weekly lab sessions for Programming Fundamentals (Java) and Computer Science I (C++), supporting about 40 students.
+summary: Supported about 40 students in the weekly labs for the department's two entry-level programming courses, Programming Fundamentals (Java) and Computer Science I (C++).
 highlights:
-  - Circulated during one lab session a week to answer questions, review code, and help students through programming problems, with the goal of raising the course average.
-  - Held two office hours a week for tutoring and coding help.
+  - Lab assistants give beginners more hands-on help than one professor can alone, so students get unstuck sooner and the professor's time goes further.
+  - Circulated during a weekly lab to answer questions, review code, and help students through problems.
+  - Held two office hours a week for tutoring and coding help outside of lab.
 skills: [Java, C++, Code review, Office hours]
 ---

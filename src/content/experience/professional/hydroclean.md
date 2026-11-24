@@ -13,6 +13,6 @@ summary: My first coding project and the start of my path into software engineer
 highlights:
   - Owned the project end to end and handled all communication with the owner, from working out what the site needed to deciding what to build and delivering it.
   - Hand-coded six pages (home, services, estimates, FAQs, community, contact) in HTML, CSS, and JavaScript, teaching myself each one from W3Schools and web searches as I went.
-  - Built a JavaScript photo lightbox for the work galleries, an embedded estimate request form, and click-to-call, email, and social links.
+  - Built a JavaScript photo lightbox, an embedded estimate form, and click-to-call, email, and social links.
 skills: [HTML, CSS, JavaScript, Client communication, Self-teaching]
 ---

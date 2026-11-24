@@ -135,7 +135,7 @@ const experience = defineCollection({
         summary: z.string(),
         highlights: z.array(z.string()).default([]),
         skills: z.array(z.string()).default([]),
-        /** Role progression within one employer, oldest first. */
+        /** Roles within one employer, newest first (like the timeline). */
         positions: z
           .array(
             z.object({
@@ -143,6 +143,8 @@ const experience = defineCollection({
               detail: z.string().optional(),
               start: date.optional(),
               end: endDate,
+              /** Bullets for this position, shown under it. */
+              highlights: z.array(z.string()).default([]),
             }),
           )
           .default([]),

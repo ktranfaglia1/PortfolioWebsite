@@ -13,7 +13,8 @@ end: 2025-05-01
 order: 2
 summary: One of two senior department tutors, covering every computer science course from 100-level to 400-level.
 highlights:
-  - Held five hours of weekly sessions focused on fundamentals and independent problem-solving, at a time when AI coding assistants were changing how students study.
+  - Held five hours of weekly sessions in the department's study rooms, tailored to what each student needed.
+  - With AI coding assistants changing how students study, focused on fundamentals and independent problem-solving, the skills that are easy to skip when a tool writes the code.
   - Students who came regularly showed clear gains in understanding hard concepts and in their programming.
 skills: [Data structures, Algorithms, Debugging, Java, C++, Python]
 ---

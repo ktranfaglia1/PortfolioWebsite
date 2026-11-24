@@ -19,8 +19,9 @@ interface Props {
 const { entry, size = "md", class: className } = Astro.props;
 const d = entry.data;
 
-// Entries without a logo get an icon for their kind of work, so every row
-// keeps the same shape.
+// Entries without a logo get an icon for their kind of work on that group's
+// color (teaching matches its lane in the career graph), so the row keeps the
+// same shape and a bit of color beside the real logos.
 const Icon = {
   professional: Briefcase,
   teaching: GraduationCap,
@@ -58,11 +59,18 @@ const Icon = {
   <div
     aria-hidden="true"
     class:list={[
-      "flex shrink-0 items-center justify-center border border-line bg-surface-2 text-fg-subtle",
+      "flex shrink-0 items-center justify-center",
+      {
+        professional: "bg-accent text-accent-fg",
+        teaching: "bg-warm text-[white]",
+        leadership: "bg-accent text-accent-fg",
+        volunteer: "bg-warm text-[white]",
+        other: "bg-warm text-[white]",
+      }[d.group],
       size === "md" ? "size-12 rounded-xl sm:size-14" : "size-10 rounded-lg",
       className,
     ]}
   >
-    <Icon size={size === "md" ? 22 : 16} />
+    <Icon size={size === "md" ? 26 : 18} />
   </div>
 )}
