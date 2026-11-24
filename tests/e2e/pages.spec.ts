@@ -93,7 +93,7 @@ test.describe("contact form", () => {
     await fill(page);
     await page.getByRole("button", { name: "Send message" }).click();
     await expect(
-      page.getByRole("heading", { name: "Message sent" }),
+      page.getByRole("heading", { name: "Message Sent" }),
     ).toBeVisible();
     await expect(page.locator("[data-contact-form]")).toBeHidden();
   });

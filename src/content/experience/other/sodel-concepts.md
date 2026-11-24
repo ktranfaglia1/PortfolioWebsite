@@ -1,5 +1,8 @@
 ---
 org: SoDel Concepts
+orgLogo:
+  src: ../../../assets/images/logos/sodel-concepts.png
+  alt: SoDel Concepts logo
 orgDescription: Restaurant and events group, Delaware beaches
 role: Server, Banquet & Events Team Member
 group: other

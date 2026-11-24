@@ -123,8 +123,6 @@ const experience = defineCollection({
             alt: z.string(),
           })
           .optional(),
-        /** Label for the logo placeholder while the logo is missing. */
-        logoPlaceholder: z.string().optional(),
         role: z.string(),
         group: z.enum(experienceGroups),
         location: z.string().optional(),

@@ -1,5 +1,8 @@
 ---
 org: GullCode
+orgLogo:
+  src: ../../../assets/images/logos/salisbury-university.png
+  alt: Salisbury University logo
 orgDescription: Salisbury University's annual coding competition
 role: Director & Host
 group: leadership

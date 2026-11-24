@@ -1,5 +1,8 @@
 ---
 org: Clayton Theatre
+orgLogo:
+  src: ../../../assets/images/logos/clayton-theatre.png
+  alt: Clayton Theatre logo
 role: Cashier
 orgDescription: Historic single-screen movie theatre, Dagsboro, DE
 group: other

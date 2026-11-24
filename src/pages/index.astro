@@ -5,6 +5,7 @@ import headshot from "../assets/images/profile/headshot.jpg";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/layout/Container.astro";
 import GitHubActivity from "../components/content/GitHubActivity.astro";
+import OrgLogo from "../components/content/OrgLogo.astro";
 import ProjectRow from "../components/content/ProjectRow.astro";
 import AccentText from "../components/ui/AccentText.astro";
 import BrandIcon from "../components/ui/BrandIcon.astro";
@@ -180,7 +181,7 @@ const moreLink =
           </div>
         )}
         <div class="bg-surface/85 p-5 backdrop-blur">
-          <dt class={label}>Based in</dt>
+          <dt class={label}>Based In</dt>
           <dd class="mt-2 font-medium">{site.location}</dd>
           <dd class="text-sm text-fg-muted">{site.locationNote}</dd>
         </div>
@@ -209,7 +210,7 @@ const moreLink =
     </div>
   </Section>
 
-  <Section id="work" eyebrow="02" title="Featured projects">
+  <Section id="work" eyebrow="02" title="Featured Projects">
     <a slot="action" href="/projects" class={moreLink}>
       All projects <ArrowRight size={14} aria-hidden="true" />
     </a>
@@ -261,10 +262,13 @@ const moreLink =
           <p class="font-mono text-sm text-fg-subtle">
             {yearRange(e.data.start, e.data.end)}
           </p>
-          <p>
-            <span class="font-medium text-fg">{e.data.role}</span>
-            <span class="block text-fg-muted">{e.data.org}</span>
-          </p>
+          <div class="flex items-center gap-3">
+            <OrgLogo entry={e} size="sm" />
+            <p>
+              <span class="font-medium text-fg">{e.data.role}</span>
+              <span class="block text-fg-muted">{e.data.org}</span>
+            </p>
+          </div>
           <p class="hidden text-sm text-fg-muted xl:block">{e.data.summary}</p>
         </li>
       ))}

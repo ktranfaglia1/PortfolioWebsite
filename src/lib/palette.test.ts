@@ -6,7 +6,7 @@ const input = {
     { label: "Home", href: "/" },
     { label: "Projects", href: "/projects" },
   ],
-  extraPages: [{ label: "Other experience", href: "/experience/other" }],
+  extraPages: [{ label: "Other Experience", href: "/experience/other" }],
   projects: [
     {
       id: "celite",

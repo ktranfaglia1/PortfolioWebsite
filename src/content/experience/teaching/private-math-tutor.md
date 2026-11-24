@@ -1,5 +1,5 @@
 ---
-org: Private tutoring
+org: Private Tutoring
 role: Private Mathematics Tutor
 group: teaching
 location: Salisbury, MD

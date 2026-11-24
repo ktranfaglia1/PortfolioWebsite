@@ -1,5 +1,8 @@
 ---
 org: Eastern Shore High School Computer Programming Competition
+orgLogo:
+  src: ../../../assets/images/logos/salisbury-university.png
+  alt: Salisbury University logo
 orgDescription: Hosted by Salisbury University
 role: Moderator, Advisor & Speaker
 group: leadership

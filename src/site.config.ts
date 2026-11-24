@@ -17,7 +17,7 @@ export const site = {
   },
   url: "https://kyletranfaglia.top",
   location: "Raleigh-Durham-Chapel Hill Area",
-  /** Subtext under "Based in" on the home fact rail. */
+  /** Subtext under "Based In" on the home fact rail. */
   locationNote: "Open to On-Site, Hybrid & Remote",
   /** Structured-data address (JSON-LD); the display string above stays general. */
   address: { region: "NC", country: "US" },

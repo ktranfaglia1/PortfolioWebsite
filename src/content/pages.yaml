@@ -25,9 +25,9 @@
   headline: A career that reads *like a commit log*.
   intro: Where I've worked, taught, and led, plus my education and honors.
 - id: experience-other
-  title: Other experience
+  title: Other Experience
   description: Kyle Tranfaglia's hospitality and service work, including formal events, restaurant service, and theatre operations.
-  heading: Other experience
+  heading: Other Experience
   intro: Before and alongside software, I spent seven years in hospitality, from my first host job to formal service for nearly 200 weddings. It's where I learned to stay calm under pressure, work closely with a team, and take ownership when I'm the one in charge.
 - id: resume
   title: Resume
@@ -42,8 +42,8 @@
   intro: Hiring, building something, or curious about my work? Send a message and I'll reply within one business day.
   headline: Got something worth building? *Let's talk.*
 - id: not-found
-  title: Page not found
+  title: Page Not Found
   description: The page you're looking for doesn't exist.
-  heading: Page not found
+  heading: Page Not Found
   headline: This path leads *nowhere*.
   intro: That page doesn't exist or has moved.

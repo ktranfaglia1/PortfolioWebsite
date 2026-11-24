@@ -24,7 +24,7 @@ const entries = await getExperience("other");
   <Container class="py-8">
     <Timeline>
       {entries.map((e) => (
-        <ExperienceItem entry={e} level={2} />
+        <ExperienceItem entry={e} level={2} wide />
       ))}
     </Timeline>
   </Container>

@@ -22,7 +22,7 @@ CarMart is an internal sales-operations tool for a fictional pre-owned car deale
 Employees manage owners, vehicles, and sales through simple forms, without touching SQL. It
 began as a database course's final project, and I later expanded it into a fuller app.
 
-## What it does
+## What It Does
 
 - **Sell:** record a sale in one form, covering the seller's contact details, the vehicle
   (make, model, year, mileage), and the registration (number, sale date, price).
@@ -30,7 +30,7 @@ began as a database course's final project, and I later expanded it into a fulle
   vehicle's owner and sale details.
 - **Modify:** update a vehicle's or owner's details, unlist a vehicle, or remove a seller.
 
-## Database design
+## Database Design
 
 A normalized MySQL schema with three tables: `Owner`, `Vehicle`, and `Registration`.
 `Registration` links each sale to an owner and a vehicle through foreign keys, and the
