@@ -12,6 +12,9 @@ interface Props {
   eyebrow?: string;
   /** Soft violet/warm glow behind the header (default on). */
   glow?: boolean;
+  /** Match the intro to the timeline's text width (pages that are one
+   *  timeline, like /experience/other). */
+  introWide?: boolean;
   class?: string;
 }
 
@@ -21,6 +24,7 @@ const {
   intro,
   eyebrow,
   glow = true,
+  introWide = false,
   class: className,
 } = Astro.props;
 ---
@@ -44,7 +48,14 @@ const {
       </p>
     )}
     {intro && (
-      <p class="mt-6 max-w-[60ch] text-lg text-fg-muted sm:text-xl">{intro}</p>
+      <p
+        class:list={[
+          "mt-6 text-lg text-fg-muted sm:text-xl",
+          introWide ? "max-w-[58rem]" : "max-w-[60ch]",
+        ]}
+      >
+        {intro}
+      </p>
     )}
     {Astro.slots.has("default") && (
       <div class="mt-10 flex flex-wrap items-center gap-3">

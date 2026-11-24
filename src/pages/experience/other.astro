@@ -20,11 +20,16 @@ const entries = await getExperience("other");
       <ArrowLeft size={16} aria-hidden="true" /> Experience
     </a>
   </Container>
-  <PageHeader heading={page.heading} intro={page.intro} class="pt-8 sm:pt-10" />
+  <PageHeader
+    heading={page.heading}
+    intro={page.intro}
+    introWide
+    class="pt-8 sm:pt-10"
+  />
   <Container class="py-8">
     <Timeline>
       {entries.map((e) => (
-        <ExperienceItem entry={e} level={2} wide />
+        <ExperienceItem entry={e} level={2} />
       ))}
     </Timeline>
   </Container>
