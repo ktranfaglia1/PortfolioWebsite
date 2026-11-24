@@ -1,5 +1,9 @@
 ---
 org: Georgia House
+orgLogo:
+  src: ../../../assets/images/logos/georgia-house.png
+  alt: Georgia House logo
+  bleed: true
 orgDescription: Southern-style restaurant with several locations, Millsboro, DE (since closed)
 role: Host, Busser & Catering
 group: other

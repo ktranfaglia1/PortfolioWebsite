@@ -1,5 +1,8 @@
 ---
 org: Townsend's HydroClean
+orgLogo:
+  src: ../../../assets/images/logos/hydroclean.png
+  alt: Townsend's HydroClean logo
 orgDescription: Local exterior cleaning company
 role: Web Developer
 group: professional

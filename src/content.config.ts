@@ -121,6 +121,8 @@ const experience = defineCollection({
             src: image(),
             srcDark: image().optional(),
             alt: z.string(),
+            /** Fill the tile edge to edge (for a mark on its own colored square). */
+            bleed: z.boolean().default(false),
           })
           .optional(),
         role: z.string(),

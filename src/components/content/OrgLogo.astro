@@ -31,23 +31,27 @@ const Icon = {
 ---
 
 {/* Logos sit on a white tile in both themes, so marks in any color stay
-     legible and every logo reads at the same size. */}
+     legible and every logo reads at the same size. `bleed` logos (a mark on
+     its own colored square) fill the tile instead. */}
 {d.orgLogo ? (
   <div
     class:list={[
-      "flex shrink-0 items-center justify-center border border-line bg-[white]",
-      size === "md"
-        ? "size-12 rounded-xl p-1.5 sm:size-14 sm:p-2"
-        : "size-10 rounded-lg p-1.5",
+      "flex shrink-0 items-center justify-center overflow-hidden border border-line bg-[white]",
+      size === "md" ? "size-12 rounded-xl sm:size-14" : "size-10 rounded-lg",
+      !d.orgLogo.bleed && (size === "md" ? "p-1 sm:p-1.5" : "p-1"),
       className,
     ]}
   >
+    {/* Width only, so wide and tall logos keep their proportions. */}
     <Image
       src={d.orgLogo.src}
       alt={d.orgLogo.alt}
-      width={112}
-      height={112}
-      class="max-h-full max-w-full object-contain"
+      width={128}
+      class:list={[
+        d.orgLogo.bleed
+          ? "size-full object-cover"
+          : "max-h-full max-w-full object-contain",
+      ]}
     />
   </div>
 ) : (
