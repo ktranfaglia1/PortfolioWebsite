@@ -1,6 +1,18 @@
 import * as simpleIcons from "simple-icons";
 import { aws, openai, type BrandMark } from "../icons/brands";
 
+/** Generic icons for skills without a brand mark (see `glyph` in skills.yaml). */
+export const skillGlyphs = [
+  "prompt",
+  "embeddings",
+  "vector",
+  "chart",
+  "security",
+  "canvas",
+  "testing",
+] as const;
+export type SkillGlyphName = (typeof skillGlyphs)[number];
+
 type SimpleIcon = { slug: string; title: string; path: string };
 
 const bySlug = new Map<string, SimpleIcon>(

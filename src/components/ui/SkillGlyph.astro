@@ -4,12 +4,15 @@ import {
   Axis3d,
   ChartLine,
   MessageSquareText,
+  Paintbrush,
   ShieldCheck,
+  TestTubeDiagonal,
   Waypoints,
 } from "@lucide/astro";
+import type { SkillGlyphName } from "../../lib/skill-icons";
 
 interface Props {
-  glyph: "prompt" | "embeddings" | "vector" | "chart" | "security";
+  glyph: SkillGlyphName;
   size?: number;
   class?: string;
 }
@@ -21,6 +24,8 @@ const Icon = {
   vector: Axis3d,
   chart: ChartLine,
   security: ShieldCheck,
+  canvas: Paintbrush,
+  testing: TestTubeDiagonal,
 }[glyph];
 ---
 

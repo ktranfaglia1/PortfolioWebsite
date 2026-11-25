@@ -24,11 +24,14 @@
     - { name: Tailwind CSS, icon: tailwindcss }
     - { name: shadcn/ui, icon: shadcnui }
     - { name: Radix, icon: radixui }
+    - { name: React Router, icon: reactrouter }
     - { name: TanStack Query, icon: reactquery }
     - { name: Zod, icon: zod }
     - { name: Recharts, glyph: chart }
+    - { name: Astro, icon: astro }
     - { name: HTML, icon: html5 }
     - { name: CSS, icon: css }
+    - { name: HTML5 Canvas, glyph: canvas }
 - id: backend-data
   label: Backend & Data
   order: 3
@@ -40,6 +43,11 @@
     - { name: pgvector, glyph: vector }
     - { name: Passport, icon: passport }
     - { name: Flask, icon: flask }
+    - { name: MySQL, icon: mysql }
+    - { name: pandas, icon: pandas }
+    - { name: NumPy, icon: numpy }
+    - { name: SciPy, icon: scipy }
+    - { name: Matplotlib, glyph: chart }
     - { name: PySide/PyQt, icon: qt }
 - id: ai-ml
   label: AI & ML
@@ -52,7 +60,7 @@
     - { name: Coding agents, icon: claude }
     - { name: PyTorch, icon: pytorch }
     - { name: scikit-learn, icon: scikitlearn }
-    - { name: Pandas, icon: pandas }
+    - { name: LangChain, icon: langchain }
 - id: infrastructure-tools
   label: Infra & Tools
   order: 5
@@ -62,6 +70,7 @@
     - { name: Google Cloud Storage, icon: googlecloudstorage }
     - { name: Resend, icon: resend }
     - { name: Vitest, icon: vitest }
+    - { name: Playwright, glyph: testing }
     - { name: ClamAV, glyph: security }
     - { name: Git, icon: git }
     - { name: Linux, icon: linux }

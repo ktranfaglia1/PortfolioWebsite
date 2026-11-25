@@ -6,7 +6,7 @@
 import { defineCollection, reference } from "astro:content";
 import { file, glob } from "astro/loaders";
 import { z } from "astro/zod";
-import { isIconSlug } from "./lib/skill-icons";
+import { isIconSlug, skillGlyphs } from "./lib/skill-icons";
 
 /* -------------------------------------------------------------------------- */
 /* Shared field types                                                         */
@@ -213,9 +213,7 @@ const skills = defineCollection({
             .refine(isIconSlug, { message: "Unknown Simple Icons slug" })
             .optional(),
           /** Generic icon for skills without a brand mark (concepts, small tools). */
-          glyph: z
-            .enum(["prompt", "embeddings", "vector", "chart", "security"])
-            .optional(),
+          glyph: z.enum(skillGlyphs).optional(),
         }),
       )
       .min(1),
