@@ -78,7 +78,16 @@ const row =
               <li class={row}>
                 <p>
                   <span class="font-medium text-fg">{e.data.role}</span>
-                  <span class="text-fg-muted">{` · ${e.data.org}`}</span>
+                  <span class="text-fg-muted">
+                    {" · "}
+                    {e.data.orgShort ? (
+                      <abbr title={e.data.org} class="no-underline">
+                        {e.data.orgShort}
+                      </abbr>
+                    ) : (
+                      e.data.org
+                    )}
+                  </span>
                 </p>
                 <p class="shrink-0 font-mono text-xs text-fg-subtle">
                   {e.data.dateLabel ??

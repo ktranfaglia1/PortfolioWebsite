@@ -48,7 +48,7 @@ const rows: Row[] = [
     lane: 0,
     date: e.data.start,
     title: e.data.role,
-    meta: e.data.org,
+    meta: e.data.orgShort ?? e.data.org,
     href: `#${e.data.group}`,
   })),
   ...teaching.map((e) => ({
@@ -56,7 +56,7 @@ const rows: Row[] = [
     lane: 1,
     date: e.data.start,
     title: e.data.role,
-    meta: e.data.org,
+    meta: e.data.orgShort ?? e.data.org,
     href: "#teaching",
   })),
   ...featured.map((p) => ({

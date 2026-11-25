@@ -110,6 +110,8 @@ const experience = defineCollection({
     z
       .object({
         org: z.string(),
+        /** Abbreviation for compact lists (resume page, career graph). */
+        orgShort: z.string().optional(),
         /** Short description shown after the org name. */
         orgDescription: z.string().optional(),
         orgUrl: z.url().optional(),

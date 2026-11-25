@@ -1,5 +1,6 @@
 ---
 org: Eastern Shore High School Computer Programming Competition
+orgShort: ESHSCPC
 orgLogo:
   src: ../../../assets/images/logos/salisbury-university.png
   alt: Salisbury University logo
