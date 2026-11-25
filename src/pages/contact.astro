@@ -1,5 +1,13 @@
 ---
-import { CircleCheck, Copy, Mail, MapPin, Send } from "@lucide/astro";
+import {
+  ArrowDownToLine,
+  CircleCheck,
+  Copy,
+  FileText,
+  Mail,
+  MapPin,
+  Send,
+} from "@lucide/astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Container from "../components/layout/Container.astro";
 import PageHeader from "../components/page/PageHeader.astro";
@@ -40,109 +48,121 @@ const profiles = [
 
   <div class="border-t border-line">
     <Container class="grid gap-12 py-16 sm:py-20 lg:grid-cols-12 lg:gap-10 xl:py-24">
-      <div class="lg:col-span-7 xl:col-span-6">
+      <div class="lg:col-span-7">
         <p class="mb-8 flex items-baseline gap-3 font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
           <span class="text-accent" aria-hidden="true">
             01
           </span>{" "}
-          Send a message
+          Send a Message
         </p>
-        <form
-          action={`https://formspree.io/f/${site.formspreeId}`}
-          method="POST"
-          data-contact-form
-          class="space-y-5"
-        >
-          <div class="grid gap-5 sm:grid-cols-2">
+        <div class="rounded-2xl border border-line bg-surface p-6 sm:p-8">
+          <form
+            action={`https://formspree.io/f/${site.formspreeId}`}
+            method="POST"
+            data-contact-form
+            class="space-y-5"
+          >
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label for="name" class={labelClass}>
+                  Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  autocomplete="name"
+                  placeholder="Your name"
+                  class={field}
+                />
+              </div>
+              <div>
+                <label for="email" class={labelClass}>
+                  Email
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autocomplete="email"
+                  placeholder="you@example.com"
+                  class={field}
+                />
+              </div>
+            </div>
             <div>
-              <label for="name" class={labelClass}>
-                Name
+              <label for="subject" class={labelClass}>
+                Subject{" "}
+                <span class="font-normal text-fg-subtle">(optional)</span>
               </label>
               <input
-                id="name"
-                name="name"
+                id="subject"
+                name="_subject"
                 type="text"
-                required
-                autocomplete="name"
+                placeholder="A role, a project, or a question"
                 class={field}
               />
             </div>
             <div>
-              <label for="email" class={labelClass}>
-                Email
+              <label for="message" class={labelClass}>
+                Message
               </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
+              <textarea
+                id="message"
+                name="message"
+                rows="6"
                 required
-                autocomplete="email"
+                placeholder="Tell me a bit about what you have in mind."
                 class={field}
+              ></textarea>
+            </div>
+            <!-- Honeypot: hidden from people, filled in by bots; Formspree drops those. -->
+            <div class="hidden" aria-hidden="true">
+              <label for="gotcha">Leave this empty</label>
+              <input
+                id="gotcha"
+                type="text"
+                name="_gotcha"
+                tabindex="-1"
+                autocomplete="off"
               />
             </div>
-          </div>
-          <div>
-            <label for="subject" class={labelClass}>
-              Subject <span class="font-normal text-fg-subtle">(optional)</span>
-            </label>
-            <input id="subject" name="_subject" type="text" class={field} />
-          </div>
-          <div>
-            <label for="message" class={labelClass}>
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows="6"
-              required
-              class={field}
-            ></textarea>
-          </div>
-          <!-- Honeypot: hidden from people, filled in by bots; Formspree drops those. -->
-          <div class="hidden" aria-hidden="true">
-            <label for="gotcha">Leave this empty</label>
-            <input
-              id="gotcha"
-              type="text"
-              name="_gotcha"
-              tabindex="-1"
-              autocomplete="off"
-            />
-          </div>
-          <div class="flex flex-wrap items-center gap-4">
-            <Button type="submit" size="lg">
-              <Send size={16} aria-hidden="true" /> Send message
-            </Button>
-            <p
-              data-form-status
-              role="status"
-              class="text-sm text-fg-muted data-[state=error]:text-fg"
-            ></p>
-          </div>
-        </form>
+            <div class="flex flex-wrap items-center gap-4">
+              <Button type="submit" size="lg">
+                <Send size={16} aria-hidden="true" /> Send message
+              </Button>
+              <p
+                data-form-status
+                role="status"
+                class="text-sm text-fg-muted data-[state=error]:text-fg"
+              ></p>
+            </div>
+          </form>
 
-        <div
-          data-form-success
-          hidden
-          tabindex="-1"
-          class="py-8 text-center outline-none"
-        >
-          <CircleCheck
-            size={36}
-            aria-hidden="true"
-            class="mx-auto text-accent"
-          />
-          <h2 class="mt-4 text-xl font-semibold">Message Sent</h2>
-          <p class="mt-2 text-fg-muted">
-            Thanks for reaching out. I'll get back to you within one business
-            day.
-          </p>
+          <div
+            data-form-success
+            hidden
+            tabindex="-1"
+            class="py-8 text-center outline-none"
+          >
+            <CircleCheck
+              size={36}
+              aria-hidden="true"
+              class="mx-auto text-accent"
+            />
+            <h2 class="mt-4 text-xl font-semibold">Message Sent</h2>
+            <p class="mt-2 text-fg-muted">
+              Thanks for reaching out. I'll get back to you within one business
+              day.
+            </p>
+          </div>
         </div>
       </div>
 
       <aside
-        class="space-y-6 lg:col-span-4 lg:col-start-9 xl:col-span-3 xl:col-start-9"
+        class="space-y-6 lg:col-span-4 lg:col-start-9"
         aria-label="Other ways to reach me"
       >
         <p class="flex items-baseline gap-3 font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase">
@@ -193,10 +213,36 @@ const profiles = [
           ))}
         </ul>
 
-        <p class="flex items-center gap-2 px-1 text-sm text-fg-muted">
-          <MapPin size={16} aria-hidden="true" class="text-fg-subtle" />{" "}
-          {site.location}
-        </p>
+        <a
+          href={site.files.resume}
+          download
+          class="flex items-center gap-3 rounded-2xl border border-line p-4 transition-colors hover:bg-surface"
+        >
+          <FileText size={20} aria-hidden="true" class="text-fg-muted" />
+          <span class="flex-1">
+            <span class="block font-medium text-fg">Resume</span>
+            <span class="block font-mono text-xs text-fg-subtle">
+              PDF · one page
+            </span>
+          </span>
+          <ArrowDownToLine
+            size={16}
+            aria-hidden="true"
+            class="text-fg-subtle"
+          />
+        </a>
+
+        <div class="flex gap-2 px-1 text-sm">
+          <MapPin
+            size={16}
+            aria-hidden="true"
+            class="mt-0.5 shrink-0 text-fg-subtle"
+          />
+          <p>
+            <span class="block text-fg-muted">{site.location}</span>
+            <span class="block text-fg-subtle">{site.locationNote}</span>
+          </p>
+        </div>
       </aside>
     </Container>
   </div>

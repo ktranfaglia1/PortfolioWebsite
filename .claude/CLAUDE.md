@@ -9,6 +9,7 @@ Node 26 (`nvm use`), pnpm. The original redesign plan (decisions, phases, conten
 - `pnpm build` / `pnpm preview` — production build to `dist/` and local preview
 - `pnpm verify` — check + lint + format check + build + unit + e2e. Run before every commit. (Not `pnpm ci`: that's a built-in pnpm command that reinstalls dependencies.)
 - `pnpm format` — apply Prettier
+- After a content schema change (`src/content.config.ts`), delete `.astro/data-store.json` and restart `pnpm dev`. The dev server caches parsed entries by file hash, so entries saved under the old schema keep stale data (new fields missing) until the cache is cleared. Builds use a separate cache in `node_modules/.astro/` and aren't affected.
 - E2E tests run against `astro preview` on port 4322 with `--ignore-lock`, so build first. (Astro 7 auto-backgrounds `preview`/`dev` when it detects an AI agent; `--ignore-lock` keeps the test server in the foreground and avoids colliding with a running `pnpm dev`.)
 
 ## Content rules
