@@ -166,7 +166,7 @@ const education = defineCollection({
     z
       .object({
         school: z.string(),
-        /** Shown on a white tile beside the school name. */
+        /** Shown on a white tile in the home page experience list. */
         logo: z.object({ src: image(), alt: z.string() }).optional(),
         /** One-line degree summary for tight spaces (home fact rail). */
         degreeSummary: z.string().optional(),
