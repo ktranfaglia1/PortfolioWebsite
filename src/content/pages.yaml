@@ -1,6 +1,5 @@
 # Per-page copy: tab title, meta description (max 160 chars), heading, intro.
-# TODO(kyle): review all of this copy, especially the home intro and the
-# page headlines (*asterisks* mark the serif-italic accent phrase).
+# In headlines, *asterisks* mark the serif-italic accent phrase.
 - id: home
   title: Kyle Tranfaglia | Software Engineer
   description: Kyle Tranfaglia is a software engineer building full-stack, AI-powered products, with dual degrees in computer science and data science.
