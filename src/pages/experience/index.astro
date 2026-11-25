@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import { ArrowRight, Award, GraduationCap } from "@lucide/astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Container from "../../components/layout/Container.astro";
@@ -120,14 +121,28 @@ const label = "font-mono text-xs tracking-[0.2em] text-fg-subtle uppercase";
     {education.map(({ data: ed }) => (
       <div class="grid gap-12 xl:grid-cols-2">
         <div data-reveal>
-          <p class="flex items-center gap-2 font-mono text-xs text-fg-subtle">
-            <GraduationCap size={14} aria-hidden="true" />
-            {formatDateRange(ed.start, ed.end)}
-            {ed.location && <span>{` · ${ed.location}`}</span>}
-          </p>
-          <h3 class="mt-3 text-[clamp(1.75rem,1.2rem+1.4vw,2.5rem)] leading-tight font-semibold tracking-tight">
-            {ed.school}
-          </h3>
+          <div class="flex items-center gap-5">
+            {ed.logo && (
+              <div class="flex size-12 shrink-0 items-center justify-center rounded-xl border border-line bg-[white] p-1 sm:size-14 sm:p-1.5">
+                <Image
+                  src={ed.logo.src}
+                  alt={ed.logo.alt}
+                  width={128}
+                  class="max-h-full max-w-full object-contain"
+                />
+              </div>
+            )}
+            <div>
+              <p class="flex items-center gap-2 font-mono text-xs text-fg-subtle">
+                <GraduationCap size={14} aria-hidden="true" />
+                {formatDateRange(ed.start, ed.end)}
+                {ed.location && <span>{` · ${ed.location}`}</span>}
+              </p>
+              <h3 class="mt-2 text-[clamp(1.75rem,1.2rem+1.4vw,2.5rem)] leading-tight font-semibold tracking-tight">
+                {ed.school}
+              </h3>
+            </div>
+          </div>
           <ul class="mt-6 space-y-4">
             {ed.degrees.map((deg) => (
               <li>

@@ -1,6 +1,9 @@
 # Education and honors. One entry per school.
 - id: salisbury-university
   school: Salisbury University
+  logo:
+    src: ../assets/images/logos/salisbury-university.png
+    alt: Salisbury University logo
   degreeSummary: Dual B.S. in CS & Data Science
   location: Salisbury, MD
   start: 2021-08-01
@@ -21,7 +24,7 @@
       when: Spring 2025
     - title: 1st Place, SU Annual Math Challenge
       when: Spring 2025
-    - title: Clarke Honors College graduate
+    - title: Clarke Honors College Graduate
       detail: University Honors
     - title: Dean's List
       when: Every semester, Fall 2021 – Spring 2025

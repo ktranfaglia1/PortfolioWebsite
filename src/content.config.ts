@@ -162,33 +162,36 @@ const experience = defineCollection({
 
 const education = defineCollection({
   loader: file("./src/content/education.yaml"),
-  schema: z
-    .object({
-      school: z.string(),
-      /** One-line degree summary for tight spaces (home fact rail). */
-      degreeSummary: z.string().optional(),
-      location: z.string().optional(),
-      start: date,
-      end: date,
-      degrees: z
-        .array(z.object({ name: z.string(), tracks: z.array(z.string()) }))
-        .min(1),
-      minors: z.array(z.string()).default([]),
-      gpa: z.number().min(0).max(4),
-      /** Latin honors, e.g. "Summa Cum Laude". */
-      distinction: z.string().optional(),
-      honors: z
-        .array(
-          z.object({
-            title: z.string(),
-            /** Free text, e.g. "Spring 2025" or "All semesters, 2021–2025". */
-            when: z.string().optional(),
-            detail: z.string().optional(),
-          }),
-        )
-        .default([]),
-    })
-    .refine((d) => d.end >= d.start, endsAfterStartError),
+  schema: ({ image }) =>
+    z
+      .object({
+        school: z.string(),
+        /** Shown on a white tile beside the school name. */
+        logo: z.object({ src: image(), alt: z.string() }).optional(),
+        /** One-line degree summary for tight spaces (home fact rail). */
+        degreeSummary: z.string().optional(),
+        location: z.string().optional(),
+        start: date,
+        end: date,
+        degrees: z
+          .array(z.object({ name: z.string(), tracks: z.array(z.string()) }))
+          .min(1),
+        minors: z.array(z.string()).default([]),
+        gpa: z.number().min(0).max(4),
+        /** Latin honors, e.g. "Summa Cum Laude". */
+        distinction: z.string().optional(),
+        honors: z
+          .array(
+            z.object({
+              title: z.string(),
+              /** Free text, e.g. "Spring 2025" or "All semesters, 2021–2025". */
+              when: z.string().optional(),
+              detail: z.string().optional(),
+            }),
+          )
+          .default([]),
+      })
+      .refine((d) => d.end >= d.start, endsAfterStartError),
 });
 
 /* -------------------------------------------------------------------------- */
